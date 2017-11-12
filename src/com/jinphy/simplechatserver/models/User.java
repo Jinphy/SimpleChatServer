@@ -6,7 +6,7 @@ public class User {
     private String name;
     private String password;
     private String date;
-    private String avatorUrl;
+    private String avatarUrl;
 
     public User(){}
 
@@ -15,7 +15,7 @@ public class User {
         this.account = account;
         this.password = password;
         this.date = date;
-        this.avatorUrl = avatorUrl;
+        this.avatarUrl = avatorUrl;
     }
 
     public void setId(int id) {
@@ -38,8 +38,8 @@ public class User {
         this.date = date;
     }
 
-    public void setAvatorUrl(String avatorUrl) {
-        this.avatorUrl = avatorUrl;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public int getId() {
@@ -62,7 +62,7 @@ public class User {
         return date;
     }
 
-    public String getAvatorUrl() {
-        return avatorUrl;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 }

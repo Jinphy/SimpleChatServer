@@ -6,6 +6,8 @@ import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
+
+
 public class DBConnectionPool {
 //    连接池单例
     private static DBConnectionPool instance = new DBConnectionPool();
@@ -20,7 +22,8 @@ public class DBConnectionPool {
 /*
      一个后台线程，用来检测是否数据库连接池中的连接数超过了正常状态下的连接数，
     如果超过了，则把超过部分的长时间为被使用的连接关闭，否则（连接数没有超过）
-    就终止该后台线程*/
+    就终止该后台线程
+    */
     private void run(){
         hasRunBackgroungThread = true;
         while (true) {

@@ -5,10 +5,13 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Client  extends WebSocketClient{
     public Client(URI serverUri) {
         super(serverUri);
+        this.close();
     }
 
     @Override
@@ -46,7 +49,6 @@ public class Client  extends WebSocketClient{
         int i = 0;
         while (true) {
             client.send("the client send message:" + (i++));
-
             Thread.sleep(1000);
         }
     }

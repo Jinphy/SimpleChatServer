@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.Properties;
 
 public class DBConfig {
-    String driver;
-    String url;
-    String user;
-    String password;
+    public String driver;
+    public String url;
+    public String user;
+    public String password;
 
     int minConnectionNum;
     int maxConnectionNum;
