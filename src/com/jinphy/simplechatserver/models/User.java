@@ -7,6 +7,8 @@ public class User {
     private String password;
     private String date;
     private String avatarUrl;
+    private String status;//登录状态
+    private String deviceId;
 
     public User(){}
 
@@ -64,5 +66,21 @@ public class User {
 
     public String getAvatarUrl() {
         return avatarUrl;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getDeviceId() {
+        return deviceId;
+    }
+
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
     }
 }

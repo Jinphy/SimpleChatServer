@@ -55,4 +55,34 @@ public class UserDao {
 
         return result;
     }
+
+    public synchronized boolean login(String account, String password, String deviceId) throws Exception {
+        Connection connection = null;
+        boolean result = false;
+
+        DBConnectionPool dbPool = DBConnectionPool.getInstance();
+        connection = dbPool.getConnection();
+        String sql = "select password from user where account like ? ";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setString(1, account);
+        ResultSet resultSet = preparedStatement.executeQuery();
+        if (resultSet.next() &&
+                ("null".equals(password) || password.equals(resultSet.getString("password")))) {
+            sql = "update user set status = ?,deviceId = ? where account = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "true");
+            preparedStatement.setString(2, deviceId);
+            preparedStatement.setString(3, account);
+            int i = preparedStatement.executeUpdate();
+            if (i == 1) {
+                result = true;
+            } else {
+                result = true;
+            }
+
+        } else {
+            result = false;
+        }
+        return result;
+    }
 }

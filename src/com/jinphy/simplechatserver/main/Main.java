@@ -5,8 +5,7 @@ import com.jinphy.simplechatserver.dao.UserDao;
 import com.jinphy.simplechatserver.controller.MyServer;
 import org.java_websocket.WebSocket;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class Main {
     public static final int PUSH_SERVER_PORT = 4540;
@@ -65,7 +64,6 @@ public class Main {
             sendServer.start();
 
         }).start();
-
     }
 
     //    开启这个服务专门处理通用的客户端请求
@@ -76,13 +74,12 @@ public class Main {
                     .doOnOpen((conn, handshake) -> {
                         // TODO: 2017/11/6 用户连接了服务器，如果是登录服务则要跟新登录状态
                         String descriptor = handshake.getResourceDescriptor();
-                        handleDescriptor(descriptor);
+                        handleDescriptor(descriptor,conn);
 
                     })
                     .doOnMessage(new MyServer.OnMessage() {
                         @Override
                         public void onMessage(WebSocket conn, String message) {
-
                         }
                     })
                     .doOnError((conn, ex) -> {
@@ -98,13 +95,15 @@ public class Main {
 
     }
 
-    private static void handleDescriptor(String descriptor) {
+    private static void handleDescriptor(String descriptor,WebSocket client) {
+        List<WebSocket> clients = new ArrayList<>(1);
+        clients.add(client);
         descriptor = descriptor.trim().substring(1);
         String[] split = descriptor.trim().split("/");
         if (split != null && split.length > 0) {
             switch (split[0]) {
                 case "user":
-                    handleUserPath(split);
+                    handleUserPath(split,clients);
                     break;
                 case "send":
                     break;
@@ -117,26 +116,29 @@ public class Main {
         }
     }
 
-    private static void handleUserPath(String[] split) {
+    private static void handleUserPath(String[] split,Collection<WebSocket> clients) {
         String account;
         String password;
+        Map<String, String> map;
         switch (split[1]) {
             case "findUser":
+                System.out.println("findUser");
                 int index = split[2].indexOf("=") + 1;
                 account = split[2].substring(index);
                 try {
                     if (UserDao.getInstance().findUser(account)) {
-                        commonServer.broadcast("yes");
+                        commonServer.broadcast("yes",clients);
                     } else {
-                        commonServer.broadcast("no");
+                        commonServer.broadcast("no",clients);
                     }
                 } catch (Exception e) {
                     Thread.yield();
-                    commonServer.broadcast("error");
+                    commonServer.broadcast("error",clients);
                 }
                 break;
             case "createNewUser":
-                Map<String, String> map = toMap(split[2]);
+                System.out.println("createNewUser");
+                map = toMap(split[2]);
                 System.out.println("account = " + map.get("account"));
                 System.out.println("password = " + map.get("password"));
                 System.out.print("date = " + map.get("date"));
@@ -145,17 +147,36 @@ public class Main {
                             map.get("account"),
                             map.get("password"),
                             map.get("date"))) {
-                        commonServer.broadcast("yes");
+                        commonServer.broadcast("yes",clients);
                     } else {
-                        commonServer.broadcast("no");
+                        commonServer.broadcast("no",clients);
                     }
                 } catch (Exception e) {
-                    commonServer.broadcast("error");
+                    commonServer.broadcast("error",clients);
+                }
+                break;
+            case "login":
+                System.out.println("login");
+                map = toMap(split[2]);
+                System.out.println("account = " + map.get("account"));
+                System.out.println("password = " + map.get("password"));
+                System.out.println("deviceId = "+map.get("deviceId"));
+                try {
+                    if (UserDao.getInstance().login(
+                            map.get("account"),
+                            map.get("password"),
+                            map.get("deviceId")) ) {
+                        commonServer.broadcast("yes",clients);
+                    } else {
+                        commonServer.broadcast("no",clients);
+                    }
+                } catch (Exception e) {
+                    commonServer.broadcast("error",clients);
+                    e.printStackTrace();
                 }
                 break;
         }
     }
-
 
     public static Map<String, String> toMap(String text) {
         text = text.substring(1);// 第一个字符时 "?"
