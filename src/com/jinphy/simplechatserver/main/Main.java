@@ -24,6 +24,8 @@ public class Main {
     private static MyServer sendServer;
     private static MyServer commonServer;
 
+    private static RequestController ontroller;
+
     public static void main(String[] args) {
         RequestController.init();
 

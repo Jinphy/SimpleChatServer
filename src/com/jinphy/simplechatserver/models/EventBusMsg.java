@@ -27,6 +27,7 @@ public class EventBusMsg {
 
     }
     private EventBusMsg(MyServer server, WebSocket client, ClientHandshake handshake) {
+        this.server = server;
         this.client = client;
         this.clients = Arrays.asList(client);
         UrlObject url = UrlObject.parse(handshake.getResourceDescriptor());

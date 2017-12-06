@@ -6,7 +6,7 @@ import java.lang.annotation.*;
  * Created by jinphy on 2017/12/5.
  */
 
-@Retention(RetentionPolicy.SOURCE)
+@Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Documented
 public @interface Path {

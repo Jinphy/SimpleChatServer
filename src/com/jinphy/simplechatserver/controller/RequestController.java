@@ -9,17 +9,27 @@ import com.jinphy.simplechatserver.models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.ObjectHelper;
 import com.jinphy.simplechatserver.utils.StringUtils;
+import io.reactivex.Flowable;
+import io.reactivex.Scheduler;
+import io.reactivex.schedulers.Schedulers;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 该类用来处理网络请求接口
  * Created by jinphy on 2017/12/5.
  */
 public class RequestController {
+
+    protected Map<String, Method> methodMap = new HashMap<>();
+
     private static class RequestControllerHolder {
         static final RequestController DAFAULT = new RequestController();
     }
@@ -35,7 +45,6 @@ public class RequestController {
         return RequestControllerHolder.DAFAULT;
     }
 
-
     public static void init() {
         getInstance();
     }
@@ -47,6 +56,42 @@ public class RequestController {
      */
     public RequestController() {
         EventBus.getDefault().register(this);
+        loadApiMethods();
+    }
+
+    /**
+     * DESC: 获取该类的所有注释了Path注解的方法
+     * Created by jinphy, on 2017/12/7, at 0:27
+     */
+    protected void loadApiMethods(){
+        for (Method method : this.getClass().getDeclaredMethods()) {
+            if (method.isAnnotationPresent(Path.class)) {
+                methodMap.put(method.getAnnotation(Path.class).path(), method);
+            }
+        }
+    }
+
+
+    /**
+     * DESC: 接收EventBus的消息，然后分发到相应的网络请求接口
+     * Created by jinphy, on 2017/12/7, at 0:32
+     */
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void handleMsg(EventBusMsg msg) {
+        Method method = methodMap.get(msg.path);
+        if (method ==null) {
+            Response response = new Response(Response.NO, "网络请求接口不存在！", null);
+            msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
+            System.out.println("json: "+GsonUtils.toJson(response));
+            return;
+        }
+        try {
+            method.invoke(this, msg);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 
     //================================================================================\\
@@ -56,13 +101,9 @@ public class RequestController {
      * DESC: 登录请求
      * Created by jinphy, on 2017/12/5, at 21:54
      */
-    @Subscribe(threadMode = ThreadMode.ASYNC)
     @Path(path = RequestConfig.Path.login)
     public void login(EventBusMsg msg) {
-        if (!RequestConfig.Path.login.equals(msg.path)) {
-            return;
-        }
-        System.out.println("login");
+        System.out.println(RequestConfig.Path.login);
         Response response = null;
         try {
             String account = msg.params.get(RequestConfig.Key.account);
@@ -85,6 +126,7 @@ public class RequestController {
             response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
+            System.out.println("json: "+GsonUtils.toJson(response));
         }
 
     }
@@ -94,18 +136,13 @@ public class RequestController {
      * DESC: 查询用户是否存在请求
      * Created by jinphy, on 2017/12/5, at 21:54
      */
-    @Subscribe(threadMode = ThreadMode.ASYNC)
     @Path(path = RequestConfig.Path.findUser)
     public void findUser(EventBusMsg msg) {
-        if (!RequestConfig.Path.findUser.equals(msg.path)) {
-            return;
-        }
-        System.out.println("findUser");
+        System.out.println(RequestConfig.Path.findUser);
         Response response = null;
         try {
             String account = msg.params.get(RequestConfig.Key.account);
             ObjectHelper.requareNonNull(account, "参数不完整！");
-
             if (UserDao.getInstance().findUser(account)) {
                 response = new Response(Response.YES, "账号" + account + "存在", null);
             } else {
@@ -118,6 +155,7 @@ public class RequestController {
             response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
+            System.out.println("json: "+GsonUtils.toJson(response));
         }
     }
 
@@ -126,13 +164,9 @@ public class RequestController {
      * DESC: 创建新用户请求
      * Created by jinphy, on 2017/12/5, at 21:54
      */
-    @Subscribe(threadMode = ThreadMode.ASYNC)
     @Path(path = RequestConfig.Path.createNewUser)
     public void createNewUser(EventBusMsg msg) {
-        if (!RequestConfig.Path.createNewUser.equals(msg.path)) {
-            return;
-        }
-        System.out.println("createNewUser");
+        System.out.println(RequestConfig.Path.createNewUser);
         Response response = null;
         String paramError = "参数不完整！";
         try {
@@ -150,6 +184,7 @@ public class RequestController {
             response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
+            System.out.println("json: "+GsonUtils.toJson(response));
         }
     }
 
