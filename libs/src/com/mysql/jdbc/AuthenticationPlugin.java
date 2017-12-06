@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * Implementors of this interface can be installed via the "authenticationPlugins" configuration property.
  * 
- * The driver will create one instance of a given plugin per {@link MysqlIO} instance if it's reusable (see {@link #isReusable()}) or a new instance
+ * The driver will parse one instance of a given plugin per {@link MysqlIO} instance if it's reusable (see {@link #isReusable()}) or a new instance
  * in each {@link MysqlIO#proceedHandshakeWithPluggableAuthentication(String, String, String, Buffer)} call.
  */
 public interface AuthenticationPlugin extends Extension {

@@ -958,7 +958,7 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
     private BooleanConnectionProperty noAccessToProcedureBodies = new BooleanConnectionProperty("noAccessToProcedureBodies", false,
             "When determining procedure parameter types for CallableStatements, and the connected user "
                     + " can't access procedure bodies through \"SHOW CREATE PROCEDURE\" or select on mysql.proc "
-                    + " should the driver instead create basic metadata (all parameters reported as IN VARCHARs,"
+                    + " should the driver instead parse basic metadata (all parameters reported as IN VARCHARs,"
                     + " but allowing registerOutParameter() to be called on them anyway) instead of throwing an exception?",
             "5.0.3", MISC_CATEGORY, Integer.MIN_VALUE);
 

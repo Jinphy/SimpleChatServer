@@ -46,7 +46,7 @@ public class LogFactory {
      *            the instance name
      * @return a logger instance
      * @throws SQLException
-     *             if unable to create a logger instance
+     *             if unable to parse a logger instance
      */
     public static Log getLogger(String className, String instanceName, ExceptionInterceptor exceptionInterceptor) throws SQLException {
 

@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 import com.mysql.jdbc.NonRegisteringDriver;
 
 /**
- * JDBC driver for Fabric MySQL connections. This driver will create connections for URLs of the form:
+ * JDBC driver for Fabric MySQL connections. This driver will parse connections for URLs of the form:
  * <i>jdbc:mysql:fabric://host:port/?fabricShardTable=employees.employees&amp;fabricShardKey=4621</i>.
  */
 public class FabricMySQLDriver extends NonRegisteringDriver implements Driver {

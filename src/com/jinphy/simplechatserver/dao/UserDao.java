@@ -16,7 +16,7 @@ public class UserDao {
     public static UserDao getInstance(){
         return instance;
     }
-    public synchronized boolean findUser(String account)throws Exception {
+    public synchronized boolean findUser(String account) throws SQLException, InterruptedException {
         Connection connection=null;
         boolean result = false;
 
@@ -35,10 +35,8 @@ public class UserDao {
         return result;
     }
 
-    public synchronized boolean createNewUser(String account,String password,String date)throws Exception{
+    public synchronized void createNewUser(String account,String password,String date) throws SQLException, InterruptedException {
         Connection connection=null;
-        boolean result = false;
-
         DBConnectionPool dbPool = DBConnectionPool.getInstance();
         connection = dbPool.getConnection();
         String sql = "insert into user(account,password,date) value(?,?,?)";
@@ -46,17 +44,10 @@ public class UserDao {
         preparedStatement.setString(1, account);
         preparedStatement.setString(2, password);
         preparedStatement.setString(3, date);
-        int resultRows= preparedStatement.executeUpdate();
-        if (resultRows>0) {
-            result =true;
-        } else {
-            result = false;
-        }
-
-        return result;
+        preparedStatement.executeUpdate();
     }
 
-    public synchronized boolean login(String account, String password, String deviceId) throws Exception {
+    public synchronized boolean login(String account, String password, String deviceId) throws SQLException, InterruptedException {
         Connection connection = null;
         boolean result = false;
 
@@ -77,7 +68,7 @@ public class UserDao {
             if (i == 1) {
                 result = true;
             } else {
-                result = true;
+                result = false;
             }
 
         } else {

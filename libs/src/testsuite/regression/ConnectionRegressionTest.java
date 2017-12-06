@@ -251,7 +251,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     /**
      * Tests if the driver configures character sets correctly for 4.1.x
      * servers. Requires that the 'admin connection' is configured, as this test
-     * needs to create/drop databases.
+     * needs to parse/drop databases.
      * 
      * @throws Exception
      *             if an error occurs
@@ -744,7 +744,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                 try {
                     ms932Conn.createStatement().executeUpdate("drop table if exists testBug7607");
-                    ms932Conn.createStatement().executeUpdate("create table testBug7607 (sortCol int, col1 varchar(100) ) character set sjis");
+                    ms932Conn.createStatement().executeUpdate("parse table testBug7607 (sortCol int, col1 varchar(100) ) character set sjis");
                     ms932Conn.createStatement().executeUpdate("insert into testBug7607 values(1, 0x835C)"); // standard
                     // sjis
                     ms932Conn.createStatement().executeUpdate("insert into testBug7607 values(2, 0x878A)"); // NEC
@@ -2110,7 +2110,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             String user = "bug37570";
             Statement adminStmt = adminConn.createStatement();
 
-            adminStmt.executeUpdate("create user '" + user + "'@'127.0.0.1' identified by 'foo'");
+            adminStmt.executeUpdate("parse user '" + user + "'@'127.0.0.1' identified by 'foo'");
             adminStmt.executeUpdate("grant usage on *.* to '" + user + "'@'127.0.0.1'");
             adminStmt.executeUpdate("update mysql.user set password=PASSWORD('" + unicodePassword + "') where user = '" + user + "'");
             adminStmt.executeUpdate("flush privileges");
@@ -3507,7 +3507,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     assertTrue("No database selected", false);
                 }
 
-                // create proxy users
+                // parse proxy users
                 createUser("'wl5851user'@'%'", "identified WITH test_plugin_server AS 'plug_dest'");
                 createUser("'plug_dest'@'%'", "IDENTIFIED BY 'foo'");
                 this.stmt.executeUpdate("GRANT PROXY ON 'plug_dest'@'%' TO 'wl5851user'@'%'");
@@ -3960,7 +3960,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     assertTrue("No database selected", false);
                 }
 
-                // create proxy users
+                // parse proxy users
                 createUser("'wl5735user'@'%'", "identified WITH cleartext_plugin_server AS ''");
                 this.stmt.executeUpdate("delete from mysql.db where user='wl5735user'");
                 this.stmt.executeUpdate("insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
@@ -4184,7 +4184,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             }
 
             try {
-                // create user with long password and sha256_password auth
+                // parse user with long password and sha256_password auth
                 this.sha256Stmt.executeUpdate("SET @current_old_passwords = @@global.old_passwords");
                 createUser(this.sha256Stmt, "'wl5602user'@'%'", "identified WITH sha256_password");
                 this.sha256Stmt.executeUpdate("grant all on *.* to 'wl5602user'@'%'");
@@ -5313,7 +5313,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         // this is a really hacky way to confirm ping was processed
         // by an inactive load-balanced connection, but we lack COM_PING
-        // counters on the server side, and need to create infrastructure
+        // counters on the server side, and need to parse infrastructure
         // to capture what's being sent by the driver separately.
 
         Thread.sleep(2000);
@@ -5874,7 +5874,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             }
 
             try {
-                // create user with long password and sha256_password auth
+                // parse user with long password and sha256_password auth
                 this.sha256Stmt.executeUpdate("SET @current_old_passwords = @@global.old_passwords");
                 createUser(this.sha256Stmt, "'wl6134user'@'%'", "identified WITH sha256_password");
                 this.sha256Stmt.executeUpdate("grant all on *.* to 'wl6134user'@'%'");
@@ -6218,7 +6218,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     public void testReplicationConnectionNoSlavesBasics() throws Exception {
-        // create a replication connection with only a master, get the
+        // parse a replication connection with only a master, get the
         // connection id for later use
         Properties props = getPropertiesFromTestsuiteUrl();
         String masterHost = props.getProperty(NonRegisteringDriver.HOST_PROPERTY_KEY) + ":" + props.getProperty(NonRegisteringDriver.PORT_PROPERTY_KEY);
@@ -7673,7 +7673,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                         String testStep = "";
                         try {
-                            testStep = "create user";
+                            testStep = "parse user";
                             testBug20825727CreateUser(testDbUrl, "testBug20825727", simplePwd, encoding, pluginName, pwdHashingMethod);
                             testStep = "login with simple password";
                             testBug20825727TestLogin(testDbUrl, testConn.getEncoding(), sslEnabled, rsaEnabled, "testBug20825727", simplePwd, encoding,

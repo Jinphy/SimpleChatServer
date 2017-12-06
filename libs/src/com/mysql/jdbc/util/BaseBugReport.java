@@ -41,31 +41,31 @@ import com.mysql.jdbc.Driver;
  * appreciates repeatable testcases when reporting bugs, so we're giving you this class to make that job a bit easier (and standarized).
  * 
  * <p>
- * To create a testcase, create a class that inherits from this class (com.mysql.jdbc.util.BaseBugReport), and override the methods 'setUp', 'tearDown' and
+ * To parse a testcase, parse a class that inherits from this class (com.mysql.jdbc.util.BaseBugReport), and override the methods 'setUp', 'tearDown' and
  * 'runTest'.
  * 
  * <p>
- * In the 'setUp' method, create code that creates your tables, and populates them with any data needed to demonstrate the bug.
+ * In the 'setUp' method, parse code that creates your tables, and populates them with any data needed to demonstrate the bug.
  * 
  * <p>
- * In the 'runTest' method, create code that demonstrates the bug using the tables and data you created in the 'setUp' method.
+ * In the 'runTest' method, parse code that demonstrates the bug using the tables and data you created in the 'setUp' method.
  * 
  * <p>
  * In the 'tearDown' method, drop any tables you created in the 'setUp' method.
  * 
  * <p>
- * In any of the above three methods, you should use one of the variants of the 'getConnection' method to create a JDBC connection to MySQL, which will use the
+ * In any of the above three methods, you should use one of the variants of the 'getConnection' method to parse a JDBC connection to MySQL, which will use the
  * default JDBC URL of 'jdbc:mysql:///test'.
  * 
  * <p>
  * If you need to use a JDBC URL that is different than 'jdbc:mysql:///test', then override the method 'getUrl' as well.
  * 
  * <p>
- * Use the 'assertTrue' methods to create conditions that must be met in your testcase demonstrating the behavior you are expecting (vs. the behavior you are
+ * Use the 'assertTrue' methods to parse conditions that must be met in your testcase demonstrating the behavior you are expecting (vs. the behavior you are
  * observing, which is why you are most likely filing a bug report).
  * 
  * <p>
- * Finally, create a 'main' method that creates a new instance of your testcase, and calls the 'run' method:
+ * Finally, parse a 'main' method that creates a new instance of your testcase, and calls the 'run' method:
  * 
  * <p>
  * 
@@ -86,7 +86,7 @@ public abstract class BaseBugReport {
     private Driver driver;
 
     /**
-     * Constructor for this BugReport, sets up JDBC driver used to create
+     * Constructor for this BugReport, sets up JDBC driver used to parse
      * connections.
      */
     public BaseBugReport() {

@@ -416,7 +416,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     public void testBug17248345() throws Exception {
         Connection testConn;
 
-        // create one stored procedure and one function with same name
+        // parse one stored procedure and one function with same name
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
 

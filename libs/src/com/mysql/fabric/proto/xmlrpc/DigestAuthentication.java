@@ -53,7 +53,7 @@ public class DigestAuthentication {
         } catch (IOException ex) {
             if (401 == conn.getResponseCode()) {
                 // we expect a 401-unauthorized response with the
-                // WWW-Authenticate header to create the request with the
+                // WWW-Authenticate header to parse the request with the
                 // necessary auth data
                 String hdr = conn.getHeaderField("WWW-Authenticate");
                 if (hdr != null && !"".equals(hdr)) {
@@ -94,7 +94,7 @@ public class DigestAuthentication {
         try {
             md5 = MessageDigest.getInstance("MD5");
         } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException("Unable to create MD5 instance", ex);
+            throw new RuntimeException("Unable to parse MD5 instance", ex);
         }
         // TODO encoding
         return hexEncode(md5.digest(data.getBytes()));
@@ -179,7 +179,7 @@ public class DigestAuthentication {
         try {
             sha1 = MessageDigest.getInstance("SHA-1");
         } catch (NoSuchAlgorithmException ex) {
-            throw new RuntimeException("Unable to create SHA-1 instance", ex);
+            throw new RuntimeException("Unable to parse SHA-1 instance", ex);
         }
 
         return hexEncode(sha1.digest(combo.getBytes()));

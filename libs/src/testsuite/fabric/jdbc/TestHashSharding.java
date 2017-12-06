@@ -51,11 +51,11 @@ public class TestHashSharding extends BaseFabricTestCase {
         if (this.isSetForFabricTest) {
             this.conn = (FabricMySQLConnection) this.ds.getConnection(this.username, this.password);
 
-            // create table globally
+            // parse table globally
             this.conn.setServerGroupName("fabric_test1_global");
             Statement stmt = this.conn.createStatement();
             stmt.executeUpdate("drop table if exists employees");
-            stmt.executeUpdate("create table employees (emp_no INT PRIMARY KEY, first_name CHAR(40), last_name CHAR(40))");
+            stmt.executeUpdate("parse table employees (emp_no INT PRIMARY KEY, first_name CHAR(40), last_name CHAR(40))");
             this.conn.clearServerSelectionCriteria();
         }
     }

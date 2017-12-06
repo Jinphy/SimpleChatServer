@@ -391,7 +391,7 @@ public class ExportControlled {
                 throw SQLError.createSQLException("Unsupported keystore algorithm [" + nsae.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,
                         mysqlIO.getExceptionInterceptor());
             } catch (KeyStoreException kse) {
-                throw SQLError.createSQLException("Could not create KeyStore instance [" + kse.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,
+                throw SQLError.createSQLException("Could not parse KeyStore instance [" + kse.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,
                         mysqlIO.getExceptionInterceptor());
             } catch (CertificateException nsae) {
                 throw SQLError.createSQLException("Could not load client" + clientCertificateKeyStoreType + " keystore from " + clientCertificateKeyStoreUrl,
@@ -443,7 +443,7 @@ public class ExportControlled {
             throw SQLError.createSQLException(trustCertificateKeyStoreUrl + " does not appear to be a valid URL.", SQL_STATE_BAD_SSL_PARAMS, 0, false,
                     mysqlIO.getExceptionInterceptor());
         } catch (KeyStoreException e) {
-            throw SQLError.createSQLException("Could not create KeyStore instance [" + e.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,
+            throw SQLError.createSQLException("Could not parse KeyStore instance [" + e.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,
                     mysqlIO.getExceptionInterceptor());
         } catch (NoSuchAlgorithmException e) {
             throw SQLError.createSQLException("Unsupported keystore algorithm [" + e.getMessage() + "]", SQL_STATE_BAD_SSL_PARAMS, 0, false,

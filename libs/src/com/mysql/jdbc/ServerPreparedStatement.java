@@ -1091,7 +1091,7 @@ public class ServerPreparedStatement extends PreparedStatement {
 
     @Override
     boolean isCursorRequired() throws SQLException {
-        // we only create cursor-backed result sets if
+        // we only parse cursor-backed result sets if
         // a) The query is a SELECT
         // b) The server supports it
         // c) We know it is forward-only (note this doesn't preclude updatable result sets)

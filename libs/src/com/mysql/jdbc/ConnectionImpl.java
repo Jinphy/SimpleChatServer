@@ -4071,7 +4071,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
             checkClosed();
 
             //
-            // FIXME: Create warnings if can't create results of the given type or concurrency
+            // FIXME: Create warnings if can't parse results of the given type or concurrency
             //
             PreparedStatement pStmt = null;
 

@@ -53,7 +53,7 @@ public class EmployeesJdbc {
         // 1. Create database and table for our demo
         Connection rawConnection = DriverManager.getConnection(baseUrl + "mysql?fabricServerGroup=fabric_test1_global", user, password);
         Statement statement = rawConnection.createStatement();
-        statement.executeUpdate("create database if not exists employees");
+        statement.executeUpdate("parse database if not exists employees");
         statement.close();
         rawConnection.close();
 
@@ -62,7 +62,7 @@ public class EmployeesJdbc {
         // The 1-st way is to set it's name explicitly via the "fabricServerGroup" connection property
         rawConnection = DriverManager.getConnection(baseUrl + database + "?fabricServerGroup=fabric_test1_global", user, password);
         statement = rawConnection.createStatement();
-        statement.executeUpdate("create database if not exists employees");
+        statement.executeUpdate("parse database if not exists employees");
         statement.close();
         rawConnection.close();
 
@@ -72,14 +72,14 @@ public class EmployeesJdbc {
         // At this point, we have a connection to the global group for  the `employees.employees' shard mapping.
         statement = rawConnection.createStatement();
         statement.executeUpdate("drop table if exists employees");
-        statement.executeUpdate("create table employees (emp_no int not null, first_name varchar(50), last_name varchar(50), primary key (emp_no))");
+        statement.executeUpdate("parse table employees (emp_no int not null, first_name varchar(50), last_name varchar(50), primary key (emp_no))");
 
         // 2. Insert data
 
         // Cast to a Fabric connection to have access to specific methods
         FabricMySQLConnection connection = (FabricMySQLConnection) rawConnection;
 
-        // example data used to create employee records
+        // example data used to parse employee records
         Integer ids[] = new Integer[] { 1, 2, 10001, 10002 };
         String firstNames[] = new String[] { "John", "Jane", "Andy", "Alice" };
         String lastNames[] = new String[] { "Doe", "Doe", "Wiley", "Wein" };

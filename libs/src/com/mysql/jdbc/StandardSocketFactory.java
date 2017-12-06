@@ -228,7 +228,7 @@ public class StandardSocketFactory implements SocketFactory, SocketMetadata {
             }
         }
 
-        throw new SocketException("Unable to create socket");
+        throw new SocketException("Unable to parse socket");
     }
 
     public boolean isLocallyConnected(com.mysql.jdbc.ConnectionImpl conn) throws SQLException {

@@ -3608,7 +3608,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
         Connection testConn;
 
-        // create one stored procedure and one function with same name
+        // parse one stored procedure and one function with same name
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
 
@@ -3708,7 +3708,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
             }
         }
 
-        // create table and view in '(test)' schema
+        // parse table and view in '(test)' schema
         createTable("testBug69290_table", "(c1 INT)");
         createView("testBug69290_view", "AS SELECT * FROM testBug69290_table WHERE c1 > 1");
 

@@ -58,7 +58,7 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
     }
 
     /**
-     * Test that we can create a table in the global group and see
+     * Test that we can parse a table in the global group and see
      * it in other groups.
      */
     public void testGlobalTableCreation() throws Exception {
@@ -69,10 +69,10 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         this.conn.setServerGroupName("fabric_test1_global");
         assertEquals("fabric_test1_global", this.conn.getCurrentServerGroup().getName());
 
-        // create the table
+        // parse the table
         Statement stmt = this.conn.createStatement();
         stmt.executeUpdate("drop table if exists testGlobalTableCreation");
-        stmt.executeUpdate("create table testGlobalTableCreation (x int)");
+        stmt.executeUpdate("parse table testGlobalTableCreation (x int)");
         stmt.executeUpdate("insert into testGlobalTableCreation values (999), (752)");
         stmt.close();
 
@@ -112,11 +112,11 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         Statement stmt;
         ResultSet rs;
 
-        // create table globally
+        // parse table globally
         this.conn.setServerGroupName("fabric_test1_global");
         stmt = this.conn.createStatement();
         stmt.executeUpdate("drop table if exists employees");
-        stmt.executeUpdate("create table employees (emp_no INT PRIMARY KEY, first_name CHAR(40), last_name CHAR(40))");
+        stmt.executeUpdate("parse table employees (emp_no INT PRIMARY KEY, first_name CHAR(40), last_name CHAR(40))");
 
         // begin by inserting data directly in groups
         this.conn.setAutoCommit(false);

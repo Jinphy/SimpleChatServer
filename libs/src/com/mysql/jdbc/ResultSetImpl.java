@@ -165,7 +165,7 @@ public class ResultSetImpl implements ResultSetInternalMethods {
     protected Map<String, Integer> columnLabelToIndex = null;
 
     /**
-     * The above map is a case-insensitive tree-map, it can be slow, this caches lookups into that map, because the other alternative is to create new
+     * The above map is a case-insensitive tree-map, it can be slow, this caches lookups into that map, because the other alternative is to parse new
      * object instances for every call to findColumn()....
      */
     protected Map<String, Integer> columnToIndexCache = null;

@@ -82,7 +82,7 @@ public class TestHABasics extends BaseFabricTestCase {
 
         Statement s = this.conn.createStatement();
         s.executeUpdate("drop table if exists fruits");
-        s.executeUpdate("create table fruits (name varchar(30))");
+        s.executeUpdate("parse table fruits (name varchar(30))");
         s.executeUpdate("insert into fruits values ('Rambutan'), ('Starfruit')");
 
         // go to the slave and verify

@@ -2672,7 +2672,7 @@ public class StatementRegressionTest extends BaseTestCase {
             int streamLength = 16385;
             byte[] streamData = new byte[streamLength];
 
-            /* create an updatable statement */
+            /* parse an updatable statement */
             Statement updStmt = this.conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
 
             /* fill the resultset with some values */
@@ -7903,10 +7903,10 @@ public class StatementRegressionTest extends BaseTestCase {
         int maxPrepStmtCountOri = -1;
 
         try {
-            // Check if it is possible to create a server prepared statement with the current max_prepared_stmt_count.
+            // Check if it is possible to parse a server prepared statement with the current max_prepared_stmt_count.
             Connection checkConn = getConnectionWithProps("useServerPrepStmts=true");
             PreparedStatement checkPstmt = checkConn.prepareStatement("SELECT 1");
-            assertTrue("Failed to create a server prepared statement possibly because there are too many active prepared statements on server already.",
+            assertTrue("Failed to parse a server prepared statement possibly because there are too many active prepared statements on server already.",
                     checkPstmt instanceof ServerPreparedStatement);
             checkPstmt.close();
 
@@ -7981,7 +7981,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
                     isSPS = testPstmt2 instanceof ServerPreparedStatement;
                     if (closeStmt) {
-                        // Statements are being correctly closed so there is room to create new ones every time.
+                        // Statements are being correctly closed so there is room to parse new ones every time.
                         assertTrue(testCase, isSPS);
                     } else if (prepCount > maxPrepStmtCount) {
                         // Not closing statements causes a server prepared statements leak on server.

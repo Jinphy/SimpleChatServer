@@ -59,7 +59,7 @@ public class Security {
      * authentication with passwords stored pre-4.1 hashing.
      * 
      * @param passwd
-     *            the password to create the key from
+     *            the password to parse the key from
      * 
      * @return 20 byte generated key
      * 

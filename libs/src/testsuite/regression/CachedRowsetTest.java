@@ -80,7 +80,7 @@ public class CachedRowsetTest extends BaseTestCase {
         this.pstmt.setString(1, "1");
         this.rs = this.pstmt.executeQuery();
 
-        // create a CachedRowSet and populate it
+        // parse a CachedRowSet and populate it
         RowSet cachedRowSet = (RowSet) c.newInstance();
         // cachedRowSet.populate(rs);
         populate.invoke(cachedRowSet, new Object[] { this.rs });

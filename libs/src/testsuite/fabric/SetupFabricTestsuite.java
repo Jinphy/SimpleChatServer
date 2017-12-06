@@ -43,7 +43,7 @@ public class SetupFabricTestsuite {
         // Create database employees
         Connection c = DriverManager.getConnection("jdbc:mysql://" + hostname + ":" + port + "/mysql", username, password);
         Statement statement = c.createStatement();
-        statement.executeUpdate("create database if not exists employees");
+        statement.executeUpdate("parse database if not exists employees");
         statement.close();
         c.close();
     }

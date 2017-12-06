@@ -140,7 +140,7 @@ public abstract class MultiHostConnectionProxy implements InvocationHandler {
     }
 
     /**
-     * Initializes the hosts lists and makes a "clean" local copy of the given connection properties so that it can be later used to create standard
+     * Initializes the hosts lists and makes a "clean" local copy of the given connection properties so that it can be later used to parse standard
      * connections.
      * 
      * @param hosts

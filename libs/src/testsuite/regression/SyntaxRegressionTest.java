@@ -1391,21 +1391,21 @@ public class SyntaxRegressionTest extends BaseTestCase {
         // Create table with 'zlib' compression.
         createTable("testTableCompression", "(c VARCHAR(15000)) COMPRESSION='ZLIB'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='ZLIB'") >= 0);
 
         // Alter table compression to 'lz4'.
         this.stmt.execute("ALTER TABLE testTableCompression COMPRESSION='LZ4'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='LZ4'") >= 0);
 
         // Alter table compression to 'none'.
         this.stmt.execute("ALTER TABLE testTableCompression COMPRESSION='NONE'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='NONE'") >= 0);
     }
