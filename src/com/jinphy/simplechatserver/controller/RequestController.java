@@ -62,6 +62,7 @@ public class RequestController {
         if (!RequestConfig.Path.login.equals(msg.path)) {
             return;
         }
+        System.out.println("login");
         Response response = null;
         try {
             String account = msg.params.get(RequestConfig.Key.account);
@@ -75,13 +76,13 @@ public class RequestController {
             if (UserDao.getInstance().login(account, password, deviceId)) {
                 response = new Response(Response.YES, "登录成功！", null);
             } else {
-                response = new Response(Response.NO, "密码错误！", null);
+                response = new Response(Response.NO, "密码错误，请重新输入！", null);
             }
 
         } catch (MyNullPointerException e) {
             response = new Response(Response.NO, e.getMessage(), null);
         } catch (InterruptedException | SQLException e) {
-            response = new Response(Response.NO, "服务器异常！", null);
+            response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
         }
@@ -99,6 +100,7 @@ public class RequestController {
         if (!RequestConfig.Path.findUser.equals(msg.path)) {
             return;
         }
+        System.out.println("findUser");
         Response response = null;
         try {
             String account = msg.params.get(RequestConfig.Key.account);
@@ -107,13 +109,13 @@ public class RequestController {
             if (UserDao.getInstance().findUser(account)) {
                 response = new Response(Response.YES, "账号" + account + "存在", null);
             } else {
-                response = new Response(Response.NO, "账号" + account + "不存在", null);
+                response = new Response(Response.NO, "账号" + account + "不存在,请重新输入！", null);
             }
         } catch (MyNullPointerException e) {
             response = new Response(Response.NO, e.getMessage(), null);
         } catch (SQLException | InterruptedException e) {
             Thread.yield();
-            response = new Response(Response.NO, "服务器异常！", null);
+            response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
         }
@@ -130,6 +132,7 @@ public class RequestController {
         if (!RequestConfig.Path.createNewUser.equals(msg.path)) {
             return;
         }
+        System.out.println("createNewUser");
         Response response = null;
         String paramError = "参数不完整！";
         try {
@@ -140,11 +143,11 @@ public class RequestController {
             String date = msg.params.get(RequestConfig.Key.date);
             ObjectHelper.requareNonNull(account, paramError);
             UserDao.getInstance().createNewUser(account, password, date);
-            response = new Response(Response.YES, "创建账户成功！", null);
+            response = new Response(Response.YES, "恭喜您，账号注册成功！", null);
         } catch (MyNullPointerException e) {
             response = new Response(Response.NO, e.getMessage(), null);
         } catch (InterruptedException | SQLException e) {
-            response = new Response(Response.NO, "服务器异常！", null);
+            response = new Response(Response.NO, "服务器异常，请稍后再试！", null);
         } finally {
             msg.server.broadcast(GsonUtils.toJson(response), msg.clients);
         }
