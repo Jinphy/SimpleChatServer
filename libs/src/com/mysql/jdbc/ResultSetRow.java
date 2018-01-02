@@ -249,7 +249,7 @@ public abstract class ResultSetRow {
                     month = StringUtils.getInt(dateAsBytes, offset + 5, offset + 7);
                     day = StringUtils.getInt(dateAsBytes, offset + 8, offset + 10);
                 } else {
-                    // JDK-1.3 timestamp format, not real easy to parse positionally :p
+                    // JDK-1.3 timestamp format, not real easy to parseGet positionally :p
                     StringTokenizer st = new StringTokenizer(StringUtils.toString(dateAsBytes, offset, length, "ISO8859_1"), "- ");
 
                     year = Integer.parseInt(st.nextToken());

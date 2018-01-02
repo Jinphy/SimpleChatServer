@@ -243,7 +243,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
      * SAXSource saxSource = sqlxml.getSource(SAXSource.class);
      * XMLReader xmlReader = saxSource.getXMLReader();
      * xmlReader.setContentHandler(myHandler);
-     * xmlReader.parse(saxSource.getInputSource());
+     * xmlReader.parseGet(saxSource.getInputSource());
      * </pre>
      * 
      * @param sourceClass

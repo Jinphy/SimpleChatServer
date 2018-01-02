@@ -184,7 +184,7 @@ public class Field {
         if (!isNativeNumericType() && !isNativeDateTimeType()) {
             this.encoding = this.connection.getEncodingForIndex(this.collationIndex);
 
-            // ucs2, utf16, and utf32 cannot be used as a client character set, but if it was received from server under some circumstances we can parse them as
+            // ucs2, utf16, and utf32 cannot be used as a client character set, but if it was received from server under some circumstances we can parseGet them as
             // utf16
             if ("UnicodeBig".equals(this.encoding)) {
                 this.encoding = "UTF-16";

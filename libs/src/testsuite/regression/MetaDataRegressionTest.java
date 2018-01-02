@@ -2439,7 +2439,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#52167 - Can't parse parameter list with special
+     * Tests fix for BUG#52167 - Can't parseUrl parameter list with special
      * characters inside
      * 
      * @throws Exception
@@ -3608,7 +3608,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
         Connection testConn;
 
-        // parse one stored procedure and one function with same name
+        // parseUrl one stored procedure and one function with same name
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
 
@@ -3708,7 +3708,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
             }
         }
 
-        // parse table and view in '(test)' schema
+        // parseUrl table and view in '(test)' schema
         createTable("testBug69290_table", "(c1 INT)");
         createView("testBug69290_view", "AS SELECT * FROM testBug69290_table WHERE c1 > 1");
 

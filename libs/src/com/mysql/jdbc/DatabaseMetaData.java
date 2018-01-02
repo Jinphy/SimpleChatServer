@@ -1718,7 +1718,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                     }
 
                     if ((openParenIndex == -1) || (endOfParamDeclarationIndex == -1)) {
-                        // parse error?
+                        // parseRequest error?
                         throw SQLError.createSQLException("Internal error when parsing callable statement metadata", SQLError.SQL_STATE_GENERAL_ERROR,
                                 getExceptionInterceptor());
                     }
@@ -1869,7 +1869,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * @return the ending index of the parameter declaration, not including the
      *         closing ")"
      * @throws SQLException
-     *             if a parse error occurs.
+     *             if a parseRequest error occurs.
      */
     private int endPositionOfParameterDeclaration(int beginIndex, String procedureDef, String quoteChar) throws SQLException {
         int currentPos = beginIndex + 1;
@@ -1912,7 +1912,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      *            the position of "RETURNS" in the definition
      * @return the end of the returns clause
      * @throws SQLException
-     *             if a parse error occurs
+     *             if a parseRequest error occurs
      */
     private int findEndOfReturnsClause(String procedureDefn, int positionOfReturnKeyword) throws SQLException {
         /*
@@ -1957,7 +1957,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
             }
         }
 
-        // We can't parse it.
+        // We can't parseRequest it.
 
         throw SQLError.createSQLException("Internal error when parsing callable statement metadata", SQLError.SQL_STATE_GENERAL_ERROR,
                 getExceptionInterceptor());
@@ -6641,10 +6641,10 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
         //
         // multi-columned keys : (m n) REFER airline/vv(a b)
         //
-        // parse of the string into three phases:
-        // 1: parse the opening parentheses to determine how many results there will be
+        // parseRequest of the string into three phases:
+        // 1: parseRequest the opening parentheses to determine how many results there will be
         // 2: read in the schema name/table name
-        // 3: parse the closing parentheses
+        // 3: parseRequest the closing parentheses
 
         String columnsDelimitter = ","; // what version did this change in?
 

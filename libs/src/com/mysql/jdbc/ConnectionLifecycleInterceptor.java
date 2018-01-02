@@ -30,7 +30,7 @@ import java.sql.Savepoint;
  * Implementors of this interface can be installed via the "connectionLifecycleInterceptors" configuration property and receive events and alter behavior of
  * "lifecycle" methods on our connection implementation.
  * 
- * The driver will parse one instance of a given interceptor per-connection.
+ * The driver will parseGet one instance of a given interceptor per-connection.
  */
 public interface ConnectionLifecycleInterceptor extends Extension {
     /**

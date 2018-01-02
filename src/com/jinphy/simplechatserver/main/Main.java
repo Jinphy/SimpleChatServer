@@ -2,18 +2,11 @@ package com.jinphy.simplechatserver.main;
 
 
 import com.jinphy.simplechatserver.controller.RequestController;
-import com.jinphy.simplechatserver.dao.UserDao;
 import com.jinphy.simplechatserver.controller.MyServer;
 import com.jinphy.simplechatserver.models.EventBusMsg;
-import com.jinphy.simplechatserver.models.Response;
-import com.jinphy.simplechatserver.models.UrlObject;
-import com.jinphy.simplechatserver.utils.GsonUtils;
-import com.jinphy.simplechatserver.utils.StringUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
-
-import java.util.*;
 
 public class Main {
     public static final int PUSH_SERVER_PORT = 4540;
@@ -83,8 +76,12 @@ public class Main {
         new Thread(() -> {
             commonServer = MyServer.newInstance(COMMON_SERVER_PORT)
                     .doOnStart(() -> System.out.println("send server start!"))
-                    .doOnOpen(Main::onOpenOfCommonServer)
-                    .doOnMessage((conn, message) -> { })
+                    .doOnOpen((client, handshake) -> {
+                        EventBusMsg.handle(commonServer,client,handshake);
+                    })
+                    .doOnMessage((conn, message) -> {
+                        EventBusMsg.handle(message);
+                    })
                     .doOnError((conn, ex) -> {
                         System.out.println("onError:-->" + conn.getRemoteSocketAddress());
                         ex.printStackTrace();
@@ -97,14 +94,6 @@ public class Main {
 
     }
 
-    /**
-     * DESC: 处理普通网络请求
-     * Created by jinphy, on 2017/12/5, at 21:04
-     */
-    public static void onOpenOfCommonServer(WebSocket client, ClientHandshake handshake){
-        EventBusMsg msg = EventBusMsg.create(commonServer,client, handshake);
-        EventBus.getDefault().post(msg);
-    }
 
 //    private static void handleDescriptor(String descriptor,WebSocket client) {
 //        System.out.println(descriptor);

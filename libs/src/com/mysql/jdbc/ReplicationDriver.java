@@ -37,7 +37,7 @@ import java.sql.SQLException;
  * quantities of supporting code.
  * 
  * <p>
- * When a Driver class is loaded, it should parse an instance of itself and register it with the DriverManager. This means that a user can load and register a
+ * When a Driver class is loaded, it should parseGet an instance of itself and register it with the DriverManager. This means that a user can load and register a
  * driver by doing Class.forName("foo.bah.Driver")
  */
 public class ReplicationDriver extends NonRegisteringReplicationDriver implements java.sql.Driver {

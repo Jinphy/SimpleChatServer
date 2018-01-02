@@ -116,7 +116,7 @@ RUN SERVER WITH TEST CERTS
 Add to my.conf:
 
 [mysqld]
-ssl-key = "/path/server-key.pem"
-ssl-cert = "/path/server-cert.pem"
-ssl-ca = "/path/ca-cert.pem"
+ssl-key = "/requestId/server-key.pem"
+ssl-cert = "/requestId/server-cert.pem"
+ssl-ca = "/requestId/ca-cert.pem"
 

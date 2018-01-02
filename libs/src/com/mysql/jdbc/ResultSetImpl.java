@@ -165,7 +165,7 @@ public class ResultSetImpl implements ResultSetInternalMethods {
     protected Map<String, Integer> columnLabelToIndex = null;
 
     /**
-     * The above map is a case-insensitive tree-map, it can be slow, this caches lookups into that map, because the other alternative is to parse new
+     * The above map is a case-insensitive tree-map, it can be slow, this caches lookups into that map, because the other alternative is to parseGet new
      * object instances for every call to findColumn()....
      */
     protected Map<String, Integer> columnToIndexCache = null;
@@ -199,7 +199,7 @@ public class ResultSetImpl implements ResultSetInternalMethods {
     protected Field[] fields; // The fields
 
     /**
-     * First character of the query that created this result set...Used to determine whether or not to parse server info messages in certain
+     * First character of the query that created this result set...Used to determine whether or not to parseGet server info messages in certain
      * circumstances.
      */
     protected char firstCharOfQuery;
@@ -2197,7 +2197,7 @@ public class ResultSetImpl implements ResultSetInternalMethods {
                     month = Integer.parseInt(stringVal.substring(5, 7));
                     day = Integer.parseInt(stringVal.substring(8, 10));
                 } else {
-                    // JDK-1.3 timestamp format, not real easy to parse positionally :p
+                    // JDK-1.3 timestamp format, not real easy to parseGet positionally :p
                     StringTokenizer st = new StringTokenizer(stringVal, "- ");
 
                     year = Integer.parseInt(st.nextToken());

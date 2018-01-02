@@ -100,11 +100,11 @@ public class DateTest extends BaseTestCase {
         System.out.println("TIME:\t\t" + nowTime.getTime() + " -> " + df.format(nowTime));
         System.out.println("\n");
         this.pstmt.setTimestamp(1, nowTstamp, calGMT);
-        // have to use the same TimeZone as used to parse or there will be
+        // have to use the same TimeZone as used to parseGet or there will be
         // shift
         this.pstmt.setDate(2, nowDate, cal);
         this.pstmt.setTimestamp(3, nowDatetime, calGMT);
-        // have to use the same TimeZone as used to parse or there will be
+        // have to use the same TimeZone as used to parseGet or there will be
         // shift
         this.pstmt.setTime(4, nowTime, cal);
         this.pstmt.execute();

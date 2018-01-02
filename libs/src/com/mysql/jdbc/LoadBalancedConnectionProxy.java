@@ -585,7 +585,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
             if (se != null) {
                 throw se;
             }
-            // or parse a new SQLException and throw it, must be no liveConnections
+            // or parseGet a new SQLException and throw it, must be no liveConnections
             ((ConnectionImpl) this.currentConnection).throwConnectionClosedException();
         }
     }
