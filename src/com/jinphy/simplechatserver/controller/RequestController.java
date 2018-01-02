@@ -18,6 +18,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,8 +29,16 @@ import java.util.Map;
  */
 public class RequestController {
 
+    /**
+     * DESC: 网络请求接口map
+     * Created by jinphy, on 2018/1/2, at 22:27
+     */
     protected Map<String, Method> methodMap = new HashMap<>();
 
+    /**
+     * DESC: 单例持有类
+     * Created by jinphy, on 2018/1/2, at 22:28
+     */
     private static class RequestControllerHolder {
         static final RequestController DAFAULT = new RequestController();
     }
@@ -45,6 +54,10 @@ public class RequestController {
         return RequestControllerHolder.DAFAULT;
     }
 
+    /**
+     * DESC: 初始化
+     * Created by jinphy, on 2018/1/2, at 22:28
+     */
     public static void init() {
         getInstance();
     }
@@ -60,12 +73,17 @@ public class RequestController {
     }
 
     /**
-     * DESC: 获取该类的所有注释了Path注解的方法
+     * DESC: 加载网络请求接口
      * Created by jinphy, on 2017/12/7, at 0:27
      */
-    protected void loadApiMethods(){
-        for (Method method : this.getClass().getDeclaredMethods()) {
-            if (method.isAnnotationPresent(Path.class)) {
+    protected void loadApiMethods() {
+        Method[] methods = Api.class.getDeclaredMethods();
+        for (Method method : methods) {
+            if (Modifier.isStatic(method.getModifiers())                           // public
+                    && Modifier.isPublic(method.getModifiers())                    // static
+                    && method.getParameterCount() == 1                             // 参数只有一个
+                    && method.getParameterTypes()[0] == EventBusMsg.class          // 参数类型为EventBusMsg
+                    && method.isAnnotationPresent(Path.class)) {                   // 注解了Path
                 methodMap.put(method.getAnnotation(Path.class).path(), method);
             }
         }
@@ -79,112 +97,17 @@ public class RequestController {
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public synchronized void handleMsg(EventBusMsg msg) {
         Method method = methodMap.get(msg.request.getPath());
-        if (method ==null) {
+        if (method == null) {
             Response response = new Response(Response.NO_API_NOT_FUND, "网络请求接口不存在！", null);
             msg.server.broadcast(response.toString(), msg.clients);
-            System.out.println("json: "+GsonUtils.toJson(response));
+            System.out.println("json: " + GsonUtils.toJson(response));
             return;
         }
         try {
-            method.invoke(this, msg);
+            method.invoke(null, msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-    //================================================================================\\
-    //********************************************************************************\\
-
-    /**
-     * DESC: 登录请求
-     * Created by jinphy, on 2017/12/5, at 21:54
-     */
-    @Path(path = RequestConfig.Path.login)
-    public void login(EventBusMsg msg) {
-        System.out.println(RequestConfig.Path.login);
-        Response response = null;
-        try {
-            String account = msg.request.getParams().get(RequestConfig.Key.account);
-            String paramError = "参数不完整！";
-            ObjectHelper.requareNonNull(account, paramError);
-            String password = msg.request.getParams().get(RequestConfig.Key.password);
-            ObjectHelper.requareNonNull(account, paramError);
-            String deviceId = msg.request.getParams().get(RequestConfig.Key.deviceId);
-            ObjectHelper.requareNonNull(account, paramError);
-
-            if (UserDao.getInstance().login(account, password, deviceId)) {
-                response = new Response(Response.YES, "登录成功！", null);
-            } else {
-                response = new Response(Response.NO_LOGIN, "密码错误，请重新输入！", null);
-            }
-
-        } catch (MyNullPointerException e) {
-            response = new Response(Response.NO_PARAMS_MISSING, e.getMessage(), null);
-        } catch (InterruptedException | SQLException e) {
-            response = new Response(Response.NO_SERVER, "服务器异常，请稍后再试！", null);
-        } finally {
-            msg.server.broadcast(response.toString(), msg.clients);
-            System.out.println("json: "+GsonUtils.toJson(response));
-        }
-
-    }
-
-
-    /**
-     * DESC: 查询用户是否存在请求
-     * Created by jinphy, on 2017/12/5, at 21:54
-     */
-    @Path(path = RequestConfig.Path.findUser)
-    public void findUser(EventBusMsg msg) {
-        System.out.println(RequestConfig.Path.findUser);
-        Response response = null;
-        try {
-            String account = msg.request.getParams().get(RequestConfig.Key.account);
-            ObjectHelper.requareNonNull(account, "参数不完整！");
-            if (UserDao.getInstance().findUser(account)) {
-                response = new Response(Response.YES, "账号" + account + "存在", null);
-            } else {
-                response = new Response(Response.NO_FIND_USER, "账号" + account + "不存在,请重新输入！", null);
-            }
-        } catch (MyNullPointerException e) {
-            response = new Response(Response.NO_PARAMS_MISSING, e.getMessage(), null);
-        } catch (SQLException | InterruptedException e) {
-            Thread.yield();
-            response = new Response(Response.NO_SERVER, "服务器异常，请稍后再试！", null);
-        } finally {
-            msg.server.broadcast(response.toString(), msg.clients);
-            System.out.println("json: "+GsonUtils.toJson(response));
-        }
-    }
-
-
-    /**
-     * DESC: 创建新用户请求
-     * Created by jinphy, on 2017/12/5, at 21:54
-     */
-    @Path(path = RequestConfig.Path.createNewUser)
-    public void createNewUser(EventBusMsg msg) {
-        System.out.println(RequestConfig.Path.createNewUser);
-        Response response = null;
-        String paramError = "参数不完整！";
-        try {
-            String account = msg.request.getParams().get(RequestConfig.Key.account);
-            ObjectHelper.requareNonNull(account, paramError);
-            String password = msg.request.getParams().get(RequestConfig.Key.password);
-            ObjectHelper.requareNonNull(account, paramError);
-            String date = msg.request.getParams().get(RequestConfig.Key.date);
-            ObjectHelper.requareNonNull(account, paramError);
-            UserDao.getInstance().createNewUser(account, password, date);
-            response = new Response(Response.YES, "恭喜您，账号注册成功！", null);
-        } catch (MyNullPointerException e) {
-            response = new Response(Response.NO_PARAMS_MISSING, e.getMessage(), null);
-        } catch (InterruptedException | SQLException e) {
-            response = new Response(Response.NO_SERVER, "服务器异常，请稍后再试！", null);
-        } finally {
-            msg.server.broadcast(response.toString(), msg.clients);
-            System.out.println("json: "+GsonUtils.toJson(response));
-        }
-    }
-
 
 }
