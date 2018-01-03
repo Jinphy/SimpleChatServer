@@ -3,10 +3,8 @@ package com.jinphy.simplechatserver.main;
 
 import com.jinphy.simplechatserver.controller.RequestController;
 import com.jinphy.simplechatserver.controller.MyServer;
-import com.jinphy.simplechatserver.models.EventBusMsg;
-import org.greenrobot.eventbus.EventBus;
+import com.jinphy.simplechatserver.models.Session;
 import org.java_websocket.WebSocket;
-import org.java_websocket.handshake.ClientHandshake;
 
 public class Main {
     public static final int PUSH_SERVER_PORT = 4540;
@@ -77,10 +75,10 @@ public class Main {
             commonServer = MyServer.newInstance(COMMON_SERVER_PORT)
                     .doOnStart(() -> System.out.println("send server start!"))
                     .doOnOpen((client, handshake) -> {
-                        EventBusMsg.handle(commonServer,client,handshake);
+                        Session.handle(commonServer,client,handshake);
                     })
                     .doOnMessage((conn, message) -> {
-                        EventBusMsg.handle(message);
+                        Session.handle(message);
                     })
                     .doOnError((conn, ex) -> {
                         System.out.println("onError:-->" + conn.getRemoteSocketAddress());

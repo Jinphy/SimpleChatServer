@@ -1,7 +1,12 @@
 package com.jinphy.simplechatserver.utils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.jinphy.simplechatserver.constants.StringConst.UTF_8;
 
 public class StringUtils {
 
@@ -71,4 +76,6 @@ public class StringUtils {
         }
         return ret;
     }
+
+
 }

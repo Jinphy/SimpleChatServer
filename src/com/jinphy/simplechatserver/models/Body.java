@@ -50,15 +50,10 @@ public class Body {
     public static Body parse(String bodyStr) {
         System.out.println("bodyStr:" + bodyStr);
         Body body = GsonUtils.toBean(bodyStr, Body.class);
-        String content = body.getContent();
-        try {
-            content = EncryptUtils.aesDecrypt(content);
-            content = URLDecoder.decode(content, UTF_8);
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        System.out.println("requestId: = " + body.getRequestId());
-        System.out.println("content: " + content);
+        // 解密和反编码
+        String content = EncryptUtils.decryptThenDecode(body.getContent());
+        System.out.println("body requestId: = " + body.getRequestId());
+        System.out.println("body content: " + content);
         body.contentMap = StringUtils.toMap(content);
         return body;
     }

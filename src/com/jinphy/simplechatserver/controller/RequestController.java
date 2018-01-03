@@ -1,25 +1,15 @@
 package com.jinphy.simplechatserver.controller;
 
-import com.jinphy.simplechatserver.MyNullPointerException;
 import com.jinphy.simplechatserver.annotation.Path;
-import com.jinphy.simplechatserver.config.RequestConfig;
-import com.jinphy.simplechatserver.dao.UserDao;
-import com.jinphy.simplechatserver.models.EventBusMsg;
+import com.jinphy.simplechatserver.models.Session;
 import com.jinphy.simplechatserver.models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
-import com.jinphy.simplechatserver.utils.ObjectHelper;
-import com.jinphy.simplechatserver.utils.StringUtils;
-import io.reactivex.Flowable;
-import io.reactivex.Scheduler;
-import io.reactivex.schedulers.Schedulers;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -82,7 +72,7 @@ public class RequestController {
             if (Modifier.isStatic(method.getModifiers())                           // public
                     && Modifier.isPublic(method.getModifiers())                    // static
                     && method.getParameterCount() == 1                             // 参数只有一个
-                    && method.getParameterTypes()[0] == EventBusMsg.class          // 参数类型为EventBusMsg
+                    && method.getParameterTypes()[0] == Session.class          // 参数类型为EventBusMsg
                     && method.isAnnotationPresent(Path.class)) {                   // 注解了Path
                 methodMap.put(method.getAnnotation(Path.class).path(), method);
             }
@@ -95,16 +85,16 @@ public class RequestController {
      * Created by jinphy, on 2017/12/7, at 0:32
      */
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public synchronized void handleMsg(EventBusMsg msg) {
-        Method method = methodMap.get(msg.request.getPath());
+    public synchronized void handleMsg(Session session) {
+        Method method = methodMap.get(session.path());
         if (method == null) {
             Response response = new Response(Response.NO_API_NOT_FUND, "网络请求接口不存在！", null);
-            msg.server.broadcast(response.toString(), msg.clients);
-            System.out.println("json: " + GsonUtils.toJson(response));
+            session.server().broadcast(response.toString(), session.client());
+            System.out.println("json: " + GsonUtils.toJson(response)+"\n");
             return;
         }
         try {
-            method.invoke(null, msg);
+            method.invoke(null, session);
         } catch (Exception e) {
             e.printStackTrace();
         }
