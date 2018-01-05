@@ -26,7 +26,7 @@ package com.mysql.jdbc;
 import java.sql.SQLException;
 
 /**
- * This interface abstracts away how row data is accessed by the result set. It is meant to allow a static implementation (Current version), and a streaming
+ * This interface abstracts away how row database is accessed by the result set. It is meant to allow a static implementation (Current version), and a streaming
  * one.
  */
 public interface RowData {
@@ -38,7 +38,7 @@ public interface RowData {
     public static final int RESULT_SET_SIZE_UNKNOWN = -1;
 
     /**
-     * Adds a row to this row data.
+     * Adds a row to this row database.
      * 
      * @param row
      *            the row to add
@@ -84,7 +84,7 @@ public interface RowData {
      * 
      * @param index
      *            row number to get at
-     * @return row data at index
+     * @return row database at index
      * @throws SQLException
      *             if a database error occurs
      */
@@ -220,7 +220,7 @@ public interface RowData {
     /**
      * Only works on non dynamic result sets.
      * 
-     * @return the size of this row data
+     * @return the size of this row database
      * @throws SQLException
      *             if a database error occurs
      */

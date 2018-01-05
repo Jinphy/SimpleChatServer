@@ -667,12 +667,12 @@ public class SQLError {
      * @param warningCountIfKnown
      *            the warning count (if known), otherwise set it to 0.
      * @param forTruncationOnly
-     *            if this method should only scan for data truncation warnings
+     *            if this method should only scan for database truncation warnings
      * 
      * @return the SQLWarning chain (or null if no warnings)
      * 
      * @throws SQLException
-     *             if the warnings could not be retrieved, or if data truncation
+     *             if the warnings could not be retrieved, or if database truncation
      *             is being scanned for and truncations were found.
      */
     static SQLWarning convertShowWarningsToSQLWarnings(Connection connection, int warningCountIfKnown, boolean forTruncationOnly) throws SQLException {

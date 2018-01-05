@@ -213,11 +213,11 @@ public class Security {
      * @param from
      *            IN Data for encryption
      * @param to
-     *            OUT Encrypt data to the buffer (may be the same)
+     *            OUT Encrypt database to the buffer (may be the same)
      * @param scramble
      *            IN Scramble used for encryption
      * @param length
-     *            IN Length of data to encrypt
+     *            IN Length of database to encrypt
      */
     public static void xorString(byte[] from, byte[] to, byte[] scramble, int length) {
         int pos = 0;

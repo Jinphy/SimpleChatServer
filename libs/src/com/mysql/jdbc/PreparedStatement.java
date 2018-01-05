@@ -167,7 +167,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
         String charEncoding;
 
         /**
-         * Represents the "parsed" state of a client-side prepared statement, with the statement broken up into it's static and dynamic (where parameters are
+         * Represents the "parsed" state of a client-side prepared statement, with the statement broken up into it's static and dynamic (wheres parameters are
          * bound) parts.
          */
         ParseInfo(String sql, MySQLConnection conn, java.sql.DatabaseMetaData dbmd, String encoding, SingleByteCharsetConverter converter) throws SQLException {
@@ -711,7 +711,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     private SimpleDateFormat tdf;
 
     /**
-     * Are we using a version of MySQL where we can use 'true' boolean values?
+     * Are we using a version of MySQL wheres we can use 'true' boolean values?
      */
     protected boolean useTrueBoolean = false;
 
@@ -1909,7 +1909,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * A Prepared SQL query is executed and its ResultSet is returned
      * 
-     * @return a ResultSet that contains the data produced by the query - never
+     * @return a ResultSet that contains the database produced by the query - never
      *         null
      * 
      * @exception SQLException
@@ -2600,7 +2600,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     }
 
     /**
-     * Used to escape binary data with hex for mb charsets
+     * Used to escape binary database with hex for mb charsets
      * 
      * @param buf
      * @param packet
@@ -2745,7 +2745,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * When a very large ASCII value is input to a LONGVARCHAR parameter, it may
      * be more practical to send it via a java.io.InputStream. JDBC will read
-     * the data from the stream as needed, until it reaches end-of-file. The
+     * the database from the stream as needed, until it reaches end-of-file. The
      * JDBC driver will do any necessary conversion from ASCII to the database
      * char format.
      * 
@@ -2796,7 +2796,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * When a very large binary value is input to a LONGVARBINARY parameter, it
      * may be more practical to send it via a java.io.InputStream. JDBC will
-     * read the data from the stream as needed, until it reaches end-of-file.
+     * read the database from the stream as needed, until it reaches end-of-file.
      * 
      * <P>
      * <B>Note:</B> This stream object can either be a standard Java stream object or your own subclass that implements the standard interface.
@@ -3079,7 +3079,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * JDBC 2.0 When a very large UNICODE value is input to a LONGVARCHAR
      * parameter, it may be more practical to send it via a java.io.Reader. JDBC
-     * will read the data from the stream as needed, until it reaches
+     * will read the database from the stream as needed, until it reaches
      * end-of-file. The JDBC driver will do any necessary conversion from
      * UNICODE to the database char format.
      * 
@@ -3090,7 +3090,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
      * @param parameterIndex
      *            the first parameter is 1, the second is 2, ...
      * @param reader
-     *            the java reader which contains the UNICODE data
+     *            the java reader which contains the UNICODE database
      * @param length
      *            the number of characters in the stream
      * 
@@ -3592,7 +3592,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
      * </p>
      * 
      * <P>
-     * note that this method may be used to pass database-specific abstract data types. This is done by using a Driver-specific Java type and using a
+     * note that this method may be used to pass database-specific abstract database types. This is done by using a Driver-specific Java type and using a
      * targetSqlType of java.sql.Types.OTHER
      * </p>
      * 
@@ -3798,7 +3798,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
      * @param i
      *            the first parameter is 1, the second is 2, ...
      * @param x
-     *            an object representing data of an SQL REF Type
+     *            an object representing database of an SQL REF Type
      * 
      * @throws SQLException
      *             if a database error occurs
@@ -4390,7 +4390,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * When a very large Unicode value is input to a LONGVARCHAR parameter, it
      * may be more practical to send it via a java.io.InputStream. JDBC will
-     * read the data from the stream as needed, until it reaches end-of-file.
+     * read the database from the stream as needed, until it reaches end-of-file.
      * The JDBC driver will do any necessary conversion from UNICODE to the
      * database char format.
      * 
@@ -4781,7 +4781,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
     /**
      * JDBC 2.0 When a very large UNICODE value is input to a LONGVARCHAR
      * parameter, it may be more practical to send it via a java.io.Reader. JDBC
-     * will read the data from the stream as needed, until it reaches
+     * will read the database from the stream as needed, until it reaches
      * end-of-file. The JDBC driver will do any necessary conversion from
      * UNICODE to the database char format.
      * 
@@ -4792,7 +4792,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
      * @param parameterIndex
      *            the first parameter is 1, the second is 2, ...
      * @param reader
-     *            the java reader which contains the UNICODE data
+     *            the java reader which contains the UNICODE database
      * @param length
      *            the number of characters in the stream
      * 
@@ -4849,7 +4849,7 @@ public class PreparedStatement extends com.mysql.jdbc.StatementImpl implements j
      * @param parameterIndex
      *            the first parameter is 1, the second is 2, ...
      * @param reader
-     *            the java reader which contains the UNICODE data
+     *            the java reader which contains the UNICODE database
      * @param length
      *            the number of characters in the stream
      * 

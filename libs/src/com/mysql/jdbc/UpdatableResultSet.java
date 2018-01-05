@@ -38,7 +38,7 @@ import com.mysql.jdbc.profiler.ProfilerEvent;
  * A result set that is updatable.
  */
 public class UpdatableResultSet extends ResultSetImpl {
-    /** Marker for 'stream' data when doing INSERT rows */
+    /** Marker for 'stream' database when doing INSERT rows */
     final static byte[] STREAM_DATA_MARKER = StringUtils.getBytes("** STREAM DATA **");
 
     protected SingleByteCharsetConverter charConverter;
@@ -48,14 +48,14 @@ public class UpdatableResultSet extends ResultSetImpl {
     /** What is the default value for the column? */
     private byte[][] defaultColumnValue;
 
-    /** PreparedStatement used to delete data */
+    /** PreparedStatement used to delete database */
     private com.mysql.jdbc.PreparedStatement deleter = null;
 
     private String deleteSQL = null;
 
     private boolean initializedCharConverter = false;
 
-    /** PreparedStatement used to insert data */
+    /** PreparedStatement used to insert database */
     protected com.mysql.jdbc.PreparedStatement inserter = null;
 
     private String insertSQL = null;
@@ -73,15 +73,15 @@ public class UpdatableResultSet extends ResultSetImpl {
 
     private String quotedIdChar = null;
 
-    /** PreparedStatement used to refresh data */
+    /** PreparedStatement used to refresh database */
     private com.mysql.jdbc.PreparedStatement refresher;
 
     private String refreshSQL = null;
 
-    /** The binary data for the 'current' row */
+    /** The binary database for the 'current' row */
     private ResultSetRow savedCurrentRow;
 
-    /** PreparedStatement used to delete data */
+    /** PreparedStatement used to delete database */
     protected com.mysql.jdbc.PreparedStatement updater = null;
 
     /** SQL for in-place modifcation */
@@ -99,7 +99,7 @@ public class UpdatableResultSet extends ResultSetImpl {
      * @param fields
      *            an array of Field objects (basically, the ResultSet MetaData)
      * @param tuples
-     *            actual row data
+     *            actual row database
      * @param conn
      *            the Connection that created us.
      * @param creatorStmt

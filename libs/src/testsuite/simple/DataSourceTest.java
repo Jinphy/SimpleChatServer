@@ -122,7 +122,7 @@ public class DataSourceTest extends BaseTestCase {
 
         Connection con = boundDs.getConnection();
         con.close();
-        assertTrue("Connection can not be obtained from data source", con != null);
+        assertTrue("Connection can not be obtained from database source", con != null);
     }
 
     /**

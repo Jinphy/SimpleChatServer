@@ -373,7 +373,7 @@ public class MysqlIO {
 
     /**
      * Build a result set. Delegates to buildResultSetWithRows() to build a
-     * JDBC-version-specific ResultSet, given rows as byte data, and field
+     * JDBC-version-specific ResultSet, given rows as byte database, and field
      * information.
      * 
      * @param callingStatement
@@ -600,7 +600,7 @@ public class MysqlIO {
 
             this.readPacketSequence = multiPacketSeq;
 
-            // Read data
+            // Read database
             byte[] buffer = new byte[packetLength];
             int numBytesRead = readFully(this.mysqlInput, buffer, 0, packetLength);
 
@@ -833,7 +833,7 @@ public class MysqlIO {
             Buffer packet = new Buffer(packLength);
             packet.writeByte((byte) MysqlDefs.COM_CHANGE_USER);
 
-            // User/Password data
+            // User/Password database
             packet.writeString(userName);
 
             if (this.protocolVersion > 9) {
@@ -897,7 +897,7 @@ public class MysqlIO {
             int len;
 
             // Due to a bug in some older Linux kernels (fixed after the patch "tcp: fix FIONREAD/SIOCINQ"), our SocketInputStream.available() may return 1 even
-            // if there is no data in the Stream, so, we need to check if InputStream.skip() actually skipped anything.
+            // if there is no database in the Stream, so, we need to check if InputStream.skip() actually skipped anything.
             while ((len = this.mysqlInput.available()) > 0 && this.mysqlInput.skip(len) > 0) {
                 continue;
             }
@@ -1101,7 +1101,7 @@ public class MysqlIO {
         this.threadId = buf.readLong();
 
         if (this.protocolVersion > 9) {
-            // read auth-plugin-data-part-1 (string[8])
+            // read auth-plugin-database-part-1 (string[8])
             this.seed = buf.readString("ASCII", getExceptionInterceptor(), 8);
             // read filler ([00])
             buf.readByte();
@@ -1130,7 +1130,7 @@ public class MysqlIO {
             this.serverCapabilities |= buf.readInt() << 16;
 
             if ((this.serverCapabilities & CLIENT_PLUGIN_AUTH) != 0) {
-                // read length of auth-plugin-data (1 byte)
+                // read length of auth-plugin-database (1 byte)
                 this.authPluginDataLength = buf.readByte() & 0xff;
             } else {
                 // read filler ([00])
@@ -1142,7 +1142,7 @@ public class MysqlIO {
             if ((this.serverCapabilities & CLIENT_SECURE_CONNECTION) != 0) {
                 String seedPart2;
                 StringBuilder newSeed;
-                // read string[$len] auth-plugin-data-part-2 ($len=MAX(13, length of auth-plugin-data - 8))
+                // read string[$len] auth-plugin-database-part-2 ($len=MAX(13, length of auth-plugin-database - 8))
                 if (this.authPluginDataLength > 0) {
                     // TODO: disabled the following check for further clarification
                     //         			if (this.authPluginDataLength < 21) {
@@ -1302,7 +1302,7 @@ public class MysqlIO {
                     packet.writeLongInt(this.maxThreeBytes);
                 }
 
-                // User/Password data
+                // User/Password database
                 packet.writeString(user, CODE_PAGE_1252, this.connection);
 
                 if (this.protocolVersion > 9) {
@@ -1338,7 +1338,7 @@ public class MysqlIO {
                     packet.writeLongInt(this.maxThreeBytes);
                 }
 
-                // User/Password data
+                // User/Password database
                 packet.writeString(user);
 
                 if (this.protocolVersion > 9) {
@@ -1586,7 +1586,7 @@ public class MysqlIO {
      * @param user
      *            the MySQL user account to log into
      * @param password
-     *            authentication data for the user account (depends
+     *            authentication database for the user account (depends
      *            on authentication method used - can be empty)
      * @param database
      *            database to connect to (can be empty)
@@ -1780,7 +1780,7 @@ public class MysqlIO {
                     last_sent = new Buffer(packLength + 1);
                     last_sent.writeByte((byte) MysqlDefs.COM_CHANGE_USER);
 
-                    // User/Password data
+                    // User/Password database
                     last_sent.writeString(user, enc, this.connection);
 
                     // 'auth-response-len' is limited to one Byte but, in case of success, COM_CHANGE_USER will be followed by an AuthSwitchRequest anyway
@@ -1842,7 +1842,7 @@ public class MysqlIO {
 
                     last_sent.writeBytesNoNull(new byte[23]);	// Set of bytes reserved for future use.
 
-                    // User/Password data
+                    // User/Password database
                     last_sent.writeString(user, enc, this.connection);
 
                     if ((this.serverCapabilities & CLIENT_PLUGIN_AUTH_LENENC_CLIENT_DATA) != 0) {
@@ -2008,7 +2008,7 @@ public class MysqlIO {
 
         if (!isBinaryEncoded) {
             //
-            // Didn't read an error, so re-position to beginning of packet in order to read result set data
+            // Didn't read an error, so re-position to beginning of packet in order to read result set database
             //
             rowPacket.setPosition(rowPacket.getPosition() - 1);
 
@@ -2038,7 +2038,7 @@ public class MysqlIO {
         }
 
         //
-        // Handle binary-encoded data for server-side PreparedStatements...
+        // Handle binary-encoded database for server-side PreparedStatements...
         //
         if (!(!isEOFDeprecated() && rowPacket.isEOFPacket() || isEOFDeprecated() && rowPacket.isResultSetOKPacket())) {
             if (resultSetConcurrency == ResultSet.CONCUR_UPDATABLE || (!useBufferRowIfPossible && !useBufferRowExplicit)) {
@@ -2079,7 +2079,7 @@ public class MysqlIO {
                         this.reusablePacket);
             }
 
-            // Does this go over the threshold where we should use a BufferRow?
+            // Does this go over the threshold wheres we should use a BufferRow?
 
             if (packetLength > this.useBufferRowSizeThreshold) {
                 reuseAndReadPacket(this.reusablePacket, packetLength);
@@ -2164,7 +2164,7 @@ public class MysqlIO {
                             }
                         }
 
-                        return null; // last data packet
+                        return null; // last database packet
                     }
 
                     rowData = new byte[columnCount][];
@@ -2263,10 +2263,10 @@ public class MysqlIO {
     }
 
     /**
-     * Returns the packet used for sending data (used by PreparedStatement)
+     * Returns the packet used for sending database (used by PreparedStatement)
      * Guarded by external synchronization on a mutex.
      * 
-     * @return A packet to send data with
+     * @return A packet to send database with
      */
     Buffer getSharedSendPacket() {
         if (this.sharedSendPacket == null) {
@@ -2397,7 +2397,7 @@ public class MysqlIO {
     }
 
     /**
-     * Send a command to the MySQL server If data is to be sent with command,
+     * Send a command to the MySQL server If database is to be sent with command,
      * it should be put in extraData.
      * 
      * Raw packets can be sent by setting queryPacket to something other
@@ -2406,9 +2406,9 @@ public class MysqlIO {
      * @param command
      *            the MySQL protocol 'command' from MysqlDefs
      * @param extraData
-     *            any 'string' data for the command
+     *            any 'string' database for the command
      * @param queryPacket
-     *            a packet pre-loaded with data for the protocol (i.e.
+     *            a packet pre-loaded with database for the protocol (i.e.
      *            from a client-side prepared statement).
      * @param skipCheck
      *            do not call checkErrorPacket() if true
@@ -3218,7 +3218,7 @@ public class MysqlIO {
             // Close the result set
             this.streamingData.getOwner().realClose(false);
 
-            // clear any pending data....
+            // clear any pending database....
             clearInputStream();
         }
     }
@@ -3258,7 +3258,7 @@ public class MysqlIO {
             compressedLength = this.deflater.deflate(compressedBytes);
 
             if (compressedLength > packetLen) {
-                // if compressed data is greater then uncompressed then send uncompressed
+                // if compressed database is greater then uncompressed then send uncompressed
                 compressedBytes = packet.getByteBuffer();
                 compressedLength = packetLen;
             } else {
@@ -3396,7 +3396,7 @@ public class MysqlIO {
 
         boolean useBufferRowExplicit = useBufferRowExplicit(fields);
 
-        // Now read the data
+        // Now read the database
         ResultSetRow row = nextRow(fields, (int) columnCount, isBinaryEncoded, resultSetConcurrency, false, useBufferRowExplicit, false, null);
 
         int rowCount = 0;
@@ -3515,7 +3515,7 @@ public class MysqlIO {
             // Set the new length
             reuse.setBufLength(packetLength);
 
-            // Read the data from the server
+            // Read the database from the server
             int numBytesRead = readFully(this.mysqlInput, reuse.getByteBuffer(), 0, packetLength);
 
             if (numBytesRead != packetLength) {
@@ -3605,7 +3605,7 @@ public class MysqlIO {
             // Set the new length
             multiPacket.setBufLength(packetLength);
 
-            // Read the data from the server
+            // Read the database from the server
             byte[] byteBuf = multiPacket.getByteBuffer();
             int lengthToWrite = packetLength;
 
@@ -4228,7 +4228,7 @@ public class MysqlIO {
             }
         }
 
-        // User/Password data
+        // User/Password database
         packet.writeString(user, CODE_PAGE_1252, this.connection);
 
         if (password.length() != 0) {
@@ -4379,7 +4379,7 @@ public class MysqlIO {
             }
         }
 
-        // User/Password data
+        // User/Password database
         if (user != null) {
             packet.writeString(user, enc, this.connection);
         }
@@ -4436,7 +4436,7 @@ public class MysqlIO {
     }
 
     /**
-     * Un-packs binary-encoded result set data for one row
+     * Un-packs binary-encoded result set database for one row
      * 
      * @param fields
      * @param binaryData

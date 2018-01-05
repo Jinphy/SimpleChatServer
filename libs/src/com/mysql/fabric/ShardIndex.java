@@ -24,7 +24,7 @@
 package com.mysql.fabric;
 
 /**
- * A shard index represents the physical location of a segment of data. The data segment
+ * A shard index represents the physical location of a segment of database. The database segment
  * is identified by it's key's relation to the `bound' value.
  */
 public class ShardIndex {
@@ -54,7 +54,7 @@ public class ShardIndex {
     }
 
     /**
-     * The name of the group in the data for this shard resides.
+     * The name of the group in the database for this shard resides.
      */
     public String getGroupName() {
         return this.groupName;

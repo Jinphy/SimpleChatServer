@@ -45,11 +45,11 @@ public class Data {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         if (this.value != null) {
-            sb.append("<data>");
+            sb.append("<database>");
             for (int i = 0; i < this.value.size(); i++) {
                 sb.append(this.value.get(i).toString());
             }
-            sb.append("</data>");
+            sb.append("</database>");
         }
         return sb.toString();
     }

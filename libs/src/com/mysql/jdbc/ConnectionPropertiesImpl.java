@@ -725,7 +725,7 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
             "5.0.8", MISC_CATEGORY, Integer.MIN_VALUE);
 
     private BooleanConnectionProperty functionsNeverReturnBlobs = new BooleanConnectionProperty("functionsNeverReturnBlobs", false,
-            "Should the driver always treat data from functions returning BLOBs as Strings - specifically to work around dubious metadata "
+            "Should the driver always treat database from functions returning BLOBs as Strings - specifically to work around dubious metadata "
                     + "returned by the server for GROUP BY clauses?",
             "5.0.8", MISC_CATEGORY, Integer.MIN_VALUE);
 
@@ -1173,7 +1173,7 @@ public class ConnectionPropertiesImpl implements Serializable, ConnectionPropert
 
     private BooleanConnectionProperty useDirectRowUnpack = new BooleanConnectionProperty("useDirectRowUnpack", true,
             "Use newer result set row unpacking code that skips a copy from network buffers "
-                    + " to a MySQL packet instance and instead reads directly into the result set row data buffers.",
+                    + " to a MySQL packet instance and instead reads directly into the result set row database buffers.",
             "5.1.1", PERFORMANCE_CATEGORY, Integer.MIN_VALUE);
 
     private BooleanConnectionProperty useFastIntParsing = new BooleanConnectionProperty("useFastIntParsing", true,

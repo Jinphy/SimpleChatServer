@@ -1,7 +1,7 @@
-package com.jinphy.simplechatserver.models;
+package com.jinphy.simplechatserver.models.network_models;
 
 import com.jinphy.simplechatserver.constants.StringConst;
-import com.jinphy.simplechatserver.controller.MyServer;
+import com.jinphy.simplechatserver.network.MyServer;
 import com.jinphy.simplechatserver.utils.EncryptUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
 import org.greenrobot.eventbus.EventBus;
@@ -9,10 +9,11 @@ import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.jinphy.simplechatserver.constants.StringConst.LINE;
 
 /**
  * DESC: 一个http请求回话，保存着单次网络请求的连接信息
@@ -34,6 +35,8 @@ public class Session {
     private String requestId;             // 每次请求的唯一id,就算是同一台设备请求同一个接口也不会相同
     private String path;                  // 请求接口
     private Map<String,String> params;    // 请求参数，包括url中的和body中的（如果有的话）
+
+    public StringBuilder loggoer = new StringBuilder();
 
     private Session(MyServer server, WebSocket client, ClientHandshake handshake) {
         this.server(server);
@@ -73,7 +76,9 @@ public class Session {
         if (session != null) {
             session.addParams(body.getContentMap());
             EventBus.getDefault().post(session);
+            session.loggoer.append(body.loggor);
         }
+
     }
 
     /**
@@ -110,11 +115,14 @@ public class Session {
         this.requestId = handshake.getFieldValue("requestId");
         this.path = path;
         this.params = StringUtils.toMap(content);
-        System.out.println("method: "+ method);
-        System.out.println("description: " + descriptor);
-        System.out.println("requestId: " + requestId);
-        System.out.println("path: " + path);
-        System.out.println("content: " + content);
+
+        loggoer.append("----------------请求开始--------------------------------------------------------------------\n")
+                .append("method: " + method+ LINE)
+                .append("description: " + descriptor+LINE)
+                .append("requestId: " + requestId+LINE)
+                .append("path: " + path+LINE)
+                .append("content: " + content+LINE);
+
     }
 
     public MyServer server() {

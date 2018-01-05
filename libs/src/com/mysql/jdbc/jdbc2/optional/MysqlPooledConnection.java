@@ -94,7 +94,7 @@ public class MysqlPooledConnection implements PooledConnection {
      * Construct a new MysqlPooledConnection and set instance variables
      * 
      * @param connection
-     *            physical connection to db
+     *            physical connection to database
      */
     public MysqlPooledConnection(com.mysql.jdbc.Connection connection) {
         this.logicalHandle = null;

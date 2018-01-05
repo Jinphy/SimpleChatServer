@@ -1,14 +1,28 @@
-package com.jinphy.simplechatserver.models;
+package com.jinphy.simplechatserver.models.db_models;
 
 public class User {
-    private int id;
+
+    public static final String ID = "id";
+    public static final String ACCOUNT = "account";
+    public static final String NAME = "name";
+    public static final String PASSWORD = "password";
+    public static final String DATE = "date";
+    public static final String SEX = "sex";
+    public static final String AVATAR_URL = "avatarUrl";
+    public static final String STATUS = "status";
+    public static final String ACCESS_TOKEN = "accessToken";
+
+
+    
+    private transient int id;
     private String account;
     private String name;
     private String password;
     private String date;
+    private String sex;
     private String avatarUrl;
     private String status;//登录状态
-    private String deviceId;
+    private String accessToken;
 
     public User(){}
 
@@ -44,6 +58,14 @@ public class User {
         this.avatarUrl = avatarUrl;
     }
 
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
     public int getId() {
         return id;
     }
@@ -76,11 +98,26 @@ public class User {
         this.status = status;
     }
 
-    public String getDeviceId() {
-        return deviceId;
+    public String getAccessToken() {
+        return accessToken;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", account='" + account + '\'' +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", date='" + date + '\'' +
+                ", sex='" + sex + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
+                ", status='" + status + '\'' +
+                ", accessToken='" + accessToken + '\'' +
+                '}';
     }
 }

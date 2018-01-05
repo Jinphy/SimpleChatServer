@@ -65,7 +65,7 @@ public class FabricConnection {
     }
 
     /**
-     * @return version of state data
+     * @return version of state database
      */
     public int refreshState() throws FabricCommunicationException {
         FabricStateResponse<Set<ServerGroup>> serverGroups = this.client.getServerGroups();

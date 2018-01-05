@@ -1128,7 +1128,7 @@ public class ConnectionTest extends BaseTestCase {
              * The 5.6.20 patch for Bug #16963396, Bug #19030353, Bug #69477 limits the size of redo log BLOB writes
              * to 10% of the redo log file size. The 5.7.5 patch addresses the bug without imposing a limitation.
              * As a result of the redo log BLOB write limit introduced for MySQL 5.6, innodb_log_file_size should be set to a value
-             * greater than 10 times the largest BLOB data size found in the rows of your tables plus the length of other variable length
+             * greater than 10 times the largest BLOB database size found in the rows of your tables plus the length of other variable length
              * fields (VARCHAR, VARBINARY, and TEXT type fields).
              */
             this.rs = this.stmt.executeQuery("SHOW VARIABLES LIKE 'innodb_log_file_size'");
@@ -1202,7 +1202,7 @@ public class ConnectionTest extends BaseTestCase {
         while ((blobbyte = is.read()) > -1) {
             int filebyte = bIn.read();
             if (filebyte < 0 || filebyte != blobbyte) {
-                fail("Blob is not identical to initial data.");
+                fail("Blob is not identical to initial database.");
             }
             count++;
         }
@@ -1833,7 +1833,7 @@ public class ConnectionTest extends BaseTestCase {
 
                 /*
                  * Verify that equal values are retrieved when default time zone is cached and different values otherwise, when default time zone doesn't
-                 * change while reading data.
+                 * change while reading database.
                  */
                 Statement testStmt = testConn.createStatement();
                 ResultSet testRs = testStmt.executeQuery("SELECT * FROM testCacheDefTZ WHERE test = " + cacheDefTZ);

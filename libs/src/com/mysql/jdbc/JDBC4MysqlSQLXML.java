@@ -140,7 +140,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
 
     private synchronized void checkWorkingWithResult() throws SQLException {
         if (this.workingWithResult) {
-            throw SQLError.createSQLException("Can't perform requested operation after getResult() has been called to write XML data",
+            throw SQLError.createSQLException("Can't perform requested operation after getResult() has been called to write XML database",
                     SQLError.SQL_STATE_ILLEGAL_ARGUMENT, this.exceptionInterceptor);
         }
     }
@@ -148,7 +148,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
     /**
      * Sets the XML value designated by this SQLXML instance to the given String
      * representation. The format of this String is defined by
-     * org.xml.sax.InputSource, where the characters in the stream represent the
+     * org.xml.sax.InputSource, wheres the characters in the stream represent the
      * unicode code points for XML according to section 2 and appendix B of the
      * XML 1.0 specification. Although an encoding declaration other than
      * unicode may be present, the encoding of the String is unicode. The
@@ -199,7 +199,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
     /**
      * Retrieves the XML value designated by this SQLXML instance as a
      * java.io.Reader object. The format of this stream is defined by
-     * org.xml.sax.InputSource, where the characters in the stream represent the
+     * org.xml.sax.InputSource, wheres the characters in the stream represent the
      * unicode code points for XML according to section 2 and appendix B of the
      * XML 1.0 specification. Although an encoding declaration other than
      * unicode may be present, the encoding of the stream is unicode. The
@@ -209,7 +209,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
      * <p>
      * The SQL XML object becomes not readable when this method is called and may also become not writable depending on implementation.
      * 
-     * @return a stream containing the XML data.
+     * @return a stream containing the XML database.
      * @throws SQLException
      *             if there is an error processing the XML value. The getCause()
      *             method of the exception may provide a more detailed
@@ -355,7 +355,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
      * <p>
      * The SQL XML object becomes not writeable when this method is called and may also become not readable depending on implementation.
      * 
-     * @return a stream to which data can be written.
+     * @return a stream to which database can be written.
      * @throws SQLException
      *             if there is an error processing the XML value. An exception
      *             is thrown if the state is not writable.
@@ -391,7 +391,7 @@ public class JDBC4MysqlSQLXML implements SQLXML {
      * <p>
      * The SQL XML object becomes not writeable when this method is called and may also become not readable depending on implementation.
      * 
-     * @return a stream to which data can be written.
+     * @return a stream to which database can be written.
      * @throws SQLException
      *             if there is an error processing the XML value. The getCause()
      *             method of the exception may provide a more detailed

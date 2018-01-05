@@ -28,7 +28,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 /**
- * A shard mapping that partitions data by ranges.
+ * A shard mapping that partitions database by ranges.
  */
 public class RangeShardMapping extends ShardMapping {
     /**

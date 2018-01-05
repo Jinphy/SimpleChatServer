@@ -321,7 +321,7 @@ public class XmlRpcClient {
      * Create a new shard mapping.
      * 
      * @param type
-     *            method by which data is distributed to shards
+     *            method by which database is distributed to shards
      * @param globalGroupName
      *            name of global group of the shard mapping
      * @returns id of the new shard mapping.

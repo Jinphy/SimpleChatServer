@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.db;
+package com.jinphy.simplechatserver.database.models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

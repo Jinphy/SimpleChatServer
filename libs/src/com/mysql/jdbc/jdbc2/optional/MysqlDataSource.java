@@ -149,14 +149,14 @@ public class MysqlDataSource extends ConnectionPropertiesImpl implements DataSou
     /**
      * Gets the name of the database
      * 
-     * @return the name of the database for this data source
+     * @return the name of the database for this database source
      */
     public String getDatabaseName() {
         return (this.databaseName != null) ? this.databaseName : "";
     }
 
     /**
-     * Sets the log writer for this data source.
+     * Sets the log writer for this database source.
      * 
      * @see javax.sql.DataSource#setLogWriter(PrintWriter)
      */
@@ -165,9 +165,9 @@ public class MysqlDataSource extends ConnectionPropertiesImpl implements DataSou
     }
 
     /**
-     * Returns the log writer for this data source
+     * Returns the log writer for this database source
      * 
-     * @return the log writer for this data source
+     * @return the log writer for this database source
      */
     public java.io.PrintWriter getLogWriter() {
         return this.logWriter;
@@ -252,7 +252,7 @@ public class MysqlDataSource extends ConnectionPropertiesImpl implements DataSou
     /**
      * Required method to support this class as a <CODE>Referenceable</CODE>.
      * 
-     * @return a Reference to this data source
+     * @return a Reference to this database source
      * 
      * @throws NamingException
      *             if a JNDI error occurs

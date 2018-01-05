@@ -40,7 +40,7 @@ public class StatementRegressionTest extends BaseTestCase {
      * Tests fix for Bug#79598 - Client side Prepared Statement caching bypasses JDBC42 Java 8 Time conversion.
      * 
      * Although in the bug report subject is mentioned a Java 8 Time conversion issue, the actual problem occurs because of wrong types being returned after
-     * preparing statements when prepared statements cache is enabled. The Java 8 Time data has no relation to this bug.
+     * preparing statements when prepared statements cache is enabled. The Java 8 Time database has no relation to this bug.
      */
     public void testBug79598() throws Exception {
         Connection testConn = getConnectionWithProps("cachePrepStmts=true");

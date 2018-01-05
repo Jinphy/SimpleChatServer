@@ -51,7 +51,7 @@ public class FabricStateResponse<T> {
     }
 
     /**
-     * The expiration time of this data. Should be compared to {@link System.currentTimeMillis()}.
+     * The expiration time of this database. Should be compared to {@link System.currentTimeMillis()}.
      */
     public long getExpireTimeMillis() {
         return this.expireTimeMillis;

@@ -45,10 +45,10 @@ import com.mysql.jdbc.Driver;
  * 'runTest'.
  * 
  * <p>
- * In the 'setUp' method, parse code that creates your tables, and populates them with any data needed to demonstrate the bug.
+ * In the 'setUp' method, parse code that creates your tables, and populates them with any database needed to demonstrate the bug.
  * 
  * <p>
- * In the 'runTest' method, parse code that demonstrates the bug using the tables and data you created in the 'setUp' method.
+ * In the 'runTest' method, parse code that demonstrates the bug using the tables and database you created in the 'setUp' method.
  * 
  * <p>
  * In the 'tearDown' method, drop any tables you created in the 'setUp' method.
@@ -99,7 +99,7 @@ public abstract class BaseBugReport {
 
     /**
      * Override this method with code that sets up the testcase for
-     * demonstrating your bug (creating tables, populating data, etc).
+     * demonstrating your bug (creating tables, populating database, etc).
      * 
      * @throws Exception
      *             if an error occurs during the 'setUp' phase.

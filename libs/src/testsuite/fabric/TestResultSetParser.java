@@ -36,7 +36,7 @@ import junit.framework.TestCase;
  * Tests for Fabric XML-RPC ResultSetParser.
  */
 public class TestResultSetParser extends TestCase {
-    // Example response data represented in tests:
+    // Example response database represented in tests:
     // [1, 5ca1ab1e-a007-feed-f00d-cab3fe13249e, 0, , 
     // [
     //  {rows=

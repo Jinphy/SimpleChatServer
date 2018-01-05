@@ -70,7 +70,7 @@ import testsuite.simple.DataSourceTest;
  */
 public class DataSourceRegressionTest extends BaseTestCase {
 
-    public final static String DS_DATABASE_PROP_NAME = "com.mysql.jdbc.test.ds.db";
+    public final static String DS_DATABASE_PROP_NAME = "com.mysql.jdbc.test.ds.database";
 
     public final static String DS_HOST_PROP_NAME = "com.mysql.jdbc.test.ds.host";
 
@@ -266,7 +266,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
                     dsStmt.executeUpdate("DROP TABLE IF EXISTS testBug3920");
                     dsStmt.executeUpdate("CREATE TABLE testBug3920 (field1 varchar(32))");
 
-                    assertTrue("Connection can not be obtained from data source", dsCon != null);
+                    assertTrue("Connection can not be obtained from database source", dsCon != null);
                 } finally {
                     if (dsStmt != null) {
                         dsStmt.executeUpdate("DROP TABLE IF EXISTS testBug3920");
@@ -571,7 +571,7 @@ public class DataSourceRegressionTest extends BaseTestCase {
                 fail("Failed to kill the Connection id " + connId + " in a timely manner.");
             }
 
-            XAException xaEx = assertThrows(XAException.class, "Undetermined error occurred in the underlying Connection - check your data for consistency",
+            XAException xaEx = assertThrows(XAException.class, "Undetermined error occurred in the underlying Connection - check your database for consistency",
                     new Callable<Void>() {
                         public Void call() throws Exception {
                             xaRes.commit(xid, false);

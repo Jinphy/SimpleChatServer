@@ -842,7 +842,7 @@ class MysqlCharset {
      * @param priority
      *            MysqlCharset with highest lever of this param will be used for Java encoding --> Mysql charsets conversion.
      * @param javaEncodings
-     *            List of Java encodings corresponding to this MySQL charset; the first name in list is the default for mysql --> java data conversion
+     *            List of Java encodings corresponding to this MySQL charset; the first name in list is the default for mysql --> java database conversion
      */
     public MysqlCharset(String charsetName, int mblen, int priority, String[] javaEncodings) {
         this.charsetName = charsetName;

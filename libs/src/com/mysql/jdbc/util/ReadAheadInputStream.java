@@ -121,7 +121,7 @@ public class ReadAheadInputStream extends InputStream {
             debugBuf.append(")");
 
             if (avail <= 0) {
-                debugBuf.append(" not all data available in buffer, must read from stream");
+                debugBuf.append(" not all database available in buffer, must read from stream");
 
                 if (len >= this.buf.length) {
                     debugBuf.append(", amount requested > buffer, returning direct read() from stream");

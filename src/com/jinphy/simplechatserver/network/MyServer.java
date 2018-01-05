@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.controller;
+package com.jinphy.simplechatserver.network;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;

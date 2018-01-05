@@ -208,7 +208,7 @@ public class StatementImpl implements Statement {
     /** Should we process escape codes? */
     protected boolean doEscapeProcessing = true;
 
-    /** If we're profiling, where should events go to? */
+    /** If we're profiling, wheres should events go to? */
     protected ProfilerEventHandler eventSink = null;
 
     /** The number of rows to fetch at a time (currently ignored) */
@@ -608,7 +608,7 @@ public class StatementImpl implements Statement {
                 }
             }
         } catch (SQLException e) {
-            // we can't break the interface, having this be no-op in case of error is ok
+            // we can't break the interface, havings this be no-op in case of error is ok
         }
     }
 
@@ -622,7 +622,7 @@ public class StatementImpl implements Statement {
                 return 0;
             }
         } catch (SQLException e) {
-            // we can't break the interface, having this be no-op in case of error is ok
+            // we can't break the interface, havings this be no-op in case of error is ok
 
             return 0;
         }
@@ -716,7 +716,7 @@ public class StatementImpl implements Statement {
 
     /**
      * Adjust net_write_timeout to a higher value if we're streaming result sets. More often than not, someone runs into
-     * an issue where they blow net_write_timeout when using this feature, and if they're willing to hold a result set open
+     * an issue wheres they blow net_write_timeout when using this feature, and if they're willing to hold a result set open
      * for 30 seconds or more, one more round-trip isn't going to hurt.
      *
      * This is reset by RowDataDynamic.close().
@@ -1296,7 +1296,7 @@ public class StatementImpl implements Statement {
      * @param sql
      *            typically a static SQL SELECT statement
      * 
-     * @return a ResulSet that contains the data produced by the query
+     * @return a ResulSet that contains the database produced by the query
      * 
      * @exception SQLException
      *                if a database access error occurs
@@ -1840,10 +1840,10 @@ public class StatementImpl implements Statement {
     }
 
     /**
-     * The maxFieldSize limit (in bytes) is the maximum amount of data returned
+     * The maxFieldSize limit (in bytes) is the maximum amount of database returned
      * for any column value; it only applies to BINARY, VARBINARY,
      * LONGVARBINARY, CHAR, VARCHAR and LONGVARCHAR columns. If the limit is
-     * exceeded, the excess data is silently discarded.
+     * exceeded, the excess database is silently discarded.
      * 
      * @return the current max column size limit; zero means unlimited
      * 

@@ -55,7 +55,7 @@ public class TestBasicConnection extends BaseFabricTestCase {
     }
 
     /**
-     * Test that we can connect with the data source, given a server group name
+     * Test that we can connect with the database source, given a server group name
      */
     public void testConnectionDataSource() throws Exception {
         if (!this.isSetForFabricTest) {

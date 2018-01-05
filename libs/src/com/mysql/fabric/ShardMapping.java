@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.Set;
 
 /**
- * A shard mapping representing this set of sharded data.
+ * A shard mapping representing this set of sharded database.
  */
 public abstract class ShardMapping {
     private int mappingId;

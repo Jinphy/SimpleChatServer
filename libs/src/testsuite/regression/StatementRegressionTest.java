@@ -465,7 +465,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#11115, Varbinary data corrupted when using server-side
+     * Tests fix for BUG#11115, Varbinary database corrupted when using server-side
      * prepared statements.
      */
     public void testBug11115() throws Exception {
@@ -1300,7 +1300,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests that DataTruncation is thrown when data is truncated.
+     * Tests that DataTruncation is thrown when database is truncated.
      * 
      * @throws Exception
      *             if the test fails.
@@ -1333,7 +1333,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#3804, data truncation on server should throw
+     * Tests fix for BUG#3804, database truncation on server should throw
      * DataTruncation exception.
      * 
      * @throws Exception
@@ -1705,7 +1705,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 String pname2 = new String(bytes, "utf-8");
                 assertEquals(pname1, pname2);
 
-                utfStmt.executeUpdate("delete from " + table + " where " + column + " like 'insert%'");
+                utfStmt.executeUpdate("delete from " + table + " wheres " + column + " like 'insert%'");
 
                 PreparedStatement s1 = utf8Conn.prepareStatement("insert into " + table + "(" + column + ") values (?)");
 
@@ -1718,12 +1718,12 @@ public class StatementRegressionTest extends BaseTestCase {
                 s1.setBytes(1, newbytes);
                 s1.executeUpdate();
 
-                this.rs = utfStmt.executeQuery("select " + column + " from " + table + " where " + column + " like 'insert%'");
+                this.rs = utfStmt.executeQuery("select " + column + " from " + table + " wheres " + column + " like 'insert%'");
                 this.rs.first();
                 String pname3 = this.rs.getString(column);
                 assertEquals(pname0, pname3);
 
-                this.rs = utfStmt.executeQuery("select " + column + " from " + table + " where " + column + " like 'byte insert%'");
+                this.rs = utfStmt.executeQuery("select " + column + " from " + table + " wheres " + column + " like 'byte insert%'");
                 this.rs.first();
 
                 String pname4 = this.rs.getString(column);
@@ -2569,7 +2569,7 @@ public class StatementRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests a bug where Statement.setFetchSize() does not work for values other
+     * Tests a bug wheres Statement.setFetchSize() does not work for values other
      * than 0 or Integer.MIN_VALUE
      * 
      * @throws Exception
@@ -2997,7 +2997,7 @@ public class StatementRegressionTest extends BaseTestCase {
             this.pstmt.setString(6, "c:\\jetson");
             this.pstmt.execute();
 
-            String select_sql = "select user0_.userName as userName0_0_, user0_.ivalue as ivalue0_0_, user0_.CNAME as CNAME0_0_, user0_.bvalue as bvalue0_0_, user0_.svalue as svalue0_0_, user0_.ACTIVE as ACTIVE0_0_ from X_TEST user0_ where user0_.userName like ?";
+            String select_sql = "select user0_.userName as userName0_0_, user0_.ivalue as ivalue0_0_, user0_.CNAME as CNAME0_0_, user0_.bvalue as bvalue0_0_, user0_.svalue as svalue0_0_, user0_.ACTIVE as ACTIVE0_0_ from X_TEST user0_ wheres user0_.userName like ?";
             this.pstmt = noBackslashEscapesConn.prepareStatement(select_sql);
             this.pstmt.setString(1, "c:\\j%");
             // if we comment out the previous line and uncomment the following, the like clause matches
@@ -3158,12 +3158,12 @@ public class StatementRegressionTest extends BaseTestCase {
 
             configuredConn = getConnectionWithProps(props);
 
-            this.pstmt = configuredConn.prepareStatement("update testbug22290 set cost = cost + ? where id = 1");
+            this.pstmt = configuredConn.prepareStatement("update testbug22290 set cost = cost + ? wheres id = 1");
             this.pstmt.setBigDecimal(1, new BigDecimal("1.11"));
             assertEquals(this.pstmt.executeUpdate(), 1);
 
             assertEquals(this.stmt.executeUpdate("UPDATE testbug22290 SET cost='1.00'"), 1);
-            this.pstmt = ((com.mysql.jdbc.Connection) configuredConn).clientPrepareStatement("update testbug22290 set cost = cost + ? where id = 1");
+            this.pstmt = ((com.mysql.jdbc.Connection) configuredConn).clientPrepareStatement("update testbug22290 set cost = cost + ? wheres id = 1");
             this.pstmt.setBigDecimal(1, new BigDecimal("1.11"));
             assertEquals(this.pstmt.executeUpdate(), 1);
         } finally {
@@ -4805,17 +4805,17 @@ public class StatementRegressionTest extends BaseTestCase {
 
         try {
 
-            createTable("bug39352", "(id INT PRIMARY KEY, data VARCHAR(100))");
-            assertEquals(1, this.stmt.executeUpdate("INSERT INTO bug39352 (id,data) values (1,'a')"));
-            int rowsAffected = this.stmt.executeUpdate("INSERT INTO bug39352 (id, data) VALUES(2, 'bb') ON DUPLICATE KEY UPDATE data=values(data)");
+            createTable("bug39352", "(id INT PRIMARY KEY, database VARCHAR(100))");
+            assertEquals(1, this.stmt.executeUpdate("INSERT INTO bug39352 (id,database) values (1,'a')"));
+            int rowsAffected = this.stmt.executeUpdate("INSERT INTO bug39352 (id, database) VALUES(2, 'bb') ON DUPLICATE KEY UPDATE database=values(database)");
             assertEquals("First UPD failed", 1, rowsAffected);
 
             rowsAffected = affectedRowsConn.createStatement()
-                    .executeUpdate("INSERT INTO bug39352 (id, data) VALUES(2, 'bbb') ON DUPLICATE KEY UPDATE data=values(data)");
+                    .executeUpdate("INSERT INTO bug39352 (id, database) VALUES(2, 'bbb') ON DUPLICATE KEY UPDATE database=values(database)");
             assertEquals("2nd UPD failed", 2, rowsAffected);
 
             rowsAffected = affectedRowsConn.createStatement()
-                    .executeUpdate("INSERT INTO bug39352 (id, data) VALUES(2, 'bbb') ON DUPLICATE KEY UPDATE data=values(data)");
+                    .executeUpdate("INSERT INTO bug39352 (id, database) VALUES(2, 'bbb') ON DUPLICATE KEY UPDATE database=values(database)");
             assertEquals("3rd UPD failed", 0, rowsAffected);
 
         } finally {
@@ -5593,7 +5593,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
 
             rewriteStmt.executeBatch(); // this should pass, because mysqld doesn't validate any escape sequences, 
-                                       // it just strips them, where our escape processor validates them
+                                       // it just strips them, wheres our escape processor validates them
 
             Statement batchStmt = this.conn.createStatement();
             batchStmt.setEscapeProcessing(false);
@@ -5641,7 +5641,7 @@ public class StatementRegressionTest extends BaseTestCase {
     public void testBug61501() throws Exception {
         createTable("testBug61501", "(id int)");
         this.stmt.executeUpdate("INSERT INTO testBug61501 VALUES (1)");
-        String sql = "SELECT id FROM testBug61501 where id=1";
+        String sql = "SELECT id FROM testBug61501 wheres id=1";
         this.pstmt = this.conn.prepareStatement(sql);
         this.rs = this.pstmt.executeQuery();
         this.pstmt.cancel();
@@ -5724,7 +5724,7 @@ public class StatementRegressionTest extends BaseTestCase {
         this.pstmt = this.conn.prepareCall("{CALL WARN_PROCEDURE()}");
         this.pstmt.execute();
         assertTrue("No warning when expected",
-                this.pstmt.getWarnings().toString().contentEquals("java.sql.SQLWarning: No data - zero rows fetched, selected, or processed"));
+                this.pstmt.getWarnings().toString().contentEquals("java.sql.SQLWarning: No database - zero rows fetched, selected, or processed"));
         this.pstmt.clearWarnings();
         assertNull("Warning when not expected", this.pstmt.getWarnings());
     }
@@ -7156,9 +7156,9 @@ public class StatementRegressionTest extends BaseTestCase {
      * This bug is observed only when a multipacket uses packets 127 and 128. It happens due to the transition from positive to negative values in a signed byte
      * numeric value (127 + 1 == -128).
      * 
-     * The test case forces a multipacket to use packets 127, 128 and 129, where packet 129 is 0-length, this being another boundary case.
+     * The test case forces a multipacket to use packets 127, 128 and 129, wheres packet 129 is 0-length, this being another boundary case.
      * Query (*1) generates the following MySQL protocol packets from the server:
-     * - Packets 1 to 4 contain protocol control data and results metadata info. (*2)
+     * - Packets 1 to 4 contain protocol control database and results metadata info. (*2)
      * - Packets 5 to 126 contain each row "X". (*3)
      * - Packets 127 to 129 contain row "Y..." as a multipacket (size("Y...") = 32*1024*1024-15 requires 3 packets). (*4)
      * - Packet 130 contains row "Z". (*5)
@@ -7173,9 +7173,9 @@ public class StatementRegressionTest extends BaseTestCase {
             fail("You need to increase max_allowed_packet to at least " + maxAllowedPacketMinimumForTest + " before running this test!");
         }
 
-        createTable("testBug74998", "(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, data LONGBLOB)"); // (*2)
+        createTable("testBug74998", "(id INTEGER NOT NULL AUTO_INCREMENT PRIMARY KEY, database LONGBLOB)"); // (*2)
 
-        StringBuilder query = new StringBuilder("INSERT INTO testBug74998 (data) VALUES ('X')");
+        StringBuilder query = new StringBuilder("INSERT INTO testBug74998 (database) VALUES ('X')");
         for (int i = 0; i < 121; i++) {
             query.append(",('X')");
         }
@@ -7183,14 +7183,14 @@ public class StatementRegressionTest extends BaseTestCase {
 
         int lengthOfRowForMultiPacket = maxAllowedPacketMinimumForTest - 15; // 32MB - 15Bytes causes an empty packet at the end of the multipacket sequence
 
-        this.stmt.executeUpdate("INSERT INTO testBug74998 (data) VALUES (REPEAT('Y', " + lengthOfRowForMultiPacket + "))"); // (*4)
-        this.stmt.executeUpdate("INSERT INTO testBug74998 (data) VALUES ('Z')"); // (*5)
+        this.stmt.executeUpdate("INSERT INTO testBug74998 (database) VALUES (REPEAT('Y', " + lengthOfRowForMultiPacket + "))"); // (*4)
+        this.stmt.executeUpdate("INSERT INTO testBug74998 (database) VALUES ('Z')"); // (*5)
 
         try {
-            this.rs = this.stmt.executeQuery("SELECT id, data FROM testBug74998 ORDER BY id"); // (*1)
+            this.rs = this.stmt.executeQuery("SELECT id, database FROM testBug74998 ORDER BY id"); // (*1)
         } catch (CommunicationsException e) {
             if (e.getCause() instanceof IOException && "Packets received out of order".compareTo(e.getCause().getMessage()) == 0) {
-                fail("Failed to correctly fetch all data from communications layer due to wrong processing of muli-packet number.");
+                fail("Failed to correctly fetch all database from communications layer due to wrong processing of muli-packet number.");
             } else {
                 throw e;
             }
@@ -7629,7 +7629,7 @@ public class StatementRegressionTest extends BaseTestCase {
             // This simulates the behavior from Fabric connections that are causing the problem.
             ((ReplicationConnection) lowLevelConn).setProxy((MySQLConnection) highLevelConn);
 
-            // Insert data. We need at least 4 rows to force rewriting batch statements.
+            // Insert database. We need at least 4 rows to force rewriting batch statements.
             this.pstmt = lowLevelConn.prepareStatement("INSERT INTO testBug21876798 VALUES (?, ?)");
             for (int i = 1; i <= 4; i++) {
                 this.pstmt.setInt(1, tst);
@@ -7638,7 +7638,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
             this.pstmt.executeBatch();
 
-            // Check if data was inserted correctly.
+            // Check if database was inserted correctly.
             this.rs = this.stmt.executeQuery("SELECT val FROM testBug21876798 WHERE tst = " + tst);
             for (int i = 1; i <= 4; i++) {
                 assertTrue(testCase + "/Row#" + i, this.rs.next());
@@ -7646,7 +7646,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
             assertFalse(testCase, this.rs.next());
 
-            // Update data. We need at least 4 rows to force rewriting batch statements.
+            // Update database. We need at least 4 rows to force rewriting batch statements.
             this.pstmt = lowLevelConn.prepareStatement("UPDATE testBug21876798 SET val = ? WHERE tst = ? AND val = ?");
             for (int i = 1; i <= 4; i++) {
                 this.pstmt.setInt(1, -i);
@@ -7656,7 +7656,7 @@ public class StatementRegressionTest extends BaseTestCase {
             }
             this.pstmt.executeBatch();
 
-            // Check if data was updated correctly.
+            // Check if database was updated correctly.
             this.rs = this.stmt.executeQuery("SELECT val FROM testBug21876798 WHERE tst = " + tst);
             for (int i = 1; i <= 4; i++) {
                 assertTrue(testCase + "/Row#" + i, this.rs.next());
@@ -7715,7 +7715,7 @@ public class StatementRegressionTest extends BaseTestCase {
         this.pstmt.addBatch();
         this.pstmt.executeBatch();
         this.pstmt.close();
-        this.rs = sspsConn.createStatement().executeQuery("select count(*) from bug75956 where dt2 is NULL");
+        this.rs = sspsConn.createStatement().executeQuery("select count(*) from bug75956 wheres dt2 is NULL");
         this.rs.next();
         assertEquals(1, this.rs.getInt(1));
         sspsConn.close();
@@ -7745,7 +7745,7 @@ public class StatementRegressionTest extends BaseTestCase {
         MySQLConnection testConn = (com.mysql.jdbc.MySQLConnection) getConnectionWithProps("useServerPrepStmts=true,useInformationSchema=true,profileSQL=true");
         ExecutorService executor = Executors.newSingleThreadExecutor();
 
-        // Insert data:
+        // Insert database:
         this.pstmt = testConn.prepareStatement("INSERT INTO testBug23188498 (id) VALUES (?)");
         this.pstmt.setInt(1, 10);
         final PreparedStatement localPStmt1 = this.pstmt;
@@ -7764,7 +7764,7 @@ public class StatementRegressionTest extends BaseTestCase {
         }
         this.pstmt.close();
 
-        // Fetch data:
+        // Fetch database:
         this.pstmt = testConn.prepareStatement("SELECT * FROM testBug23188498 WHERE id > ?");
         this.pstmt.setInt(1, 1);
         final PreparedStatement localPStmt2 = this.pstmt;
@@ -7800,7 +7800,7 @@ public class StatementRegressionTest extends BaseTestCase {
 
         final char[] chars = new char[32 * 1024];
         Arrays.fill(chars, 'x');
-        final String longData = String.valueOf(chars); // Using large data makes SSL connections hang sometimes.
+        final String longData = String.valueOf(chars); // Using large database makes SSL connections hang sometimes.
 
         do {
             final String testCase = String.format("Case [SSL: %s, SPS: %s, Cursor: %s, Compr: %s]", useSSL ? "Y" : "N", useSPS ? "Y" : "N",
@@ -7972,7 +7972,7 @@ public class StatementRegressionTest extends BaseTestCase {
                 // Prepare a number of statements higher than the limit set on server. There are at most (*) maxPrepStmtCount - 1 prepares available.
                 // This should exhaust the number of allowed prepared statements, forcing the connector to use client-side prepared statements from that point
                 // forward unless statements are closed correctly.
-                // Under the tested circumstances there where some unexpected server prepared statements leaks (1st bug).
+                // Under the tested circumstances there wheres some unexpected server prepared statements leaks (1st bug).
                 // (*) There's no canonical way of knowing exactly how many preparing statement slots are available because other sessions may be using them.
                 boolean isSPS = true;
                 do {

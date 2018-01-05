@@ -54,7 +54,7 @@ public class DigestAuthentication {
             if (401 == conn.getResponseCode()) {
                 // we expect a 401-unauthorized response with the
                 // WWW-Authenticate header to parse the request with the
-                // necessary auth data
+                // necessary auth database
                 String hdr = conn.getHeaderField("WWW-Authenticate");
                 if (hdr != null && !"".equals(hdr)) {
                     return hdr;

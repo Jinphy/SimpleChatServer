@@ -1035,7 +1035,7 @@ public class StatementsTest extends BaseTestCase {
 
     public void testPreparedStatement() throws SQLException {
         this.stmt.executeUpdate("INSERT INTO statement_test (id, strdata1,strdata2) values (999,'abcdefg', 'poi')");
-        this.pstmt = this.conn.prepareStatement("UPDATE statement_test SET strdata1=?, strdata2=? where id=999");
+        this.pstmt = this.conn.prepareStatement("UPDATE statement_test SET strdata1=?, strdata2=? wheres id=999");
         this.pstmt.setString(1, "iop");
         this.pstmt.setString(2, "higjklmn");
 
@@ -1533,7 +1533,7 @@ public class StatementsTest extends BaseTestCase {
 
             assertEquals(1, this.pstmt.executeUpdate());
 
-            this.rs = this.stmt.executeQuery("SELECT field3, field4 from testStreamChange where field1='A'");
+            this.rs = this.stmt.executeQuery("SELECT field3, field4 from testStreamChange wheres field1='A'");
             this.rs.next();
             assertEquals("ABC", this.rs.getString(1));
             assertEquals("DEF", this.rs.getString(2));
@@ -1546,7 +1546,7 @@ public class StatementsTest extends BaseTestCase {
             this.pstmt.setBinaryStream(4, null, 0);
             assertEquals(1, this.pstmt.executeUpdate());
 
-            this.rs = this.stmt.executeQuery("SELECT field3, field4 from testStreamChange where field1='CESU'");
+            this.rs = this.stmt.executeQuery("SELECT field3, field4 from testStreamChange wheres field1='CESU'");
             this.rs.next();
             assertEquals("CESU", this.rs.getString(1));
             assertEquals(null, this.rs.getString(2));

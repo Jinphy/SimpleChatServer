@@ -86,7 +86,7 @@ public class EscapeProcessorRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#63526 - Unhandled case of {data...}
+     * Tests fix for BUG#63526 - Unhandled case of {database...}
      * 
      * @throws Exception
      *             if the test fails.

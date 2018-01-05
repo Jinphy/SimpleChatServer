@@ -29,12 +29,32 @@ public class StringUtils {
     }
 
     /**
-     * DESC: 判断一个字符串是否为null或者是空串
+     * DESC: 判断是否是空
      * Created by jinphy, on 2017/12/5, at 20:42
      */
-    public static boolean isEmpty(String text) {
-        return text == null || text.trim().length() == 0;
+    public static boolean isEmpty(Object... values) {
+        for (Object value : values) {
+            if (value == null || value.toString().length() == 0) {
+                return true;
+            }
+        }
+        return false;
     }
+
+    /**
+     * DESC: 判断是否是空
+     * Created by jinphy, on 2018/1/3, at 14:58
+     */
+    public static boolean isTrimEmpty(Object... values) {
+        for (Object value : values) {
+            if (value == null || value.toString().trim().length() == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 
     /**
      * DESC: 判断一个字符串是否不为null和空串
@@ -44,6 +64,48 @@ public class StringUtils {
         return !isEmpty(text);
     }
 
+
+    /**
+     * DESC: 把对象转换成String后再用指定的字符首尾包装
+     *
+     * @param wrapper 用来包装的字符串，默认最多只接受两个字符串，多的将被忽略，
+     *                如果只有一个则首尾都用该字符串，如果不传则返回原字符串，
+     *                如果为空则返回空
+     * Created by jinphy, on 2018/1/4, at 0:18
+     */
+    public static String wrap(Object value, String... wrapper) {
+        if (value == null || wrapper.length == 0) {
+            return null;
+        }
+        String first = wrapper[0];
+        String last;
+        if (wrapper.length > 1) {
+            last = wrapper[1];
+        } else {
+            last = first;
+        }
+        return first + value + last;
+    }
+
+
+    /**
+     * DESC: 判断两个字符串是否相等
+     * Created by jinphy, on 2018/1/4, at 14:55
+     */
+    public static boolean equal(String first, String second) {
+        if (first == null) {
+            return false;
+        }
+        return first.equals(second);
+    }
+
+    /**
+     * DESC: 判断两个字符串是否不相等
+     * Created by jinphy, on 2018/1/4, at 14:56
+     */
+    public static boolean noEqual(String first, String second) {
+        return !equal(first, second);
+    }
 
 
 
@@ -76,6 +138,9 @@ public class StringUtils {
         }
         return ret;
     }
+
+
+
 
 
 }

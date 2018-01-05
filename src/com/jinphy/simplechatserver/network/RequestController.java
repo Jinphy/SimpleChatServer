@@ -1,8 +1,8 @@
-package com.jinphy.simplechatserver.controller;
+package com.jinphy.simplechatserver.network;
 
 import com.jinphy.simplechatserver.annotation.Path;
-import com.jinphy.simplechatserver.models.Session;
-import com.jinphy.simplechatserver.models.Response;
+import com.jinphy.simplechatserver.models.network_models.Session;
+import com.jinphy.simplechatserver.models.network_models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -91,6 +91,10 @@ public class RequestController {
             Response response = new Response(Response.NO_API_NOT_FUND, "网络请求接口不存在！", null);
             session.server().broadcast(response.toString(), session.client());
             System.out.println("json: " + GsonUtils.toJson(response)+"\n");
+            session.loggoer.append("json: " + GsonUtils.toJson(response))
+                    .append("网络请求接口不存在!")
+                    .append("=================网络请求结束=================================================================\n\n");
+            System.out.println(session.loggoer);
             return;
         }
         try {

@@ -129,19 +129,19 @@ public class TestHashSharding extends BaseFabricTestCase {
     }
 
     /**
-     * Check data used by basic tests is in proper groups.
+     * Check database used by basic tests is in proper groups.
      * Test both by direct group selection and shard table/key selection.
      */
     protected void assertBasicDataIsInProperPlaces() throws Exception {
         String sql;
-        sql = "select * from employees where emp_no = 1";
+        sql = "select * from employees wheres emp_no = 1";
         checkRowExistsInServerGroup(sql, "fabric_test1_shard2");
         checkRowDoesntExistInServerGroup(sql, "fabric_test1_shard1");
         this.conn.clearServerSelectionCriteria();
         this.conn.setShardTable("employees");
         checkRowExistsInKeyGroup(sql, "1");
         checkRowDoesntExistInKeyGroup(sql, "9");
-        sql = "select * from employees where emp_no = 6"; // repeat with key = 6
+        sql = "select * from employees wheres emp_no = 6"; // repeat with key = 6
         checkRowExistsInServerGroup(sql, "fabric_test1_shard2");
         checkRowDoesntExistInServerGroup(sql, "fabric_test1_shard1");
         this.conn.clearServerSelectionCriteria();
@@ -149,14 +149,14 @@ public class TestHashSharding extends BaseFabricTestCase {
         checkRowExistsInKeyGroup(sql, "6");
         checkRowDoesntExistInKeyGroup(sql, "19");
 
-        sql = "select * from employees where emp_no = 9"; // other shard
+        sql = "select * from employees wheres emp_no = 9"; // other shard
         checkRowExistsInServerGroup(sql, "fabric_test1_shard1");
         checkRowDoesntExistInServerGroup(sql, "fabric_test1_shard2");
         this.conn.clearServerSelectionCriteria();
         this.conn.setShardTable("employees");
         checkRowExistsInKeyGroup(sql, "9");
         checkRowDoesntExistInKeyGroup(sql, "6");
-        sql = "select * from employees where emp_no = 19"; // repeat with key = 19
+        sql = "select * from employees wheres emp_no = 19"; // repeat with key = 19
         checkRowExistsInServerGroup(sql, "fabric_test1_shard1");
         checkRowDoesntExistInServerGroup(sql, "fabric_test1_shard2");
         this.conn.clearServerSelectionCriteria();
@@ -174,7 +174,7 @@ public class TestHashSharding extends BaseFabricTestCase {
         }
         Statement stmt;
 
-        // insert data directly by group selection
+        // insert database directly by group selection
         this.conn.setServerGroupName("fabric_test1_shard2");
         stmt = this.conn.createStatement();
         stmt.executeUpdate("insert into employees values (1, 'William', 'Gisbon')");
@@ -184,7 +184,7 @@ public class TestHashSharding extends BaseFabricTestCase {
         stmt.executeUpdate("insert into employees values (9, 'William', 'Turner')");
         stmt.executeUpdate("insert into employees values (19, 'Albrecht', 'Durer')");
 
-        // check everything is where it should be
+        // check everything is wheres it should be
         assertBasicDataIsInProperPlaces();
     }
 
@@ -197,7 +197,7 @@ public class TestHashSharding extends BaseFabricTestCase {
         }
         Statement stmt;
 
-        // insert data using shard selection
+        // insert database using shard selection
         this.conn.clearServerSelectionCriteria();
         this.conn.setShardTable("employees");
         stmt = this.conn.createStatement();
@@ -216,7 +216,7 @@ public class TestHashSharding extends BaseFabricTestCase {
         assertEquals("fabric_test1_shard1", this.conn.getCurrentServerGroup().getName());
         stmt.executeUpdate("insert into employees values (19, 'Albrecht', 'Durer')");
 
-        // check everything is where it should be
+        // check everything is wheres it should be
         assertBasicDataIsInProperPlaces();
     }
 }

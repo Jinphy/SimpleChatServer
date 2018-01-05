@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.config;
+package com.jinphy.simplechatserver.network;
 
 /**
  * Created by jinphy on 2017/12/5.

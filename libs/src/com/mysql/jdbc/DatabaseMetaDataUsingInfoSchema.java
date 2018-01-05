@@ -656,7 +656,7 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
      *            return indices regardless of whether unique or not
      * @param approximate
      *            when true, result is allowed to reflect approximate or out of
-     *            data values; when false, results are requested to be accurate
+     *            database values; when false, results are requested to be accurate
      * @return ResultSet each row is an index column description
      * @throws SQLException
      */
@@ -896,7 +896,7 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
      * <LI><B>DATA_TYPE</B> int => SQL type from java.sql.Types
      * <LI><B>TYPE_NAME</B> String => SQL type name, for a UDT type the type name is fully qualified
      * <LI><B>PRECISION</B> int => precision
-     * <LI><B>LENGTH</B> int => length in bytes of data
+     * <LI><B>LENGTH</B> int => length in bytes of database
      * <LI><B>SCALE</B> short => scale
      * <LI><B>RADIX</B> short => radix
      * <LI><B>NULLABLE</B> short => can it contain NULL.
@@ -994,7 +994,7 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
 
         // PRECISION</B> int => precision
         sqlBuf.append("NUMERIC_PRECISION AS `PRECISION`, ");
-        // LENGTH</B> int => length in bytes of data
+        // LENGTH</B> int => length in bytes of database
         sqlBuf.append("CASE WHEN LCASE(DATA_TYPE)='date' THEN 10 WHEN LCASE(DATA_TYPE)='time' THEN 8 WHEN LCASE(DATA_TYPE)='datetime' THEN 19 "
                 + "WHEN LCASE(DATA_TYPE)='timestamp' THEN 19 WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN NUMERIC_PRECISION WHEN CHARACTER_MAXIMUM_LENGTH > "
                 + Integer.MAX_VALUE + " THEN " + Integer.MAX_VALUE + " ELSE CHARACTER_MAXIMUM_LENGTH END AS LENGTH, ");
@@ -1289,8 +1289,8 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
      * <LI><B>DATA_TYPE</B> int => SQL type from java.sql.Types
      * <LI><B>TYPE_NAME</B> String => SQL type name, for a UDT type the type name is fully qualified
      * <LI><B>PRECISION</B> int => precision
-     * <LI><B>LENGTH</B> int => length in bytes of data
-     * <LI><B>SCALE</B> short => scale - null is returned for data types where SCALE is not applicable.
+     * <LI><B>LENGTH</B> int => length in bytes of database
+     * <LI><B>SCALE</B> short => scale - null is returned for database types wheres SCALE is not applicable.
      * <LI><B>RADIX</B> short => radix
      * <LI><B>NULLABLE</B> short => can it contain NULL.
      * <UL>
@@ -1314,10 +1314,10 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
      * </OL>
      * 
      * <p>
-     * The PRECISION column represents the specified column size for the given parameter or column. For numeric data, this is the maximum precision. For
-     * character data, this is the length in characters. For datetime datatypes, this is the length in characters of the String representation (assuming the
-     * maximum allowed precision of the fractional seconds component). For binary data, this is the length in bytes. For the ROWID datatype, this is the length
-     * in bytes. Null is returned for data types where the column size is not applicable.
+     * The PRECISION column represents the specified column size for the given parameter or column. For numeric database, this is the maximum precision. For
+     * character database, this is the length in characters. For datetime datatypes, this is the length in characters of the String representation (assuming the
+     * maximum allowed precision of the fractional seconds component). For binary database, this is the length in bytes. For the ROWID datatype, this is the length
+     * in bytes. Null is returned for database types where the column size is not applicable.
      * 
      * @param catalog
      *            a catalog name; must match the catalog name as it
@@ -1401,7 +1401,7 @@ public class DatabaseMetaDataUsingInfoSchema extends DatabaseMetaData {
 
         // PRECISION int => precision
         sqlBuf.append("NUMERIC_PRECISION AS `PRECISION`, ");
-        // LENGTH int => length in bytes of data
+        // LENGTH int => length in bytes of database
         sqlBuf.append("CASE WHEN LCASE(DATA_TYPE)='date' THEN 10 WHEN LCASE(DATA_TYPE)='time' THEN 8 WHEN LCASE(DATA_TYPE)='datetime' THEN 19 WHEN "
                 + "LCASE(DATA_TYPE)='timestamp' THEN 19 WHEN CHARACTER_MAXIMUM_LENGTH IS NULL THEN NUMERIC_PRECISION WHEN CHARACTER_MAXIMUM_LENGTH > "
                 + Integer.MAX_VALUE + " THEN " + Integer.MAX_VALUE + " ELSE CHARACTER_MAXIMUM_LENGTH END AS LENGTH, ");

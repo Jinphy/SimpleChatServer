@@ -29,7 +29,7 @@ import com.mysql.jdbc.profiler.ProfilerEvent;
 import com.mysql.jdbc.profiler.ProfilerEventHandler;
 
 /**
- * Allows streaming of MySQL data.
+ * Allows streaming of MySQL database.
  */
 public class RowDataDynamic implements RowData {
 
@@ -65,11 +65,11 @@ public class RowDataDynamic implements RowData {
      * Creates a new RowDataDynamic object.
      * 
      * @param io
-     *            the connection to MySQL that this data is coming from
+     *            the connection to MySQL that this database is coming from
      * @param metadata
-     *            the metadata that describe this data
+     *            the metadata that describe this database
      * @param isBinaryEncoded
-     *            is this data in native format?
+     *            is this database in native format?
      * @param colCount
      *            the number of columns
      * @throws SQLException
@@ -85,7 +85,7 @@ public class RowDataDynamic implements RowData {
     }
 
     /**
-     * Adds a row to this row data.
+     * Adds a row to this row database.
      * 
      * @param row
      *            the row to add
@@ -209,7 +209,7 @@ public class RowDataDynamic implements RowData {
      * 
      * @param index
      *            row number to get at
-     * @return row data at index
+     * @return row database at index
      * @throws SQLException
      *             if a database error occurs
      */
@@ -451,7 +451,7 @@ public class RowDataDynamic implements RowData {
     /**
      * Only works on non dynamic result sets.
      * 
-     * @return the size of this row data
+     * @return the size of this row database
      */
     public int size() {
         return RESULT_SET_SIZE_UNKNOWN;

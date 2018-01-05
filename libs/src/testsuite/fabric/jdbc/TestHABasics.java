@@ -89,7 +89,7 @@ public class TestHABasics extends BaseFabricTestCase {
         this.conn.setReadOnly(true);
         assertTrue(!this.masterPort.equals(getPort()));
 
-        // allow a little replication lag and check for data
+        // allow a little replication lag and check for database
         Thread.sleep(3000);
         ResultSet rs = s.executeQuery("select name from fruits order by 1");
         assertTrue(rs.next());

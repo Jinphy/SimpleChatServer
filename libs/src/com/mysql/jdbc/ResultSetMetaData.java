@@ -267,7 +267,7 @@ public class ResultSetMetaData implements java.sql.ResultSetMetaData {
     }
 
     /**
-     * Whats is the column's data source specific type name?
+     * Whats is the column's database source specific type name?
      * 
      * @param column
      *            the first column is 1, the second is 2, etc.

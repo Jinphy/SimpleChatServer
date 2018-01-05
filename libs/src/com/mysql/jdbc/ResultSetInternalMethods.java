@@ -36,7 +36,7 @@ public interface ResultSetInternalMethods extends java.sql.ResultSet {
 
     /**
      * Returns a new instance of this result set, that shares the
-     * underlying row data.
+     * underlying row database.
      */
     public abstract ResultSetInternalMethods copy() throws SQLException;
 

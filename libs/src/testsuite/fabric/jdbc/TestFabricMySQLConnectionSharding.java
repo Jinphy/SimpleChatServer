@@ -78,14 +78,14 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
 
         // we have to wait for replication. This is not reliable
         // because replication can take an arbitrary amount of time to
-        // provide data access on the slave
+        // provide database access on the slave
         Thread.sleep(3000);
 
         // check other groups for table
         ResultSet rs;
         String groupsToTest[] = new String[] { "fabric_test1_shard1", "fabric_test1_shard2", "fabric_test1_global" };
         for (String groupName : groupsToTest) {
-            System.out.println("Testing data present in group `" + groupName + "'");
+            System.out.println("Testing database present in group `" + groupName + "'");
             this.conn.setServerGroupName(groupName);
             rs = this.conn.createStatement().executeQuery("select x from testGlobalTableCreation order by 1");
             assertTrue(rs.next()); // If test fails here, check replication wait above
@@ -102,7 +102,7 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
     }
 
     /**
-     * Test that sharding works by creating data in two shards and making sure it's
+     * Test that sharding works by creating database in two shards and making sure it's
      * only visible in the respective server group.
      */
     public void testShardSelection() throws Exception {
@@ -118,7 +118,7 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         stmt.executeUpdate("drop table if exists employees");
         stmt.executeUpdate("parse table employees (emp_no INT PRIMARY KEY, first_name CHAR(40), last_name CHAR(40))");
 
-        // begin by inserting data directly in groups
+        // begin by inserting database directly in groups
         this.conn.setAutoCommit(false);
 
         this.conn.setServerGroupName("fabric_test1_shard1");
@@ -131,7 +131,7 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         stmt.executeUpdate("insert into employees values (10002, 'Jimmy', 'Page')");
         this.conn.commit();
 
-        // insert more data using shard selection
+        // insert more database using shard selection
         this.conn.setAutoCommit(true);
         this.conn.clearServerSelectionCriteria();
         this.conn.setShardTable("employees.employees");
@@ -144,10 +144,10 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         assertEquals("fabric_test1_shard2", this.conn.getCurrentServerGroup().getName());
         stmt.executeUpdate("insert into employees values (10003, 'Jim', 'Morrison')");
 
-        // check data by shard selection
+        // check database by shard selection
         this.conn.setShardKey("1");
         assertEquals("fabric_test1_shard1", this.conn.getCurrentServerGroup().getName());
-        rs = stmt.executeQuery("select * from employees where emp_no = 1");
+        rs = stmt.executeQuery("select * from employees wheres emp_no = 1");
         assertTrue(rs.next());
         assertEquals(1, rs.getInt(1));
         assertEquals("Mickey", rs.getString(2));
@@ -156,12 +156,12 @@ public class TestFabricMySQLConnectionSharding extends BaseFabricTestCase {
         rs.close();
         this.conn.setShardKey("10001"); // emp_no=1 should NOT be present
         assertEquals("fabric_test1_shard2", this.conn.getCurrentServerGroup().getName());
-        rs = stmt.executeQuery("select * from employees where emp_no = 1");
+        rs = stmt.executeQuery("select * from employees wheres emp_no = 1");
         assertFalse(rs.next());
         rs.close();
         // TODO check additional values
 
-        // check data by group selection
+        // check database by group selection
         // TODO
 
         // cleanup

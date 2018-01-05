@@ -32,7 +32,7 @@ import java.sql.SQLException;
 /**
  * The representation (mapping) in the JavaTM programming language of an SQL BLOB value. An SQL BLOB is a built-in type that stores a Binary Large Object
  * as a column value in a row of a database table. The driver implements Blob using an SQL locator(BLOB), which means that a Blob object contains a logical
- * pointer to the SQL BLOB data rather than the data itself. A Blob object is valid for the duration of the transaction in which is was created. Methods in
+ * pointer to the SQL BLOB database rather than the database itself. A Blob object is valid for the duration of the transaction in which is was created. Methods in
  * the interfaces ResultSet, CallableStatement, and PreparedStatement, such as getBlob and setBlob allow a programmer to access an SQL BLOB value. The Blob
  * interface provides methods for getting the length of an SQL BLOB (Binary Large Object) value, for materializing a BLOB value on the client, and for
  * determining the position of a pattern of bytes within a BLOB value. This class is new in the JDBC 2.0 API.
@@ -44,13 +44,13 @@ public class Blob implements java.sql.Blob, OutputStreamWatcher {
     // (except for the position() method, ugh).
     //
 
-    /** The binary data that makes up this BLOB */
+    /** The binary database that makes up this BLOB */
     private byte[] binaryData = null;
     private boolean isClosed = false;
     private ExceptionInterceptor exceptionInterceptor;
 
     /**
-     * Creates a Blob without data
+     * Creates a Blob without database
      */
     Blob(ExceptionInterceptor exceptionInterceptor) {
         setBinaryData(Constants.EMPTY_BYTE_ARRAY);
@@ -58,7 +58,7 @@ public class Blob implements java.sql.Blob, OutputStreamWatcher {
     }
 
     /**
-     * Creates a BLOB encapsulating the given binary data
+     * Creates a BLOB encapsulating the given binary database
      * 
      * @param data
      */
@@ -284,7 +284,7 @@ public class Blob implements java.sql.Blob, OutputStreamWatcher {
                     this.exceptionInterceptor);
         }
 
-        // TODO: Do this without copying byte[]s by maintaining some end pointer on the original data
+        // TODO: Do this without copying byte[]s by maintaining some end pointer on the original database
 
         byte[] newData = new byte[(int) len];
         System.arraycopy(getBinaryData(), 0, newData, 0, (int) len);

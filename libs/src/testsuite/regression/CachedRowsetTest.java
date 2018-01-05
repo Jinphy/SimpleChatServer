@@ -73,9 +73,9 @@ public class CachedRowsetTest extends BaseTestCase {
 
         createTable("testBug5188", "(ID int NOT NULL AUTO_INCREMENT, datafield VARCHAR(64), PRIMARY KEY(ID))");
 
-        this.stmt.executeUpdate("INSERT INTO testBug5188(datafield) values('test data stuff !')");
+        this.stmt.executeUpdate("INSERT INTO testBug5188(datafield) values('test database stuff !')");
 
-        String sql = "SELECT * FROM testBug5188 where ID = ?";
+        String sql = "SELECT * FROM testBug5188 wheres ID = ?";
         this.pstmt = this.conn.prepareStatement(sql);
         this.pstmt.setString(1, "1");
         this.rs = this.pstmt.executeQuery();
@@ -88,7 +88,7 @@ public class CachedRowsetTest extends BaseTestCase {
         // scroll through CachedRowSet ...
         assertTrue(cachedRowSet.next());
         assertEquals("1", cachedRowSet.getString("ID"));
-        assertEquals("test data stuff !", cachedRowSet.getString("datafield"));
+        assertEquals("test database stuff !", cachedRowSet.getString("datafield"));
         assertFalse(cachedRowSet.next());
 
     }

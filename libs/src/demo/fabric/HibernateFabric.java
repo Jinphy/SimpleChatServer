@@ -78,7 +78,7 @@ public class HibernateFabric {
                 j += 10000;
             }
 
-            Session session = sf.withOptions().tenantIdentifier("" + j) // choose a db server
+            Session session = sf.withOptions().tenantIdentifier("" + j) // choose a database server
                     .openSession();
 
             // vanilla hibernate code

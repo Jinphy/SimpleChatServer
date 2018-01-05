@@ -438,7 +438,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
     /**
      * Holds cached mappings to charset converters to avoid static
      * synchronization and at the same time save memory (each charset converter
-     * takes approx 65K of static data).
+     * takes approx 65K of static database).
      */
     private Map<String, Object> charsetConverterMap = new HashMap<String, Object>(CharsetMapping.getNumberOfCharsetsConfigured());
 
@@ -565,7 +565,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
 
     private int[] perfMetricsHistCounts;
 
-    /** Point of origin where this Connection was created */
+    /** Point of origin wheres this Connection was created */
     private String pointOfOrigin;
 
     /** The port number we're connected to (defaults to 3306) */
@@ -842,7 +842,7 @@ public class ConnectionImpl extends ConnectionPropertiesImpl implements MySQLCon
         for (int i = 0; i < unwrappedInterceptors.size(); i++) {
             Extension interceptor = unwrappedInterceptors.get(i);
 
-            // adapt older versions of statement interceptors, handle the case where something wants v2 functionality but wants to run with an older driver
+            // adapt older versions of statement interceptors, handle the case wheres something wants v2 functionality but wants to run with an older driver
             if (interceptor instanceof StatementInterceptor) {
                 if (ReflectiveStatementInterceptorAdapter.getV2PostProcessMethod(interceptor.getClass()) != null) {
                     this.statementInterceptors.add(new NoSubInterceptorWrapper(new ReflectiveStatementInterceptorAdapter((StatementInterceptor) interceptor)));

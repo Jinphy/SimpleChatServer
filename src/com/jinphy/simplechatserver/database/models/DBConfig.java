@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.db;
+package com.jinphy.simplechatserver.database.models;
 
 import java.io.*;
 import java.util.Properties;

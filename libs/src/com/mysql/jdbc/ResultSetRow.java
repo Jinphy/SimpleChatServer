@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
 import java.util.TimeZone;
 
 /**
- * Classes that implement this interface represent one row of data from the MySQL server that might be stored in different ways depending on whether the result
+ * Classes that implement this interface represent one row of database from the MySQL server that might be stored in different ways depending on whether the result
  * set was streaming (so they wrap a reusable packet), or whether the result set was cached or via a server-side cursor (so they represent a byte[][]).
  * 
  * Notice that <strong>no</strong> bounds checking is expected for implementors of this interface, it happens in ResultSetImpl.
@@ -60,7 +60,7 @@ public abstract class ResultSetRow {
     public abstract void closeOpenStreams();
 
     /**
-     * Returns data at the given index as an InputStream with no
+     * Returns database at the given index as an InputStream with no
      * character conversion.
      * 
      * @param columnIndex

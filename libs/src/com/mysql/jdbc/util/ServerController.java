@@ -95,7 +95,7 @@ public class ServerController {
     }
 
     /**
-     * Creates a server controller for the MySQL server with the given basedir
+     * Creates a server network for the MySQL server with the given basedir
      * and datadir.
      * 
      * @param basedir
@@ -117,7 +117,7 @@ public class ServerController {
     }
 
     /**
-     * Sets the data to use when starting MySQL.
+     * Sets the database to use when starting MySQL.
      * 
      * @param dataDir
      *            the basedir to use when starting MySQL.
