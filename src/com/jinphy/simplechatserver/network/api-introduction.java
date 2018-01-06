@@ -7,40 +7,36 @@
             ☆请求方式：Post
             ☆入参：
                 字段：                 是否必传：           描述
-                1、account:            必传                登录账号
-                2、password：          非必传               登录密码，md5加密，不传时需要用验证码验证登录
-                3、deviceId:           必传                设备唯一识别码，md5加密
+                1、account:            是                  登录账号
+                2、password：          否                  登录密码，md5加密，不传时需要用验证码验证登录
+                3、deviceId:           是                  设备唯一识别码，md5加密
             ☆出参：
-                1、
-                2、
+                1、account:            是                  账号
+                2、name;               是                  昵称
+                3、date                是                  注册日期
+                4、sex                 是                  性别
+                5、avatarUrl           是                  头像
+                6、status              是                  登录状态
+                7、accessToken         是                  账号认证令牌
 
- private int id;
- private String account;
- private String name;
- private String password;
- private String date;
- private String sex;
- private String avatarUrl;
- private String status;//登录状态
- private String accessToken;
      --------------------------------------------------------------------------------------------
      DESC: 查找用户是否穿在接口
             ☆接口：/user/findUser
             ☆请求方式：Get
             ☆入参：
                 字段：                 是否必传：           描述
-                1、account：           必传                 账号
+                1、account：           是                   账号
             ☆出参
      --------------------------------------------------------------------------------------------
 
      DESC: 创建用户接口
-            ☆接口：/user/createNewUser
+            ☆接口：/user/signUp
             ☆请求方式：Post
             ☆入参：
                 字段：                 是否必传：           描述
-                1、account:            必传                要创建的账号
-                2、password:           必传：              用户密码
-                3、date:               必传                创建日期
+                1、account:            是                  要创建的账号
+                2、password:           是                  用户密码
+                3、date:               是                  创建日期
             ☆出参：
      --------------------------------------------------------------------------------------------
 

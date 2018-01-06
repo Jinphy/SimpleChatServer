@@ -54,6 +54,7 @@ public class UserDao {
                 if (update.count > 0) {
                     // 更新数据库成功，登录成功
                     result.first.remove(User.ID);
+                    result.first.remove(User.PASSWORD);
                     return result;
                 } else {
                     // 跟新数据库失败，服务器异常，登录失败

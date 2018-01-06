@@ -1,6 +1,7 @@
 package com.jinphy.simplechatserver.network;
 
 import com.jinphy.simplechatserver.annotation.Path;
+import com.jinphy.simplechatserver.constants.StringConst;
 import com.jinphy.simplechatserver.models.network_models.Session;
 import com.jinphy.simplechatserver.models.network_models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
@@ -12,12 +13,16 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * 该类用来处理网络请求接口
  * Created by jinphy on 2017/12/5.
  */
 public class RequestController {
+
+    private static ExecutorService threadPools = Executors.newCachedThreadPool();
 
     /**
      * DESC: 网络请求接口map
@@ -85,23 +90,25 @@ public class RequestController {
      * Created by jinphy, on 2017/12/7, at 0:32
      */
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public synchronized void handleMsg(Session session) {
-        Method method = methodMap.get(session.path());
-        if (method == null) {
-            Response response = new Response(Response.NO_API_NOT_FUND, "网络请求接口不存在！", null);
-            session.server().broadcast(response.toString(), session.client());
-            System.out.println("json: " + GsonUtils.toJson(response)+"\n");
-            session.loggoer.append("json: " + GsonUtils.toJson(response))
-                    .append("网络请求接口不存在!")
-                    .append("=================网络请求结束=================================================================\n\n");
-            System.out.println(session.loggoer);
-            return;
-        }
-        try {
-            method.invoke(null, session);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void handleMsg(Session session) {
+        threadPools.execute(()->{
+            Method method = methodMap.get(session.path());
+            if (method == null) {
+                Response response = new Response(Response.NO_API_NOT_FUND, "网络请求接口不存在！", null);
+                session.server().broadcast(response.toString(), session.client());
+                session.loggoer.append("json: " + GsonUtils.toJson(response)+ StringConst.LINE)
+                        .append("网络请求接口不存在!")
+                        .append("=================网络请求结束=================================================================\n\n");
+                System.out.println(session.loggoer);
+                return;
+            }
+            try {
+                method.invoke(null, session);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+        });
     }
 
 }

@@ -33,7 +33,7 @@ public interface RequestConfig {
         String findUser = "/user/findUser";
 
         /**
-         * DESC: 创建用户接口
+         * DESC: 注册用户接口
          *  请求方式：Post
          *  参数：
          *      1、account:         必传：要创建的账号
@@ -41,7 +41,7 @@ public interface RequestConfig {
          *      3、date:            必传：创建日期
          * Created by jinphy, on 2018/1/2, at 12:47
          */
-        String createNewUser = "/user/createNewUser";
+        String signUp = "/user/signUp";
     }
 
 

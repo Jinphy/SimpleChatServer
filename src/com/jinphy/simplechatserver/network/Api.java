@@ -1,19 +1,12 @@
 package com.jinphy.simplechatserver.network;
 
-import com.jinphy.simplechatserver.MyNullPointerException;
 import com.jinphy.simplechatserver.annotation.Path;
-import com.jinphy.simplechatserver.constants.StringConst;
 import com.jinphy.simplechatserver.database.dao.UserDao;
 import com.jinphy.simplechatserver.database.models.Result;
-import com.jinphy.simplechatserver.models.db_models.User;
 import com.jinphy.simplechatserver.models.network_models.Session;
 import com.jinphy.simplechatserver.models.network_models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
-import com.jinphy.simplechatserver.utils.ObjectHelper;
 import com.jinphy.simplechatserver.utils.StringUtils;
-
-import java.lang.reflect.Array;
-import java.sql.SQLException;
 
 import static com.jinphy.simplechatserver.constants.StringConst.LINE;
 import static com.jinphy.simplechatserver.models.network_models.Response.*;
@@ -49,6 +42,7 @@ public class Api {
             code = NO_PARAMS_MISSING;
             msg = "参数不完整！";
         } else {
+            // 查询数据库
             result = UserDao.getInstance().login(account, password, deviceId);
             session.loggoer.append(result.logger + LINE);
             if (result.count < 0) {
@@ -116,7 +110,7 @@ public class Api {
      * DESC: 创建新用户请求
      * Created by jinphy, on 2017/12/5, at 21:54
      */
-    @Path(path = RequestConfig.Path.createNewUser)
+    @Path(path = RequestConfig.Path.signUp)
     public static void createNewUser(Session session) {
         String code;
         String msg;
