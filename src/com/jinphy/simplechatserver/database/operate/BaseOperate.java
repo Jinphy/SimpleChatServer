@@ -51,7 +51,8 @@ abstract class BaseOperate implements Database.Operate {
     @Override
     public Database.Operate columnNames(String... columnNames) {
         if (columnNames.length == 0) {
-            ObjectHelper.throwRuntime("You must specify the columnNames as you invoke this method!");
+//            ObjectHelper.throwRuntime("You must specify the columnNames as you invoke this method!");
+            return this;
         }
         this.columnNames = columnNames;
         return this;

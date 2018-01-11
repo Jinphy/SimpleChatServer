@@ -24,7 +24,8 @@ import java.util.Map;
 public class Test {
 
     public static void main(String[] args) {
-
+        String string = "aB \n\t2";
+        System.out.println(string.replaceAll("[\\s\\S]","*"));
     }
 
 

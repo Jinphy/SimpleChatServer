@@ -28,6 +28,7 @@ public class Response<T>{
     public static final String NO_LOGIN = "30003";
     public static final String NO_GET_CODE = "30004";
     public static final String NO_SUBMIT_CODE = "30005";
+    public static final String NO_ACCESS_TOKEN = "30006";
 
     // 以4 开头的为客户端错误
     public static final String NO_API_NOT_FUND = "40001";

@@ -24,7 +24,7 @@ public class AccessToken {
      * DESC: accessToken 有效期30天
      * Created by jinphy, on 2018/1/4, at 15:34
      */
-    public static final long TIMEOUT = 30*24*60*60_000;
+    public static final long TIMEOUT = 30L*24L*60L*60L*1000L;
 
     private String deviceId;
 
@@ -68,10 +68,10 @@ public class AccessToken {
      * DESC: 创建一个AccessToken
      * Created by jinphy, on 2018/1/4, at 14:42
      */
-    public static AccessToken make(String deviceId) {
+    public static AccessToken make(String deviceId,String status) {
         AccessToken out = new AccessToken();
         out.deviceId = deviceId;
-        out.status = "true";
+        out.status = status;
         out.loginTime = System.currentTimeMillis() + "";
         return out;
     }
@@ -91,7 +91,7 @@ public class AccessToken {
         }
         AccessToken s = GsonUtils.toBean(EncryptUtils.decryptThenDecode(server), AccessToken.class);
         AccessToken c = GsonUtils.toBean(EncryptUtils.decryptThenDecode(client), AccessToken.class);
-        if (noEqual(TRUE, c.status.toUpperCase())) {
+        if (noEqual(User.STATUS_LOGIN, c.status.toUpperCase())) {
             return REASON_LOGIN_OUT;
         }
         if (c.isTimeout()) {
@@ -104,6 +104,8 @@ public class AccessToken {
     private boolean isTimeout() {
         long time = Long.valueOf(loginTime);
         long now = System.currentTimeMillis();
+        System.out.println(now - time);
+        System.out.println("timeout= "+TIMEOUT);
         return now - time > TIMEOUT;
     }
 

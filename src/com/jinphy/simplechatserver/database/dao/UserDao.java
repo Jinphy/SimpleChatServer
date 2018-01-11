@@ -18,9 +18,10 @@ public class UserDao {
     public static UserDao getInstance(){
         return instance;
     }
-    public synchronized Result findUser(String account)  {
+    public synchronized Result findUser(String account,String...columns)  {
         return Database.select()
                 .tables(Database.TABLE_USER)
+                .columnNames(columns)
                 .whereEq(User.ACCOUNT, account)
                 .execute();
     }
@@ -33,22 +34,31 @@ public class UserDao {
                 .execute();
     }
 
+    public synchronized Result updateUser(String account, String[] columns, String[] values) {
+        return Database.update()
+                .tables(Database.TABLE_USER)
+                .columnNames(columns)
+                .columnValues(values)
+                .whereEq(User.ACCOUNT, account)
+                .execute();
+    }
+
     public synchronized Result login(String account, String password, String deviceId) {
         // 查询当前账号account用户的密码
         Result result = findUser(account);
 
         if (result.count > 0) {
             // 账号存在，正常情况下count=1
-            String accessToken = AccessToken.make(deviceId).toString();
+            String accessToken = AccessToken.make(deviceId,User.STATUS_LOGIN).toString();
             result.first.put(User.ACCESS_TOKEN, accessToken);
-            result.first.put(User.STATUS, StringConst.TRUE.toLowerCase());
+            result.first.put(User.STATUS, User.STATUS_LOGIN);
 
             if ("null".equals(password) || password.equals(result.first.get(User.PASSWORD))) {
                 // 密码正确
                 Result update = Database.update()
                         .tables(Database.TABLE_USER)
                         .columnNames(User.STATUS, User.ACCESS_TOKEN)
-                        .columnValues(true, accessToken)
+                        .columnValues(User.STATUS_LOGIN, accessToken)
                         .whereEq(User.ACCOUNT, account)
                         .execute();
                 if (update.count > 0) {

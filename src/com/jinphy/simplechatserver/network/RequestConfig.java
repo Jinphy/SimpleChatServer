@@ -10,38 +10,21 @@ public interface RequestConfig {
      * Created by jinphy, on 2018/1/2, at 12:36
      */
     interface Path{
-        /**
-         * DESC: 登录接口
-         *  请求方式：Post
-         *  参数：
-         *      1、account:         必传，登录账号
-         *      2、password：       非必传，登录密码，md5加密，不传时需要用验证码验证登录
-         *      3、deviceId:        必传：设备唯一识别码，md5加密
-         *
-         * Created by jinphy, on 2018/1/2, at 12:35
-         */
+
+        // 登录接口
         String login = "/user/login";
 
-        /**
-         * DESC: 查找用户是否穿在接口
-         *  请求方式：Get
-         *  参数：
-         *      1、account：        必传，账号
-         *
-         * Created by jinphy, on 2018/1/2, at 12:43
-         */
+        // 登出接口
+        String logout = "/user/logout";
+
+        // 查询账号是否存在接口
         String findUser = "/user/findUser";
 
-        /**
-         * DESC: 注册用户接口
-         *  请求方式：Post
-         *  参数：
-         *      1、account:         必传：要创建的账号
-         *      2、password:        必传：用户密码
-         *      3、date:            必传：创建日期
-         * Created by jinphy, on 2018/1/2, at 12:47
-         */
+        // 注册接口
         String signUp = "/user/signUp";
+
+        // 修改用户信息接口
+        String modifyUserInfo = "/user/modifyUserInfo";
     }
 
 
@@ -50,5 +33,6 @@ public interface RequestConfig {
         String password = "password";
         String date = "date";
         String deviceId = "deviceId";
+        String accessToken = "accessToken";
     }
 }

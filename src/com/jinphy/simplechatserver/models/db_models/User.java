@@ -8,10 +8,14 @@ public class User {
     public static final String PASSWORD = "password";
     public static final String DATE = "date";
     public static final String SEX = "sex";
-    public static final String AVATAR_URL = "avatarUrl";
+    public static final String AVATAR = "avatar";
     public static final String STATUS = "status";
     public static final String ACCESS_TOKEN = "accessToken";
+    public static final String SIGNATURE = "signature";
+    public static final String ADDRESS = "address";
 
+    public static final String STATUS_LOGIN = "LOGIN";
+    public static final String STATUS_LOGOUT = "LOGOUT";
 
     
     private transient int id;
@@ -20,9 +24,11 @@ public class User {
     private String password;
     private String date;
     private String sex;
-    private String avatarUrl;
+    private String avatar;
     private String status;//登录状态
     private String accessToken;
+    private String signature;// 个性签名
+    private String address;
 
     public User(){}
 
@@ -31,7 +37,7 @@ public class User {
         this.account = account;
         this.password = password;
         this.date = date;
-        this.avatarUrl = avatorUrl;
+        this.avatar = avatorUrl;
     }
 
     public void setId(int id) {
@@ -54,8 +60,8 @@ public class User {
         this.date = date;
     }
 
-    public void setAvatarUrl(String avatarUrl) {
-        this.avatarUrl = avatarUrl;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getSex() {
@@ -86,8 +92,8 @@ public class User {
         return date;
     }
 
-    public String getAvatarUrl() {
-        return avatarUrl;
+    public String getAvatar() {
+        return avatar;
     }
 
     public String getStatus() {
@@ -106,6 +112,22 @@ public class User {
         this.accessToken = accessToken;
     }
 
+    public String getSignature() {
+        return signature;
+    }
+
+    public void setSignature(String signature) {
+        this.signature = signature;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -115,9 +137,11 @@ public class User {
                 ", password='" + password + '\'' +
                 ", date='" + date + '\'' +
                 ", sex='" + sex + '\'' +
-                ", avatarUrl='" + avatarUrl + '\'' +
+                ", avatar='" + avatar + '\'' +
                 ", status='" + status + '\'' +
                 ", accessToken='" + accessToken + '\'' +
+                ", signature='" + signature + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
 }

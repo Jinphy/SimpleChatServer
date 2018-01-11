@@ -3,10 +3,15 @@ package com.jinphy.simplechatserver.network;
 import com.jinphy.simplechatserver.annotation.Path;
 import com.jinphy.simplechatserver.database.dao.UserDao;
 import com.jinphy.simplechatserver.database.models.Result;
+import com.jinphy.simplechatserver.models.db_models.AccessToken;
+import com.jinphy.simplechatserver.models.db_models.User;
+import com.jinphy.simplechatserver.models.network_models.KeyValueArray;
 import com.jinphy.simplechatserver.models.network_models.Session;
 import com.jinphy.simplechatserver.models.network_models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
+
+import java.util.Map;
 
 import static com.jinphy.simplechatserver.constants.StringConst.LINE;
 import static com.jinphy.simplechatserver.models.network_models.Response.*;
@@ -142,4 +147,61 @@ public class Api {
         System.out.println(session.loggoer);
     }
 
+
+    @Path(path = RequestConfig.Path.modifyUserInfo)
+    public static void modifyUserInfo(Session session) {
+        String code;
+        String msg;
+        Map<String,String> data = null;
+
+        String account = session.params().remove(RequestConfig.Key.account);
+        String accessToken = session.params().remove(RequestConfig.Key.accessToken);
+        String deviceId = session.params().remove(RequestConfig.Key.deviceId);
+        if (StringUtils.isTrimEmpty(account, deviceId, accessToken)) {
+            code = NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            Result findResult = UserDao.getInstance().findUser(account);
+            String check = AccessToken.check(findResult.first.get(User.ACCESS_TOKEN), accessToken);
+            if (check != AccessToken.OK) {
+                // 令牌过期
+                code = NO_ACCESS_TOKEN;
+                msg = check;
+            } else {
+                // 参数正确
+
+                // 更新AccessToken
+                session.params().put(User.ACCESS_TOKEN, AccessToken.make(deviceId, User.STATUS_LOGIN).toString());
+
+                // 解析参数
+                KeyValueArray array = KeyValueArray.parse(session.params());
+
+                // 更新数据库，更新时account和deviceId要去除
+                Result result = UserDao.getInstance().updateUser(account, array.keys, array.values);
+
+                session.loggoer.append(result.logger + LINE);
+                if (result.count < 0) {
+                    code = NO_SERVER;
+                    msg = "服务器异常，请稍后再试！";
+                } else if (result.count == 0) {
+                    code = NO_PARAMS_ERROR;
+                    msg = "请求参数错误，请重新检查";
+                } else {
+                    // TODO: 2018/1/10 获取更新结果
+                    code = YES;
+                    msg = "个人信息修改成功！";
+                    // 更新成功后要把account加回来，并且把password删除
+                    // 所以最终返回给客户端的参数比入参少了deviceId和password两个字段
+                    session.params().put(User.ACCOUNT, account);
+                    session.params().remove(User.PASSWORD);
+                    data = session.params();
+                }
+            }
+        }
+        Response response = Response.make(code, msg, data);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
 }
