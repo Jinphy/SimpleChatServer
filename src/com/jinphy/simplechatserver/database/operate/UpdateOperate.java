@@ -73,6 +73,7 @@ class UpdateOperate extends BaseOperate {
             return Result.error();
         }
         String sql = generateSql();
+        System.out.println("sql====>>"+sql);
         try {
             Connection connection = DBConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();

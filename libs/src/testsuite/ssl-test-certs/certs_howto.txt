@@ -96,7 +96,7 @@ $ keytool -list -keystore ca-truststore -storepass password
 5. Client key and certificate keystore
 ======================================
 
-(Convert client key to pkcs12 format)
+(Convert client key toAccount pkcs12 format)
 $ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -passout pass:password -out client-keystore.p12
 
 (Create a keystore containing the client key)
@@ -113,7 +113,7 @@ $ keytool -list -keystore client-keystore -storepass password
 ==========================
 RUN SERVER WITH TEST CERTS
 ==========================
-Add to my.conf:
+Add toAccount my.conf:
 
 [mysqld]
 ssl-key = "/requestId/server-key.pem"

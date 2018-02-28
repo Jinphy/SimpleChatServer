@@ -1,9 +1,10 @@
-package com.jinphy.simplechatserver.network;
+package com.jinphy.simplechatserver.network.controller;
 
 import com.jinphy.simplechatserver.annotation.Path;
 import com.jinphy.simplechatserver.constants.StringConst;
-import com.jinphy.simplechatserver.models.network_models.Session;
+import com.jinphy.simplechatserver.models.network_models.CommonSession;
 import com.jinphy.simplechatserver.models.network_models.Response;
+import com.jinphy.simplechatserver.network.Api;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -13,16 +14,12 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * 该类用来处理网络请求接口
  * Created by jinphy on 2017/12/5.
  */
-public class RequestController {
-
-    private static ExecutorService threadPools = Executors.newCachedThreadPool();
+public class CommonServerController  extends BaseController{
 
     /**
      * DESC: 网络请求接口map
@@ -34,19 +31,19 @@ public class RequestController {
      * DESC: 单例持有类
      * Created by jinphy, on 2018/1/2, at 22:28
      */
-    private static class RequestControllerHolder {
-        static final RequestController DAFAULT = new RequestController();
+    private static class InstanceHolder {
+        static final CommonServerController DAFAULT = new CommonServerController();
     }
 
     /**
      * DESC: 单例模式
      * Created by jinphy, on 2017/12/5, at 22:06
      */
-    public static RequestController getInstance() {
-        if (!EventBus.getDefault().isRegistered(RequestControllerHolder.DAFAULT)) {
-            EventBus.getDefault().register(RequestControllerHolder.DAFAULT);
+    public static CommonServerController getInstance() {
+        if (!EventBus.getDefault().isRegistered(InstanceHolder.DAFAULT)) {
+            EventBus.getDefault().register(InstanceHolder.DAFAULT);
         }
-        return RequestControllerHolder.DAFAULT;
+        return InstanceHolder.DAFAULT;
     }
 
     /**
@@ -62,7 +59,7 @@ public class RequestController {
      * DESC: 私有化
      * Created by jinphy, on 2017/12/5, at 22:09
      */
-    public RequestController() {
+    public CommonServerController() {
         EventBus.getDefault().register(this);
         loadApiMethods();
     }
@@ -77,7 +74,7 @@ public class RequestController {
             if (Modifier.isStatic(method.getModifiers())                           // public
                     && Modifier.isPublic(method.getModifiers())                    // static
                     && method.getParameterCount() == 1                             // 参数只有一个
-                    && method.getParameterTypes()[0] == Session.class          // 参数类型为EventBusMsg
+                    && method.getParameterTypes()[0] == CommonSession.class          // 参数类型为EventBusMsg
                     && method.isAnnotationPresent(Path.class)) {                   // 注解了Path
                 methodMap.put(method.getAnnotation(Path.class).path(), method);
             }
@@ -90,7 +87,7 @@ public class RequestController {
      * Created by jinphy, on 2017/12/7, at 0:32
      */
     @Subscribe(threadMode = ThreadMode.ASYNC)
-    public void handleMsg(Session session) {
+    public void handleSession(CommonSession session) {
         threadPools.execute(()->{
             Method method = methodMap.get(session.path());
             if (method == null) {

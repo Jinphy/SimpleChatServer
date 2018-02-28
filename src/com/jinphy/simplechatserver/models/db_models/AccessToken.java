@@ -76,6 +76,15 @@ public class AccessToken {
         return out;
     }
 
+
+    /**
+     * DESC: 解析AccessToken
+     * Created by jinphy, on 2018/1/15, at 9:31
+     */
+    public static AccessToken parse(String accessToken) {
+        return GsonUtils.toBean(EncryptUtils.decryptThenDecode(accessToken), AccessToken.class);
+    }
+
     /**
      * DESC: 获取AccessToken失效的原因
      *
@@ -89,8 +98,8 @@ public class AccessToken {
         if (noEqual(server, client)) {
             return REASON_DEVICE_CHANGED;
         }
-        AccessToken s = GsonUtils.toBean(EncryptUtils.decryptThenDecode(server), AccessToken.class);
-        AccessToken c = GsonUtils.toBean(EncryptUtils.decryptThenDecode(client), AccessToken.class);
+        AccessToken s = AccessToken.parse(server);
+        AccessToken c = AccessToken.parse(client);
         if (noEqual(User.STATUS_LOGIN, c.status.toUpperCase())) {
             return REASON_LOGIN_OUT;
         }
@@ -104,8 +113,6 @@ public class AccessToken {
     private boolean isTimeout() {
         long time = Long.valueOf(loginTime);
         long now = System.currentTimeMillis();
-        System.out.println(now - time);
-        System.out.println("timeout= "+TIMEOUT);
         return now - time > TIMEOUT;
     }
 

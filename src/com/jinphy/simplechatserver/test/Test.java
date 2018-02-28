@@ -1,21 +1,7 @@
 package com.jinphy.simplechatserver.test;
 
-import com.google.gson.reflect.TypeToken;
-import com.jinphy.simplechatserver.database.models.Result;
-import com.jinphy.simplechatserver.database.operate.Database;
-import com.jinphy.simplechatserver.models.db_models.User;
-import com.jinphy.simplechatserver.models.network_models.Response;
-import com.jinphy.simplechatserver.utils.EncryptUtils;
-import com.jinphy.simplechatserver.utils.GsonUtils;
-import com.sun.org.apache.regexp.internal.RE;
-
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.lang.reflect.TypeVariable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
 
 /**
  * DESC:
@@ -23,11 +9,10 @@ import java.util.Map;
  */
 public class Test {
 
-    public static void main(String[] args) {
-        String string = "aB \n\t2";
-        System.out.println(string.replaceAll("[\\s\\S]","*"));
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        File file = new File("./files");
+        file.mkdirs();
+        System.out.println(file.getAbsolutePath());
     }
-
-
 
 }

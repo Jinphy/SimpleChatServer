@@ -139,13 +139,13 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <tr class="altColor">
 <td class="colFirst"><code>protected int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/SSLSocketChannel2.html#bufferallocations">bufferallocations</a></span></code>
-<div class="block">Should be used to count the buffer allocations.</div>
+<div class="block">Should be used toAccount count the buffer allocations.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>protected static <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/SSLSocketChannel2.html#emptybuffer">emptybuffer</a></span></code>
-<div class="block">This object is used to feed the <a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html?is-external=true" title="class or interface in javax.net.ssl"><code>SSLEngine</code></a>'s wrap and unwrap methods during the handshake phase.</div>
+<div class="block">This object is used toAccount feed the <a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html?is-external=true" title="class or interface in javax.net.ssl"><code>SSLEngine</code></a>'s wrap and unwrap methods during the handshake phase.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -177,7 +177,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <tr class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/SSLSocketChannel2.html#selectionKey">selectionKey</a></span></code>
-<div class="block">used to set interestOP SelectionKey.OP_WRITE for the underlying channel</div>
+<div class="block">used toAccount set interestOP SelectionKey.OP_WRITE for the underlying channel</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -274,7 +274,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <tr id="i9" class="rowColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/SSLSocketChannel2.html#isNeedRead--">isNeedRead</a></span>()</code>
-<div class="block">returns whether readMore should be called to fetch data which has been decoded but not yet been returned.</div>
+<div class="block">returns whether readMore should be called toAccount fetch data which has been decoded but not yet been returned.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -296,7 +296,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code>int</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/SSLSocketChannel2.html#readMore-java.nio.ByteBuffer-">readMore</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;dst)</code>
-<div class="block">This function does not read data from the underlying channel at all.</div>
+<div class="block">This function does not read data fromAccount the underlying channel at all.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -315,10 +315,10 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
@@ -342,7 +342,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>emptybuffer</h4>
 <pre>protected static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a> emptybuffer</pre>
-<div class="block">This object is used to feed the <a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html?is-external=true" title="class or interface in javax.net.ssl"><code>SSLEngine</code></a>'s wrap and unwrap methods during the handshake phase.</div>
+<div class="block">This object is used toAccount feed the <a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLEngine.html?is-external=true" title="class or interface in javax.net.ssl"><code>SSLEngine</code></a>'s wrap and unwrap methods during the handshake phase.</div>
 </li>
 </ul>
 <a name="exec">
@@ -410,7 +410,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>selectionKey</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/SelectionKey.html?is-external=true" title="class or interface in java.nio.channels">SelectionKey</a> selectionKey</pre>
-<div class="block">used to set interestOP SelectionKey.OP_WRITE for the underlying channel</div>
+<div class="block">used toAccount set interestOP SelectionKey.OP_WRITE for the underlying channel</div>
 </li>
 </ul>
 <a name="sslEngine">
@@ -447,8 +447,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>bufferallocations</h4>
 <pre>protected&nbsp;int bufferallocations</pre>
-<div class="block">Should be used to count the buffer allocations.
- But because of #190 where HandshakeStatus.FINISHED is not properly returned by nio wrap/unwrap this variable is used to check whether <a href="../../org/java_websocket/SSLSocketChannel2.html#createBuffers-javax.net.ssl.SSLSession-"><code>createBuffers(SSLSession)</code></a> needs to be called.</div>
+<div class="block">Should be used toAccount count the buffer allocations.
+ But because of #190 where HandshakeStatus.FINISHED is not properly returned by nio wrap/unwrap this variable is used toAccount check whether <a href="../../org/java_websocket/SSLSocketChannel2.html#createBuffers-javax.net.ssl.SSLSession-"><code>createBuffers(SSLSession)</code></a> needs toAccount be called.</div>
 </li>
 </ul>
 </li>
@@ -647,7 +647,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>isNeedWrite</h4>
 <pre>public&nbsp;boolean&nbsp;isNeedWrite()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isNeedWrite--">WrappedByteChannel</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isNeedWrite--">WrappedByteChannel</a></code></span></div>
 <div class="block">returns whether writeMore should be called write additional data.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -665,13 +665,13 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <h4>writeMore</h4>
 <pre>public&nbsp;void&nbsp;writeMore()
                throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#writeMore--">WrappedByteChannel</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#writeMore--">WrappedByteChannel</a></code></span></div>
 <div class="block">Gets called when <a href="../../org/java_websocket/WrappedByteChannel.html#isNeedWrite--"><code>WrappedByteChannel.isNeedWrite()</code></a> ()} requires a additional rite</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../org/java_websocket/WrappedByteChannel.html#writeMore--">writeMore</a></code>&nbsp;in interface&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html" title="interface in org.java_websocket">WrappedByteChannel</a></code></dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - may be thrown due to an error while writing</dd>
+<dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - may be thrown due toAccount an error while writing</dd>
 </dl>
 </li>
 </ul>
@@ -682,8 +682,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>isNeedRead</h4>
 <pre>public&nbsp;boolean&nbsp;isNeedRead()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isNeedRead--">WrappedByteChannel</a></code></span></div>
-<div class="block">returns whether readMore should be called to fetch data which has been decoded but not yet been returned.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isNeedRead--">WrappedByteChannel</a></code></span></div>
+<div class="block">returns whether readMore should be called toAccount fetch data which has been decoded but not yet been returned.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../org/java_websocket/WrappedByteChannel.html#isNeedRead--">isNeedRead</a></code>&nbsp;in interface&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html" title="interface in org.java_websocket">WrappedByteChannel</a></code></dd>
@@ -703,9 +703,9 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <h4>readMore</h4>
 <pre>public&nbsp;int&nbsp;readMore(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;dst)
              throws <a href="http://docs.oracle.com/javase/7/docs/api/javax/net/ssl/SSLException.html?is-external=true" title="class or interface in javax.net.ssl">SSLException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#readMore-java.nio.ByteBuffer-">WrappedByteChannel</a></code></span></div>
-<div class="block">This function does not read data from the underlying channel at all. It is just a way to fetch data which has already be received or decoded but was but was not yet returned to the user.
- This could be the case when the decoded data did not fit into the buffer the user passed to <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/ReadableByteChannel.html?is-external=true#read-java.nio.ByteBuffer-" title="class or interface in java.nio.channels"><code>ReadableByteChannel.read(ByteBuffer)</code></a>.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#readMore-java.nio.ByteBuffer-">WrappedByteChannel</a></code></span></div>
+<div class="block">This function does not read data fromAccount the underlying channel at all. It is just a way toAccount fetch data which has already be received or decoded but was but was not yet returned toAccount the user.
+ This could be the case when the decoded data did not fit into the buffer the user passed toAccount <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/ReadableByteChannel.html?is-external=true#read-java.nio.ByteBuffer-" title="class or interface in java.nio.channels"><code>ReadableByteChannel.read(ByteBuffer)</code></a>.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../org/java_websocket/WrappedByteChannel.html#readMore-java.nio.ByteBuffer-">readMore</a></code>&nbsp;in interface&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html" title="interface in org.java_websocket">WrappedByteChannel</a></code></dd>
@@ -725,7 +725,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/B
 <li class="blockList">
 <h4>isBlocking</h4>
 <pre>public&nbsp;boolean&nbsp;isBlocking()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isBlocking--">WrappedByteChannel</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../org/java_websocket/WrappedByteChannel.html#isBlocking--">WrappedByteChannel</a></code></span></div>
 <div class="block">This function returns the blocking state of the channel</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>

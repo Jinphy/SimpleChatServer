@@ -112,7 +112,7 @@ var activeTableTab = "activeTableTab";
 <br>
 <pre>public class <span class="typeNameLabel">Base64</span>
 extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></pre>
-<div class="block"><p>Encodes and decodes to and from Base64 notation.</p>
+<div class="block"><p>Encodes and decodes toAccount and fromAccount Base64 notation.</p>
  <p>Homepage: <a href="http://iharder.net/base64">http://iharder.net/base64</a>.</p>
  
  <p>Example:</p>
@@ -121,22 +121,22 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <br>
  <code>byte[] myByteArray = Base64.decode( encoded );</code>
 
- <p>The <tt>options</tt> parameter, which appears in a few places, is used to pass 
- several pieces of information to the encoder. In the "higher level" methods such as 
- encodeBytes( bytes, options ) the options parameter can be used to indicate such 
+ <p>The <tt>options</tt> parameter, which appears in a few places, is used toAccount pass
+ several pieces of information toAccount the encoder. In the "higher level" methods such as
+ encodeBytes( bytes, options ) the options parameter can be used toAccount indicate such
  things as first gzipping the bytes before encoding them, not inserting linefeeds,
  and encoding using the URL-safe and Ordered dialects.</p>
 
- <p>Note, according to <a href="http://www.faqs.org/rfcs/rfc3548.html">RFC3548</a>,
+ <p>Note, according toAccount <a href="http://www.faqs.org/rfcs/rfc3548.html">RFC3548</a>,
  Section 2.1, implementations should not add line feeds unless explicitly told
- to do so. I've got Base64 set to this behavior now, although earlier versions
+ toAccount do so. I've got Base64 set toAccount this behavior now, although earlier versions
  broke lines by default.</p>
 
- <p>The constants defined in Base64 can be OR-ed together to combine options, so you 
+ <p>The constants defined in Base64 can be OR-ed together toAccount combine options, so you
  might make a call like this:</p>
 
  <code>String encoded = Base64.encodeBytes( mybytes, Base64.GZIP | Base64.DO_BREAK_LINES );</code>
- <p>to compress the data before encoding it and then making the output have newline characters.</p>
+ <p>toAccount compress the data before encoding it and then making the output have newline characters.</p>
  <p>Also...</p>
  <code>String encoded = Base64.encodeBytes( crazyString.getBytes() );</code>
 
@@ -148,7 +148,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  <ul>
   <li>v2.3.7 - Fixed subtle bug when base 64 input stream contained the
    value 01111111, which is an invalid base 64 character but should not
-   throw an ArrayIndexOutOfBoundsException either. Led to discovery of
+   throw an ArrayIndexOutOfBoundsException either. Led toAccount discovery of
    mishandling (or potential for better handling) of other bad input
    characters. You should now get an IOException if you try decoding
    something that has bad characters in it.</li>
@@ -159,52 +159,52 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
    was wrong for files of size 31, 34, and 37 bytes.</li>
   <li>v2.3.4 - Fixed bug when working with gzipped streams whereby flushing
    the Base64.OutputStream closed the Base64 encoding (by padding with equals
-   signs) too soon. Also added an option to suppress the automatic decoding
+   signs) too soon. Also added an option toAccount suppress the automatic decoding
    of gzipped streams. Also added experimental support for specifying a
    class loader when using the
    <a href="../../../org/java_websocket/util/Base64.html#decodeToObject-java.lang.String-int-java.lang.ClassLoader-"><code>decodeToObject(java.lang.String, int, java.lang.ClassLoader)</code></a>
    method.</li>
-  <li>v2.3.3 - Changed default char encoding to US-ASCII which reduces the internal Java
+  <li>v2.3.3 - Changed default char encoding toAccount US-ASCII which reduces the internal Java
    footprint with its CharEncoders and so forth. Fixed some javadocs that were
    inconsistent. Removed imports and specified things like java.io.IOException
    explicitly inline.</li>
   <li>v2.3.2 - Reduced memory footprint! Finally refined the "guessing" of how big the
-   final encoded data will be so that the code doesn't have to create two output
+   final encoded data will be so that the code doesn't have toAccount create two output
    arrays: an oversized initial one and then a final, exact-sized one. Big win
    when using the <a href="../../../org/java_websocket/util/Base64.html#encodeBytesToBytes-byte:A-"><code>encodeBytesToBytes(byte[])</code></a> family of methods (and not
    using the gzip options which uses a different mechanism with streams and stuff).</li>
   <li>v2.3.1 - Added <a href="../../../org/java_websocket/util/Base64.html#encodeBytesToBytes-byte:A-int-int-int-"><code>encodeBytesToBytes(byte[], int, int, int)</code></a> and some
-   similar helper methods to be more efficient with memory by not returning a
+   similar helper methods toAccount be more efficient with memory by not returning a
    String but just a byte array.</li>
   <li>v2.3 - <strong>This is not a drop-in replacement!</strong> This is two years of comments
-   and bug fixes queued up and finally executed. Thanks to everyone who sent
-   me stuff, and I'm sorry I wasn't able to distribute your fixes to everyone else.
+   and bug fixes queued up and finally executed. Thanks toAccount everyone who sent
+   me stuff, and I'm sorry I wasn't able toAccount distribute your fixes toAccount everyone else.
    Much bad coding was cleaned up including throwing exceptions where necessary 
    instead of returning null values or something similar. Here are some changes
    that may affect you:
    <ul>
-    <li><em>Does not break lines, by default.</em> This is to keep in compliance with
+    <li><em>Does not break lines, by default.</em> This is toAccount keep in compliance with
       <a href="http://www.faqs.org/rfcs/rfc3548.html">RFC3548</a>.</li>
     <li><em>Throws exceptions instead of returning null values.</em> Because some operations
       (especially those that may permit the GZIP option) use IO streams, there
       is a possiblity of an java.io.IOException being thrown. After some discussion and
-      thought, I've changed the behavior of the methods to throw java.io.IOExceptions
+      thought, I've changed the behavior of the methods toAccount throw java.io.IOExceptions
       rather than return null if ever there's an error. I think this is more
-      appropriate, though it will require some changes to your code. Sorry,
-      it should have been done this way to begin with.</li>
-    <li><em>Removed all references to System.out, System.err, and the like.</em>
+      appropriate, though it will require some changes toAccount your code. Sorry,
+      it should have been done this way toAccount begin with.</li>
+    <li><em>Removed all references toAccount System.out, System.err, and the like.</em>
       Shame on me. All I can say is sorry they were ever there.</li>
     <li><em>Throws IllegalArgumentExceptions</em> as needed
       such as when passed arrays are null or offsets are invalid.</li>
-    <li>Cleaned up as much javadoc as I could to avoid any javadoc warnings.
+    <li>Cleaned up as much javadoc as I could toAccount avoid any javadoc warnings.
       This was especially annoying before for people who were thorough in their
       own projects and then had gobs of javadoc warnings on this file.</li>
    </ul>
   <li>v2.2.1 - Fixed bug using URL_SAFE and ORDERED encodings. Fixed bug
    when using very small files (~&lt; 40 bytes).</li>
-  <li>v2.2 - Added some helper methods for encoding/decoding directly from
-   one file to the next. Also added a main() method to support command line
-   encoding/decoding from one file to the next. Also added these Base64 dialects:
+  <li>v2.2 - Added some helper methods for encoding/decoding directly fromAccount
+   one file toAccount the next. Also added a main() method toAccount support command line
+   encoding/decoding fromAccount one file toAccount the next. Also added these Base64 dialects:
    <ol>
    <li>The default is RFC3548 format.</li>
    <li>Calling Base64.setFormat(Base64.BASE64_FORMAT.URLSAFE_FORMAT) generates
@@ -214,33 +214,33 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
    URL and file name friendly format that preserves lexical ordering as described
    in http://www.faqs.org/qa/rfcc-1940.html</li>
    </ol>
-   Special thanks to Jim Kellerman at <a href="http://www.powerset.com/">http://www.powerset.com/</a>
+   Special thanks toAccount Jim Kellerman at <a href="http://www.powerset.com/">http://www.powerset.com/</a>
    for contributing the new Base64 dialects.
   </li>
  
   <li>v2.1 - Cleaned up javadoc comments and unused variables and methods. Added
-   some convenience methods for reading and writing to and from files.</li>
+   some convenience methods for reading and writing toAccount and fromAccount files.</li>
   <li>v2.0.2 - Now specifies UTF-8 encoding in places where the code fails on systems
    with other encodings (like EBCDIC).</li>
   <li>v2.0.1 - Fixed an error when decoding a single byte, that is, when the
    encoded data was a single byte.</li>
-  <li>v2.0 - I got rid of methods that used booleans to set options. 
+  <li>v2.0 - I got rid of methods that used booleans toAccount set options.
    Now everything is more consolidated and cleaner. The code now detects
    when data that's being decoded is gzip-compressed and will decompress it
-   automatically. Generally things are cleaner. You'll probably have to
-   change some method calls that you were making to support the new
+   automatically. Generally things are cleaner. You'll probably have toAccount
+   change some method calls that you were making toAccount support the new
    options format (<tt>int</tt>s that you "OR" together).</li>
-  <li>v1.5.1 - Fixed bug when decompressing and decoding to a             
+  <li>v1.5.1 - Fixed bug when decompressing and decoding toAccount a
    byte[] using <tt>decode( String s, boolean gzipCompressed )</tt>.      
-   Added the ability to "suspend" encoding in the Output Stream so        
-   you can turn on and off the encoding if you need to embed base64       
+   Added the ability toAccount "suspend" encoding in the Output Stream so
+   you can turn on and off the encoding if you need toAccount embed base64
    data in an otherwise "normal" stream (like an XML file).</li>  
   <li>v1.5 - Output stream pases on flush() command but doesn't do anything itself.
       This helps when using GZIP streams.
-      Added the ability to GZip-compress objects before encoding them.</li>
-  <li>v1.4 - Added helper methods to read/write files.</li>
+      Added the ability toAccount GZip-compress objects before encoding them.</li>
+  <li>v1.4 - Added helper methods toAccount read/write files.</li>
   <li>v1.3.6 - Fixed OutputStream.flush() so that 'position' is reset.</li>
-  <li>v1.3.5 - Added flag to turn on and off line breaks. Fixed bug in input stream
+  <li>v1.3.5 - Added flag toAccount turn on and off line breaks. Fixed bug in input stream
       where last buffer being read, if not completely full, was not returned.</li>
   <li>v1.3.4 - Fixed when "improperly padded stream" error was thrown at the wrong time.</li>
   <li>v1.3.3 - Fixed I/O streams which were totally messed up.</li>
@@ -251,7 +251,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  This software comes with no guarantees or warranties but with
  plenty of well-wishing instead!
  Please visit <a href="http://iharder.net/base64">http://iharder.net/base64</a>
- periodically to check for updates or to contribute improvements.
+ periodically toAccount check for updates or toAccount contribute improvements.
  </p></div>
 <dl>
 <dt><span class="simpleTagLabel">Version:</span></dt>
@@ -280,17 +280,17 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr class="altColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.InputStream.html" title="class in org.java_websocket.util">Base64.InputStream</a></span></code>
-<div class="block">A <a href="../../../org/java_websocket/util/Base64.InputStream.html" title="class in org.java_websocket.util"><code>Base64.InputStream</code></a> will read data from another
+<div class="block">A <a href="../../../org/java_websocket/util/Base64.InputStream.html" title="class in org.java_websocket.util"><code>Base64.InputStream</code></a> will read data fromAccount another
  <tt>java.io.InputStream</tt>, given in the constructor,
- and encode/decode to/from Base64 notation on the fly.</div>
+ and encode/decode toAccount/fromAccount Base64 notation on the fly.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>static class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.OutputStream.html" title="class in org.java_websocket.util">Base64.OutputStream</a></span></code>
-<div class="block">A <a href="../../../org/java_websocket/util/Base64.OutputStream.html" title="class in org.java_websocket.util"><code>Base64.OutputStream</code></a> will write data to another
+<div class="block">A <a href="../../../org/java_websocket/util/Base64.OutputStream.html" title="class in org.java_websocket.util"><code>Base64.OutputStream</code></a> will write data toAccount another
  <tt>java.io.OutputStream</tt>, given in the constructor,
- and encode/decode to/from Base64 notation on the fly.</div>
+ and encode/decode toAccount/fromAccount Base64 notation on the fly.</div>
 </td>
 </tr>
 </table>
@@ -377,7 +377,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decode-byte:A-">decode</a></span>(byte[]&nbsp;source)</code>
-<div class="block">Low-level access to decoding ASCII characters in
+<div class="block">Low-level access toAccount decoding ASCII characters in
  the form of a byte array.</div>
 </td>
 </tr>
@@ -387,14 +387,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
       int&nbsp;off,
       int&nbsp;len,
       int&nbsp;options)</code>
-<div class="block">Low-level access to decoding ASCII characters in
+<div class="block">Low-level access toAccount decoding ASCII characters in
  the form of a byte array.</div>
 </td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decode-java.lang.String-">decode</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;s)</code>
-<div class="block">Decodes data from Base64 notation, automatically
+<div class="block">Decodes data fromAccount Base64 notation, automatically
  detecting gzip-compressed data and decompressing it.</div>
 </td>
 </tr>
@@ -402,7 +402,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decode-java.lang.String-int-">decode</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;s,
       int&nbsp;options)</code>
-<div class="block">Decodes data from Base64 notation, automatically
+<div class="block">Decodes data fromAccount Base64 notation, automatically
  detecting gzip-compressed data and decompressing it.</div>
 </td>
 </tr>
@@ -410,7 +410,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decodeFileToFile-java.lang.String-java.lang.String-">decodeFileToFile</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;infile,
                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outfile)</code>
-<div class="block">Reads <tt>infile</tt> and decodes it to <tt>outfile</tt>.</div>
+<div class="block">Reads <tt>infile</tt> and decodes it toAccount <tt>outfile</tt>.</div>
 </td>
 </tr>
 <tr id="i5" class="rowColor">
@@ -424,13 +424,13 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decodeToFile-java.lang.String-java.lang.String-">decodeToFile</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;dataToDecode,
             <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;filename)</code>
-<div class="block">Convenience method for decoding data to a file.</div>
+<div class="block">Convenience method for decoding data toAccount a file.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>static <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decodeToObject-java.lang.String-">decodeToObject</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;encodedObject)</code>
-<div class="block">Attempts to decode Base64 data and deserialize a Java
+<div class="block">Attempts toAccount decode Base64 data and deserialize a Java
  Object within.</div>
 </td>
 </tr>
@@ -439,7 +439,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#decodeToObject-java.lang.String-int-java.lang.ClassLoader-">decodeToObject</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;encodedObject,
               int&nbsp;options,
               <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;loader)</code>
-<div class="block">Attempts to decode Base64 data and deserialize a Java
+<div class="block">Attempts toAccount decode Base64 data and deserialize a Java
  Object within.</div>
 </td>
 </tr>
@@ -448,7 +448,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#encode-java.nio.ByteBuffer-java.nio.ByteBuffer-">encode</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;raw,
       <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;encoded)</code>
 <div class="block">Performs Base64 encoding on the <code>raw</code> ByteBuffer,
- writing it to the <code>encoded</code> ByteBuffer.</div>
+ writing it toAccount the <code>encoded</code> ByteBuffer.</div>
 </td>
 </tr>
 <tr id="i10" class="altColor">
@@ -456,7 +456,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#encode-java.nio.ByteBuffer-java.nio.CharBuffer-">encode</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;raw,
       <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/CharBuffer.html?is-external=true" title="class or interface in java.nio">CharBuffer</a>&nbsp;encoded)</code>
 <div class="block">Performs Base64 encoding on the <code>raw</code> ByteBuffer,
- writing it to the <code>encoded</code> CharBuffer.</div>
+ writing it toAccount the <code>encoded</code> CharBuffer.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
@@ -492,7 +492,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <tr id="i15" class="rowColor">
 <td class="colFirst"><code>static byte[]</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#encodeBytesToBytes-byte:A-">encodeBytesToBytes</a></span>(byte[]&nbsp;source)</code>
-<div class="block">Similar to <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-"><code>encodeBytes(byte[])</code></a> but returns
+<div class="block">Similar toAccount <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-"><code>encodeBytes(byte[])</code></a> but returns
  a byte array instead of instantiating a String.</div>
 </td>
 </tr>
@@ -502,7 +502,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
                   int&nbsp;off,
                   int&nbsp;len,
                   int&nbsp;options)</code>
-<div class="block">Similar to <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-int-int-int-"><code>encodeBytes(byte[], int, int, int)</code></a> but returns
+<div class="block">Similar toAccount <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-int-int-int-"><code>encodeBytes(byte[], int, int, int)</code></a> but returns
  a byte array instead of instantiating a String.</div>
 </td>
 </tr>
@@ -510,7 +510,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#encodeFileToFile-java.lang.String-java.lang.String-">encodeFileToFile</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;infile,
                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outfile)</code>
-<div class="block">Reads <tt>infile</tt> and encodes it to <tt>outfile</tt>.</div>
+<div class="block">Reads <tt>infile</tt> and encodes it toAccount <tt>outfile</tt>.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -539,15 +539,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <td class="colFirst"><code>static void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/util/Base64.html#encodeToFile-byte:A-java.lang.String-">encodeToFile</a></span>(byte[]&nbsp;dataToEncode,
             <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;filename)</code>
-<div class="block">Convenience method for encoding data to a file.</div>
+<div class="block">Convenience method for encoding data toAccount a file.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
@@ -658,7 +658,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <div class="block">Encode using Base64-like encoding that is URL- and Filename-safe as described
  in Section 4 of RFC3548: 
  <a href="http://www.faqs.org/rfcs/rfc3548.html">http://www.faqs.org/rfcs/rfc3548.html</a>.
- It is important to note that data encoded this way is <em>not</em> officially valid Base64, 
+ It is important toAccount note that data encoded this way is <em>not</em> officially valid Base64,
  or at the very least should not be called Base64 without also specifying that is
  was encoded using the URL- and Filename-safe dialect.</div>
 <dl>
@@ -699,7 +699,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;encode(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;raw,
                           <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;encoded)</pre>
 <div class="block">Performs Base64 encoding on the <code>raw</code> ByteBuffer,
- writing it to the <code>encoded</code> ByteBuffer.
+ writing it toAccount the <code>encoded</code> ByteBuffer.
  This is an experimental feature. Currently it does not
  pass along any options (such as <a href="../../../org/java_websocket/util/Base64.html#DO_BREAK_LINES"><code>DO_BREAK_LINES</code></a>
  or <a href="../../../org/java_websocket/util/Base64.html#GZIP"><code>GZIP</code></a>.</div>
@@ -721,7 +721,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;encode(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;raw,
                           <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/CharBuffer.html?is-external=true" title="class or interface in java.nio">CharBuffer</a>&nbsp;encoded)</pre>
 <div class="block">Performs Base64 encoding on the <code>raw</code> ByteBuffer,
- writing it to the <code>encoded</code> CharBuffer.
+ writing it toAccount the <code>encoded</code> CharBuffer.
  This is an experimental feature. Currently it does not
  pass along any options (such as <a href="../../../org/java_websocket/util/Base64.html#DO_BREAK_LINES"><code>DO_BREAK_LINES</code></a>
  or <a href="../../../org/java_websocket/util/Base64.html#GZIP"><code>GZIP</code></a>.</div>
@@ -747,14 +747,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   
  <p>As of v 2.3, if the object
  cannot be serialized or there is another error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned a null value, but
- in retrospect that's a pretty poor way to handle it.</p>
+ in retrospect that's a pretty poor way toAccount handle it.</p>
  
  The object is not GZip-compressed before being encoded.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serializableObject</code> - The object to encode</dd>
+<dd><code>serializableObject</code> - The object toAccount encode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -779,9 +779,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
   
  <p>As of v 2.3, if the object
  cannot be serialized or there is another error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned a null value, but
- in retrospect that's a pretty poor way to handle it.</p>
+ in retrospect that's a pretty poor way toAccount handle it.</p>
  
  The object is not GZip-compressed before being encoded.
  <p>
@@ -795,7 +795,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Example: <code>encodeObject( myObj, Base64.GZIP | Base64.DO_BREAK_LINES )</code></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serializableObject</code> - The object to encode</dd>
+<dd><code>serializableObject</code> - The object toAccount encode</dd>
 <dd><code>options</code> - Specified options</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded object</dd>
@@ -820,7 +820,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Does not GZip-compress data.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The data in Base64-encoded form</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -853,12 +853,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 
   
  <p>As of v 2.3, if there is an error with the GZIP stream,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned a null value, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dd><code>options</code> - Specified options</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded data as a String</dd>
@@ -886,14 +886,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  Does not GZip-compress data.
   
  <p>As of v 2.3, if there is an error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned a null value, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dd><code>off</code> - Offset in array where conversion should begin</dd>
-<dd><code>len</code> - Length of data to convert</dd>
+<dd><code>len</code> - Length of data toAccount convert</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded data as a String</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -928,14 +928,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 
   
  <p>As of v 2.3, if there is an error with the GZIP stream,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned a null value, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dd><code>off</code> - Offset in array where conversion should begin</dd>
-<dd><code>len</code> - Length of data to convert</dd>
+<dd><code>len</code> - Length of data toAccount convert</dd>
 <dd><code>options</code> - Specified options</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded data as a String</dd>
@@ -957,12 +957,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <li class="blockList">
 <h4>encodeBytesToBytes</h4>
 <pre>public static&nbsp;byte[]&nbsp;encodeBytesToBytes(byte[]&nbsp;source)</pre>
-<div class="block">Similar to <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-"><code>encodeBytes(byte[])</code></a> but returns
+<div class="block">Similar toAccount <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-"><code>encodeBytes(byte[])</code></a> but returns
  a byte array instead of instantiating a String. This is more efficient
- if you're working with I/O streams and have large data sets to encode.</div>
+ if you're working with I/O streams and have large data sets toAccount encode.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded data as a byte[] (of ASCII characters)</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -983,14 +983,14 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
                                         int&nbsp;len,
                                         int&nbsp;options)
                                  throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Similar to <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-int-int-int-"><code>encodeBytes(byte[], int, int, int)</code></a> but returns
+<div class="block">Similar toAccount <a href="../../../org/java_websocket/util/Base64.html#encodeBytes-byte:A-int-int-int-"><code>encodeBytes(byte[], int, int, int)</code></a> but returns
  a byte array instead of instantiating a String. This is more efficient
- if you're working with I/O streams and have large data sets to encode.</div>
+ if you're working with I/O streams and have large data sets toAccount encode.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>source</code> - The data to convert</dd>
+<dd><code>source</code> - The data toAccount convert</dd>
 <dd><code>off</code> - Offset in array where conversion should begin</dd>
-<dd><code>len</code> - Length of data to convert</dd>
+<dd><code>len</code> - Length of data toAccount convert</dd>
 <dd><code>options</code> - Specified options</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The Base64-encoded data as a String</dd>
@@ -1013,7 +1013,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>decode</h4>
 <pre>public static&nbsp;byte[]&nbsp;decode(byte[]&nbsp;source)
                      throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Low-level access to decoding ASCII characters in
+<div class="block">Low-level access toAccount decoding ASCII characters in
  the form of a byte array. <strong>Ignores GUNZIP option, if
  it's set.</strong> This is not generally a recommended method,
  although it is used internally as part of the decoding process.
@@ -1043,7 +1043,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
                             int&nbsp;len,
                             int&nbsp;options)
                      throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Low-level access to decoding ASCII characters in
+<div class="block">Low-level access toAccount decoding ASCII characters in
  the form of a byte array. <strong>Ignores GUNZIP option, if
  it's set.</strong> This is not generally a recommended method,
  although it is used internally as part of the decoding process.
@@ -1053,9 +1053,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>source</code> - The Base64 encoded data</dd>
-<dd><code>off</code> - The offset of where to begin decoding</dd>
-<dd><code>len</code> - The length of characters to decode</dd>
-<dd><code>options</code> - Can specify options such as alphabet type to use</dd>
+<dd><code>off</code> - The offset of where toAccount begin decoding</dd>
+<dd><code>len</code> - The length of characters toAccount decode</dd>
+<dd><code>options</code> - Can specify options such as alphabet type toAccount use</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>decoded data</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1073,11 +1073,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <h4>decode</h4>
 <pre>public static&nbsp;byte[]&nbsp;decode(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;s)
                      throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Decodes data from Base64 notation, automatically
+<div class="block">Decodes data fromAccount Base64 notation, automatically
  detecting gzip-compressed data and decompressing it.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>s</code> - the string to decode</dd>
+<dd><code>s</code> - the string toAccount decode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the decoded data</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1096,11 +1096,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;byte[]&nbsp;decode(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;s,
                             int&nbsp;options)
                      throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Decodes data from Base64 notation, automatically
+<div class="block">Decodes data fromAccount Base64 notation, automatically
  detecting gzip-compressed data and decompressing it.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>s</code> - the string to decode</dd>
+<dd><code>s</code> - the string toAccount decode</dd>
 <dd><code>options</code> - encode options such as URL_SAFE</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the decoded data</dd>
@@ -1121,11 +1121,11 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a>&nbsp;decodeToObject(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;encodedObject)
                              throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
                                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
-<div class="block">Attempts to decode Base64 data and deserialize a Java
+<div class="block">Attempts toAccount decode Base64 data and deserialize a Java
  Object within. Returns <tt>null</tt> if there was an error.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>encodedObject</code> - The Base64 data to decode</dd>
+<dd><code>encodedObject</code> - The Base64 data toAccount decode</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The decoded and deserialized object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1149,15 +1149,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
                                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassLoader.html?is-external=true" title="class or interface in java.lang">ClassLoader</a>&nbsp;loader)
                              throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a>,
                                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/ClassNotFoundException.html?is-external=true" title="class or interface in java.lang">ClassNotFoundException</a></pre>
-<div class="block">Attempts to decode Base64 data and deserialize a Java
+<div class="block">Attempts toAccount decode Base64 data and deserialize a Java
  Object within. Returns <tt>null</tt> if there was an error.
  If <tt>loader</tt> is not null, it will be the class loader
  used when deserializing.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>encodedObject</code> - The Base64 data to decode</dd>
-<dd><code>options</code> - Various parameters related to decoding</dd>
-<dd><code>loader</code> - Optional class loader to use in deserializing classes.</dd>
+<dd><code>encodedObject</code> - The Base64 data toAccount decode</dd>
+<dd><code>options</code> - Various parameters related toAccount decoding</dd>
+<dd><code>loader</code> - Optional class loader toAccount use in deserializing classes.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The decoded and deserialized object</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
@@ -1179,15 +1179,15 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;encodeToFile(byte[]&nbsp;dataToEncode,
                                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;filename)
                          throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Convenience method for encoding data to a file.
+<div class="block">Convenience method for encoding data toAccount a file.
 
  <p>As of v 2.3, if there is a error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned false, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>dataToEncode</code> - byte array of data to encode in base64 form</dd>
+<dd><code>dataToEncode</code> - byte array of data toAccount encode in base64 form</dd>
 <dd><code>filename</code> - Filename for saving encoded data</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></code> - if there is an error</dd>
@@ -1206,12 +1206,12 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;decodeToFile(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;dataToDecode,
                                 <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;filename)
                          throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Convenience method for decoding data to a file.
+<div class="block">Convenience method for decoding data toAccount a file.
 
  <p>As of v 2.3, if there is a error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned false, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>dataToDecode</code> - Base64-encoded data as a string</dd>
@@ -1235,9 +1235,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  file and decoding it.
 
  <p>As of v 2.3, if there is a error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned false, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>filename</code> - Filename for reading encoded data</dd>
@@ -1262,9 +1262,9 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
  and base64-encoding it.
 
  <p>As of v 2.3, if there is a error,
- the method will throw an java.io.IOException. <b>This is new to v2.3!</b>
+ the method will throw an java.io.IOException. <b>This is new toAccount v2.3!</b>
  In earlier versions, it just returned false, but
- in retrospect that's a pretty poor way to handle it.</p></div>
+ in retrospect that's a pretty poor way toAccount handle it.</p></div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>filename</code> - Filename for reading binary data</dd>
@@ -1286,7 +1286,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;encodeFileToFile(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;infile,
                                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outfile)
                              throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Reads <tt>infile</tt> and encodes it to <tt>outfile</tt>.</div>
+<div class="block">Reads <tt>infile</tt> and encodes it toAccount <tt>outfile</tt>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>infile</code> - Input file</dd>
@@ -1307,7 +1307,7 @@ extends <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?
 <pre>public static&nbsp;void&nbsp;decodeFileToFile(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;infile,
                                     <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;outfile)
                              throws <a href="http://docs.oracle.com/javase/7/docs/api/java/io/IOException.html?is-external=true" title="class or interface in java.io">IOException</a></pre>
-<div class="block">Reads <tt>infile</tt> and decodes it to <tt>outfile</tt>.</div>
+<div class="block">Reads <tt>infile</tt> and decodes it toAccount <tt>outfile</tt>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>infile</code> - Input file</dd>

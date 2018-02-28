@@ -14,6 +14,8 @@ import java.sql.Statement;
 public class Database {
 
     public static final String TABLE_USER = "user";
+    public static final String TABLE_FRIEND = "friend";
+    public static final String TABLE_MESSAGE = "message";
 
 
     /**

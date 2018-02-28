@@ -25,8 +25,13 @@ public interface RequestConfig {
 
         // 修改用户信息接口
         String modifyUserInfo = "/user/modifyUserInfo";
-    }
 
+        // 添加好友接口
+        String addFriend = "/friend/addFriend";
+
+        // 加载指定账号对应的所有好友接口
+        String loadFriends = "/friend/loadFriends";
+    }
 
     interface Key{
         String account = "account";

@@ -16,7 +16,7 @@ public class User {
 
     public static final String STATUS_LOGIN = "LOGIN";
     public static final String STATUS_LOGOUT = "LOGOUT";
-
+    public static final String SYSTEM = "SYSTEM";
     
     private transient int id;
     private String account;

@@ -127,8 +127,8 @@ var activeTableTab = "activeTableTab";
 <pre>public abstract class <span class="typeNameLabel">WebSocketClient</span>
 extends <a href="../../../org/java_websocket/AbstractWebSocket.html" title="class in org.java_websocket">AbstractWebSocket</a>
 implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.html?is-external=true" title="class or interface in java.lang">Runnable</a>, <a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></pre>
-<div class="block">A subclass must implement at least <var>onOpen</var>, <var>onClose</var>, and <var>onMessage</var> to be
- useful. At runtime the user is expected to establish a connection via <a href="../../../org/java_websocket/client/WebSocketClient.html#connect--"><code>connect()</code></a>, then receive events like <a href="../../../org/java_websocket/client/WebSocketClient.html#onMessage-java.lang.String-"><code>onMessage(String)</code></a> via the overloaded methods and to <a href="../../../org/java_websocket/client/WebSocketClient.html#send-java.lang.String-"><code>send(String)</code></a> data to the server.</div>
+<div class="block">A subclass must implement at least <var>onOpen</var>, <var>onClose</var>, and <var>onMessage</var> toAccount be
+ useful. At runtime the user is expected toAccount establish a connection via <a href="../../../org/java_websocket/client/WebSocketClient.html#connect--"><code>connect()</code></a>, then receive events like <a href="../../../org/java_websocket/client/WebSocketClient.html#onMessage-java.lang.String-"><code>onMessage(String)</code></a> via the overloaded methods and toAccount <a href="../../../org/java_websocket/client/WebSocketClient.html#send-java.lang.String-"><code>send(String)</code></a> data toAccount the server.</div>
 </li>
 </ul>
 </div>
@@ -142,10 +142,10 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 </a>
 <h3>Nested Class Summary</h3>
 <ul class="blockList">
-<li class="blockList"><a name="nested.classes.inherited.from.class.org.java_websocket.WebSocket">
+<li class="blockList"><a name="nested.classes.inherited.fromAccount.class.org.java_websocket.WebSocket">
 <!--   -->
 </a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></h3>
+<h3>Nested classes/interfaces inherited fromAccount interface&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></h3>
 <code><a href="../../../org/java_websocket/WebSocket.READYSTATE.html" title="enum in org.java_websocket">WebSocket.READYSTATE</a>, <a href="../../../org/java_websocket/WebSocket.Role.html" title="enum in org.java_websocket">WebSocket.Role</a></code></li>
 </ul>
 </li>
@@ -165,15 +165,15 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr class="altColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#uri">uri</a></span></code>
-<div class="block">The URI this channel is supposed to connect to.</div>
+<div class="block">The URI this channel is supposed toAccount connect toAccount.</div>
 </td>
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="fields.inherited.from.class.org.java_websocket.WebSocket">
+<li class="blockList"><a name="fields.inherited.fromAccount.class.org.java_websocket.WebSocket">
 <!--   -->
 </a>
-<h3>Fields inherited from interface&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></h3>
+<h3>Fields inherited fromAccount interface&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></h3>
 <code><a href="../../../org/java_websocket/WebSocket.html#DEFAULT_PORT">DEFAULT_PORT</a>, <a href="../../../org/java_websocket/WebSocket.html#DEFAULT_WSS_PORT">DEFAULT_WSS_PORT</a></code></li>
 </ul>
 </li>
@@ -191,14 +191,14 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 </tr>
 <tr class="altColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#WebSocketClient-java.net.URI-">WebSocketClient</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a>&nbsp;serverUri)</code>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
  specified URI.</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colOne"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#WebSocketClient-java.net.URI-org.java_websocket.drafts.Draft-">WebSocketClient</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a>&nbsp;serverUri,
                <a href="../../../org/java_websocket/drafts/Draft.html" title="class in org.java_websocket.drafts">Draft</a>&nbsp;protocolDraft)</code>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
  specified URI.</div>
 </td>
 </tr>
@@ -207,7 +207,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
                <a href="../../../org/java_websocket/drafts/Draft.html" title="class in org.java_websocket.drafts">Draft</a>&nbsp;protocolDraft,
                <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;httpHeaders,
                int&nbsp;connectTimeout)</code>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
  specified URI.</div>
 </td>
 </tr>
@@ -248,7 +248,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i3" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#closeBlocking--">closeBlocking</a></span>()</code>
-<div class="block">Same as <code>close</code> but blocks until the websocket closed or failed to do so.</div>
+<div class="block">Same as <code>close</code> but blocks until the websocket closed or failed toAccount do so.</div>
 </td>
 </tr>
 <tr id="i4" class="altColor">
@@ -267,13 +267,13 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#connectBlocking--">connectBlocking</a></span>()</code>
-<div class="block">Same as <code>connect</code> but blocks until the websocket connected or failed to do so.</div>
+<div class="block">Same as <code>connect</code> but blocks until the websocket connected or failed toAccount do so.</div>
 </td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>protected <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#connections--">connections</a></span>()</code>
-<div class="block">Getter to get all the currently available connections</div>
+<div class="block">Getter toAccount get all the currently available connections</div>
 </td>
 </tr>
 <tr id="i8" class="altColor">
@@ -291,7 +291,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i10" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/net/InetSocketAddress.html?is-external=true" title="class or interface in java.net">InetSocketAddress</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#getLocalSocketAddress--">getLocalSocketAddress</a></span>()</code>
-<div class="block">Returns the address of the endpoint this socket is bound to.</div>
+<div class="block">Returns the address of the endpoint this socket is bound toAccount.</div>
 </td>
 </tr>
 <tr id="i11" class="rowColor">
@@ -307,7 +307,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i13" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/net/InetSocketAddress.html?is-external=true" title="class or interface in java.net">InetSocketAddress</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#getRemoteSocketAddress--">getRemoteSocketAddress</a></span>()</code>
-<div class="block">Returns the address of the endpoint this socket is connected to, or<code>null</code> if it is unconnected.</div>
+<div class="block">Returns the address of the endpoint this socket is connected toAccount, or<code>null</code> if it is unconnected.</div>
 </td>
 </tr>
 <tr id="i14" class="altColor">
@@ -324,13 +324,13 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i16" class="altColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/net/Socket.html?is-external=true" title="class or interface in java.net">Socket</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#getSocket--">getSocket</a></span>()</code>
-<div class="block">Returns the socket to allow Hostname Verification</div>
+<div class="block">Returns the socket toAccount allow Hostname Verification</div>
 </td>
 </tr>
 <tr id="i17" class="rowColor">
 <td class="colFirst"><code><a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a></code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#getURI--">getURI</a></span>()</code>
-<div class="block">Returns the URI that this WebSocketClient is connected to.</div>
+<div class="block">Returns the URI that this WebSocketClient is connected toAccount.</div>
 </td>
 </tr>
 <tr id="i18" class="altColor">
@@ -477,7 +477,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i40" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#onWriteDemand-org.java_websocket.WebSocket-">onWriteDemand</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn)</code>
-<div class="block">This method is used to inform the selector thread that there is data queued to be written to the socket.</div>
+<div class="block">This method is used toAccount inform the selector thread that there is data queued toAccount be written toAccount the socket.</div>
 </td>
 </tr>
 <tr id="i41" class="rowColor">
@@ -487,19 +487,19 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <tr id="i42" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#send-byte:A-">send</a></span>(byte[]&nbsp;data)</code>
-<div class="block">Sends binary <var> data</var> to the connected webSocket server.</div>
+<div class="block">Sends binary <var> data</var> toAccount the connected webSocket server.</div>
 </td>
 </tr>
 <tr id="i43" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#send-java.nio.ByteBuffer-">send</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;bytes)</code>
-<div class="block">Send Binary data (plain bytes) to the other end.</div>
+<div class="block">Send Binary data (plain bytes) toAccount the other end.</div>
 </td>
 </tr>
 <tr id="i44" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#send-java.lang.String-">send</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)</code>
-<div class="block">Sends <var>text</var> to the connected websocket server.</div>
+<div class="block">Sends <var>text</var> toAccount the connected websocket server.</div>
 </td>
 </tr>
 <tr id="i45" class="rowColor">
@@ -507,25 +507,25 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#sendFragmentedFrame-org.java_websocket.framing.Framedata.Opcode-java.nio.ByteBuffer-boolean-">sendFragmentedFrame</a></span>(<a href="../../../org/java_websocket/framing/Framedata.Opcode.html" title="enum in org.java_websocket.framing">Framedata.Opcode</a>&nbsp;op,
                    <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;buffer,
                    boolean&nbsp;fin)</code>
-<div class="block">Allows to send continuous/fragmented frames conveniently.</div>
+<div class="block">Allows toAccount send continuous/fragmented frames conveniently.</div>
 </td>
 </tr>
 <tr id="i46" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#sendFrame-java.util.Collection-">sendFrame</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&gt;&nbsp;frames)</code>
-<div class="block">Send a collection of frames to the other end</div>
+<div class="block">Send a collection of frames toAccount the other end</div>
 </td>
 </tr>
 <tr id="i47" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#sendFrame-org.java_websocket.framing.Framedata-">sendFrame</a></span>(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;framedata)</code>
-<div class="block">Send a frame to the other end</div>
+<div class="block">Send a frame toAccount the other end</div>
 </td>
 </tr>
 <tr id="i48" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html#sendPing--">sendPing</a></span>()</code>
-<div class="block">Send a ping to the other end</div>
+<div class="block">Send a ping toAccount the other end</div>
 </td>
 </tr>
 <tr id="i49" class="rowColor">
@@ -540,24 +540,24 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.java_websocket.AbstractWebSocket">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.org.java_websocket.AbstractWebSocket">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.java_websocket.<a href="../../../org/java_websocket/AbstractWebSocket.html" title="class in org.java_websocket">AbstractWebSocket</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;org.java_websocket.<a href="../../../org/java_websocket/AbstractWebSocket.html" title="class in org.java_websocket">AbstractWebSocket</a></h3>
 <code><a href="../../../org/java_websocket/AbstractWebSocket.html#getConnectionLostTimeout--">getConnectionLostTimeout</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#isReuseAddr--">isReuseAddr</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#isTcpNoDelay--">isTcpNoDelay</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#setConnectionLostTimeout-int-">setConnectionLostTimeout</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#setReuseAddr-boolean-">setReuseAddr</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#setTcpNoDelay-boolean-">setTcpNoDelay</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#startConnectionLostTimer--">startConnectionLostTimer</a>, <a href="../../../org/java_websocket/AbstractWebSocket.html#stopConnectionLostTimer--">stopConnectionLostTimer</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.org.java_websocket.WebSocketAdapter">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.org.java_websocket.WebSocketAdapter">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocketAdapter.html" title="class in org.java_websocket">WebSocketAdapter</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;org.java_websocket.<a href="../../../org/java_websocket/WebSocketAdapter.html" title="class in org.java_websocket">WebSocketAdapter</a></h3>
 <code><a href="../../../org/java_websocket/WebSocketAdapter.html#getFlashPolicy-org.java_websocket.WebSocket-">getFlashPolicy</a>, <a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketHandshakeReceivedAsClient-org.java_websocket.WebSocket-org.java_websocket.handshake.ClientHandshake-org.java_websocket.handshake.ServerHandshake-">onWebsocketHandshakeReceivedAsClient</a>, <a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketHandshakeReceivedAsServer-org.java_websocket.WebSocket-org.java_websocket.drafts.Draft-org.java_websocket.handshake.ClientHandshake-">onWebsocketHandshakeReceivedAsServer</a>, <a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketHandshakeSentAsClient-org.java_websocket.WebSocket-org.java_websocket.handshake.ClientHandshake-">onWebsocketHandshakeSentAsClient</a>, <a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketPing-org.java_websocket.WebSocket-org.java_websocket.framing.Framedata-">onWebsocketPing</a>, <a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketPong-org.java_websocket.WebSocket-org.java_websocket.framing.Framedata-">onWebsocketPong</a></code></li>
 </ul>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#equals-java.lang.Object-" title="class or interface in java.lang">equals</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#hashCode--" title="class or interface in java.lang">hashCode</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#toString--" title="class or interface in java.lang">toString</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
@@ -581,7 +581,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>uri</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a> uri</pre>
-<div class="block">The URI this channel is supposed to connect to.</div>
+<div class="block">The URI this channel is supposed toAccount connect toAccount.</div>
 </li>
 </ul>
 </li>
@@ -599,12 +599,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>WebSocketClient</h4>
 <pre>public&nbsp;WebSocketClient(<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a>&nbsp;serverUri)</pre>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
- specified URI. The channel does not attampt to connect automatically. The connection
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
+ specified URI. The channel does not attampt toAccount connect automatically. The connection
  will be established once you call <var>connect</var>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serverUri</code> - the server URI to connect to</dd>
+<dd><code>serverUri</code> - the server URI toAccount connect toAccount</dd>
 </dl>
 </li>
 </ul>
@@ -616,12 +616,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>WebSocketClient</h4>
 <pre>public&nbsp;WebSocketClient(<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a>&nbsp;serverUri,
                        <a href="../../../org/java_websocket/drafts/Draft.html" title="class in org.java_websocket.drafts">Draft</a>&nbsp;protocolDraft)</pre>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
- specified URI. The channel does not attampt to connect automatically. The connection
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
+ specified URI. The channel does not attampt toAccount connect automatically. The connection
  will be established once you call <var>connect</var>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serverUri</code> - the server URI to connect to</dd>
+<dd><code>serverUri</code> - the server URI toAccount connect toAccount</dd>
 <dd><code>protocolDraft</code> - The draft which should be used for this connection</dd>
 </dl>
 </li>
@@ -636,12 +636,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
                        <a href="../../../org/java_websocket/drafts/Draft.html" title="class in org.java_websocket.drafts">Draft</a>&nbsp;protocolDraft,
                        <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Map.html?is-external=true" title="class or interface in java.util">Map</a>&lt;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>,<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&gt;&nbsp;httpHeaders,
                        int&nbsp;connectTimeout)</pre>
-<div class="block">Constructs a WebSocketClient instance and sets it to the connect to the
- specified URI. The channel does not attampt to connect automatically. The connection
+<div class="block">Constructs a WebSocketClient instance and sets it toAccount the connect toAccount the
+ specified URI. The channel does not attampt toAccount connect automatically. The connection
  will be established once you call <var>connect</var>.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>serverUri</code> - the server URI to connect to</dd>
+<dd><code>serverUri</code> - the server URI toAccount connect toAccount</dd>
 <dd><code>protocolDraft</code> - The draft which should be used for this connection</dd>
 <dd><code>httpHeaders</code> - Additional HTTP-Headers</dd>
 <dd><code>connectTimeout</code> - The Timeout for the connection</dd>
@@ -663,10 +663,10 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>getURI</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/net/URI.html?is-external=true" title="class or interface in java.net">URI</a>&nbsp;getURI()</pre>
-<div class="block">Returns the URI that this WebSocketClient is connected to.</div>
+<div class="block">Returns the URI that this WebSocketClient is connected toAccount.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>the URI connected to</dd>
+<dd>the URI connected toAccount</dd>
 </dl>
 </li>
 </ul>
@@ -694,7 +694,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>getSocket</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/net/Socket.html?is-external=true" title="class or interface in java.net">Socket</a>&nbsp;getSocket()</pre>
-<div class="block">Returns the socket to allow Hostname Verification</div>
+<div class="block">Returns the socket toAccount allow Hostname Verification</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>the socket used for this connection</dd>
@@ -719,7 +719,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>connectBlocking</h4>
 <pre>public&nbsp;boolean&nbsp;connectBlocking()
                         throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
-<div class="block">Same as <code>connect</code> but blocks until the websocket connected or failed to do so.<br></div>
+<div class="block">Same as <code>connect</code> but blocks until the websocket connected or failed toAccount do so.<br></div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns whether it succeeded or not.</dd>
@@ -736,7 +736,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close()</pre>
 <div class="block">Initiates the websocket close handshake. This method does not block<br>
- In oder to make sure the connection is closed use <code>closeBlocking</code></div>
+ In oder toAccount make sure the connection is closed use <code>closeBlocking</code></div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#close--">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -751,7 +751,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>closeBlocking</h4>
 <pre>public&nbsp;void&nbsp;closeBlocking()
                    throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></pre>
-<div class="block">Same as <code>close</code> but blocks until the websocket closed or failed to do so.<br></div>
+<div class="block">Same as <code>close</code> but blocks until the websocket closed or failed toAccount do so.<br></div>
 <dl>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/InterruptedException.html?is-external=true" title="class or interface in java.lang">InterruptedException</a></code> - Thrown when the threads get interrupted</dd>
@@ -766,7 +766,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>send</h4>
 <pre>public&nbsp;void&nbsp;send(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text)
           throws <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></pre>
-<div class="block">Sends <var>text</var> to the connected websocket server.</div>
+<div class="block">Sends <var>text</var> toAccount the connected websocket server.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#send-java.lang.String-">send</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -785,12 +785,12 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>send</h4>
 <pre>public&nbsp;void&nbsp;send(byte[]&nbsp;data)
           throws <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></pre>
-<div class="block">Sends binary <var> data</var> to the connected webSocket server.</div>
+<div class="block">Sends binary <var> data</var> toAccount the connected webSocket server.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#send-byte:A-">send</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>data</code> - The byte-Array of data to send to the WebSocket server.</dd>
+<dd><code>data</code> - The byte-Array of data toAccount send toAccount the WebSocket server.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></code> - websocket is not yet connected</dd>
 </dl>
@@ -803,8 +803,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>connections</h4>
 <pre>protected&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;&nbsp;connections()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../org/java_websocket/AbstractWebSocket.html#connections--">AbstractWebSocket</a></code></span></div>
-<div class="block">Getter to get all the currently available connections</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount class:&nbsp;<code><a href="../../../org/java_websocket/AbstractWebSocket.html#connections--">AbstractWebSocket</a></code></span></div>
+<div class="block">Getter toAccount get all the currently available connections</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/AbstractWebSocket.html#connections--">connections</a></code>&nbsp;in class&nbsp;<code><a href="../../../org/java_websocket/AbstractWebSocket.html" title="class in org.java_websocket">AbstractWebSocket</a></code></dd>
@@ -821,8 +821,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>sendPing</h4>
 <pre>public&nbsp;void&nbsp;sendPing()
               throws <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendPing--">WebSocket</a></code></span></div>
-<div class="block">Send a ping to the other end</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendPing--">WebSocket</a></code></span></div>
+<div class="block">Send a ping toAccount the other end</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#sendPing--">sendPing</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -886,7 +886,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>onWebsocketMessage</h4>
 <pre>public final&nbsp;void&nbsp;onWebsocketMessage(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                                      <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;blob)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketMessage-org.java_websocket.WebSocket-java.nio.ByteBuffer-">WebSocketListener</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketMessage-org.java_websocket.WebSocket-java.nio.ByteBuffer-">WebSocketListener</a></code></span></div>
 <div class="block">Called when an entire binary frame has been received. Do whatever you want
  here...</div>
 <dl>
@@ -906,7 +906,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <h4>onWebsocketMessageFragment</h4>
 <pre>public&nbsp;void&nbsp;onWebsocketMessageFragment(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                                        <a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;frame)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from class:&nbsp;<code><a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketMessageFragment-org.java_websocket.WebSocket-org.java_websocket.framing.Framedata-">WebSocketAdapter</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount class:&nbsp;<code><a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketMessageFragment-org.java_websocket.WebSocket-org.java_websocket.framing.Framedata-">WebSocketAdapter</a></code></span></div>
 <div class="block">This default implementation does not do anything. Go ahead and overwrite it</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -976,7 +976,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dd><code>ex</code> - The exception that occurred. <br>
-            Might be null if the exception is not related to any specific connection. For example if the server port could not be bound.</dd>
+            Might be null if the exception is not related toAccount any specific connection. For example if the server port could not be bound.</dd>
 </dl>
 </li>
 </ul>
@@ -987,8 +987,8 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <li class="blockList">
 <h4>onWriteDemand</h4>
 <pre>public final&nbsp;void&nbsp;onWriteDemand(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWriteDemand-org.java_websocket.WebSocket-">WebSocketListener</a></code></span></div>
-<div class="block">This method is used to inform the selector thread that there is data queued to be written to the socket.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWriteDemand-org.java_websocket.WebSocket-">WebSocketListener</a></code></span></div>
+<div class="block">This method is used toAccount inform the selector thread that there is data queued toAccount be written toAccount the socket.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocketListener.html#onWriteDemand-org.java_websocket.WebSocket-">onWriteDemand</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html" title="interface in org.java_websocket">WebSocketListener</a></code></dd>
@@ -1006,7 +1006,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <pre>public&nbsp;void&nbsp;onWebsocketCloseInitiated(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                                       int&nbsp;code,
                                       <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;reason)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketCloseInitiated-org.java_websocket.WebSocket-int-java.lang.String-">WebSocketListener</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketCloseInitiated-org.java_websocket.WebSocket-int-java.lang.String-">WebSocketListener</a></code></span></div>
 <div class="block">send when this peer sends a close handshake</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1028,7 +1028,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
                                int&nbsp;code,
                                <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;reason,
                                boolean&nbsp;remote)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketClosing-org.java_websocket.WebSocket-int-java.lang.String-boolean-">WebSocketListener</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocketListener.html#onWebsocketClosing-org.java_websocket.WebSocket-int-java.lang.String-boolean-">WebSocketListener</a></code></span></div>
 <div class="block">Called as soon as no further frames are accepted</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1102,7 +1102,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the address of the endpoint this socket is bound to.</dd>
+<dd>Returns the address of the endpoint this socket is bound toAccount.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../org/java_websocket/WebSocket.html#getLocalSocketAddress--"><code>WebSocket.getLocalSocketAddress()</code></a></dd>
 </dl>
@@ -1121,7 +1121,7 @@ implements <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Runnable.
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the address of the endpoint this socket is connected to, or<code>null</code> if it is unconnected.</dd>
+<dd>Returns the address of the endpoint this socket is connected toAccount, or<code>null</code> if it is unconnected.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../../org/java_websocket/WebSocket.html#getRemoteSocketAddress--"><code>WebSocket.getRemoteSocketAddress()</code></a></dd>
 </dl>
@@ -1203,7 +1203,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <pre>public&nbsp;void&nbsp;setSocket(<a href="http://docs.oracle.com/javase/7/docs/api/java/net/Socket.html?is-external=true" title="class or interface in java.net">Socket</a>&nbsp;socket)</pre>
 <div class="block">Accepts bound and unbound sockets.<br>
  This method must be called before <code>connect</code>.
- If the given socket is not yet bound it will be bound to the uri specified in the constructor.</div>
+ If the given socket is not yet bound it will be bound toAccount the uri specified in the constructor.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>socket</code> - The socket which should be used for the connection</dd>
@@ -1219,8 +1219,8 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <pre>public&nbsp;void&nbsp;sendFragmentedFrame(<a href="../../../org/java_websocket/framing/Framedata.Opcode.html" title="enum in org.java_websocket.framing">Framedata.Opcode</a>&nbsp;op,
                                 <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;buffer,
                                 boolean&nbsp;fin)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFragmentedFrame-org.java_websocket.framing.Framedata.Opcode-java.nio.ByteBuffer-boolean-">WebSocket</a></code></span></div>
-<div class="block">Allows to send continuous/fragmented frames conveniently. <br>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFragmentedFrame-org.java_websocket.framing.Framedata.Opcode-java.nio.ByteBuffer-boolean-">WebSocket</a></code></span></div>
+<div class="block">Allows toAccount send continuous/fragmented frames conveniently. <br>
  For more into on this frame type see http://tools.ietf.org/html/rfc6455#section-5.4<br>
  
  If the first frame you send is also the last then it is not a fragmented frame and will received via onMessage instead of onFragmented even though it was send by this method.</div>
@@ -1241,7 +1241,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>isOpen</h4>
 <pre>public&nbsp;boolean&nbsp;isOpen()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isOpen--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isOpen--">WebSocket</a></code></span></div>
 <div class="block">Is the websocket in the state OPEN</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1258,7 +1258,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>isFlushAndClose</h4>
 <pre>public&nbsp;boolean&nbsp;isFlushAndClose()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isFlushAndClose--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isFlushAndClose--">WebSocket</a></code></span></div>
 <div class="block">Returns true when no further frames may be submitted<br>
  This happens before the socket connection is closed.</div>
 <dl>
@@ -1276,7 +1276,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>isClosed</h4>
 <pre>public&nbsp;boolean&nbsp;isClosed()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isClosed--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isClosed--">WebSocket</a></code></span></div>
 <div class="block">Is the websocket in the state CLOSED</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1293,7 +1293,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>isClosing</h4>
 <pre>public&nbsp;boolean&nbsp;isClosing()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isClosing--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isClosing--">WebSocket</a></code></span></div>
 <div class="block">Is the websocket in the state CLOSING</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1310,7 +1310,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>isConnecting</h4>
 <pre>public&nbsp;boolean&nbsp;isConnecting()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isConnecting--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#isConnecting--">WebSocket</a></code></span></div>
 <div class="block">Is the websocket in the state CONNECTING</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1327,7 +1327,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>hasBufferedData</h4>
 <pre>public&nbsp;boolean&nbsp;hasBufferedData()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#hasBufferedData--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#hasBufferedData--">WebSocket</a></code></span></div>
 <div class="block">Checks if the websocket has buffered data</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -1344,9 +1344,9 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close(int&nbsp;code)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#close-int-">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#close-int-">WebSocket</a></code></span></div>
 <div class="block">sends the closing handshake.
- may be send in response to an other handshake.</div>
+ may be send in response toAccount an other handshake.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#close-int-">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -1363,9 +1363,9 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <h4>close</h4>
 <pre>public&nbsp;void&nbsp;close(int&nbsp;code,
                   <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#close-int-java.lang.String-">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#close-int-java.lang.String-">WebSocket</a></code></span></div>
 <div class="block">sends the closing handshake.
- may be send in response to an other handshake.</div>
+ may be send in response toAccount an other handshake.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#close-int-java.lang.String-">close</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -1383,9 +1383,9 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <h4>closeConnection</h4>
 <pre>public&nbsp;void&nbsp;closeConnection(int&nbsp;code,
                             <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#closeConnection-int-java.lang.String-">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#closeConnection-int-java.lang.String-">WebSocket</a></code></span></div>
 <div class="block">This will close the connection immediately without a proper close handshake.
- The code and the message therefore won't be transfered over the wire also they will be forwarded to onClose/onWebsocketClose.</div>
+ The code and the message therefore won't be transfered over the wire also they will be forwarded toAccount onClose/onWebsocketClose.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#closeConnection-int-java.lang.String-">closeConnection</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -1404,13 +1404,13 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <pre>public&nbsp;void&nbsp;send(<a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;bytes)
           throws <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a>,
                  <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#send-java.nio.ByteBuffer-">WebSocket</a></code></span></div>
-<div class="block">Send Binary data (plain bytes) to the other end.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#send-java.nio.ByteBuffer-">WebSocket</a></code></span></div>
+<div class="block">Send Binary data (plain bytes) toAccount the other end.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#send-java.nio.ByteBuffer-">send</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>bytes</code> - the binary data to send</dd>
+<dd><code>bytes</code> - the binary data toAccount send</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/IllegalArgumentException.html?is-external=true" title="class or interface in java.lang">IllegalArgumentException</a></code> - the data is null</dd>
 <dd><code><a href="http://docs.oracle.com/javase/7/docs/api/java/nio/channels/NotYetConnectedException.html?is-external=true" title="class or interface in java.nio.channels">NotYetConnectedException</a></code> - websocket is not yet connected</dd>
@@ -1424,13 +1424,13 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>sendFrame</h4>
 <pre>public&nbsp;void&nbsp;sendFrame(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;framedata)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-org.java_websocket.framing.Framedata-">WebSocket</a></code></span></div>
-<div class="block">Send a frame to the other end</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-org.java_websocket.framing.Framedata-">WebSocket</a></code></span></div>
+<div class="block">Send a frame toAccount the other end</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-org.java_websocket.framing.Framedata-">sendFrame</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>framedata</code> - the frame to send to the other end</dd>
+<dd><code>framedata</code> - the frame toAccount send toAccount the other end</dd>
 </dl>
 </li>
 </ul>
@@ -1441,13 +1441,13 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>sendFrame</h4>
 <pre>public&nbsp;void&nbsp;sendFrame(<a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&gt;&nbsp;frames)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-java.util.Collection-">WebSocket</a></code></span></div>
-<div class="block">Send a collection of frames to the other end</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-java.util.Collection-">WebSocket</a></code></span></div>
+<div class="block">Send a collection of frames toAccount the other end</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#sendFrame-java.util.Collection-">sendFrame</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>frames</code> - the frames to send to the other end</dd>
+<dd><code>frames</code> - the frames toAccount send toAccount the other end</dd>
 </dl>
 </li>
 </ul>
@@ -1458,8 +1458,8 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>getLocalSocketAddress</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/net/InetSocketAddress.html?is-external=true" title="class or interface in java.net">InetSocketAddress</a>&nbsp;getLocalSocketAddress()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getLocalSocketAddress--">WebSocket</a></code></span></div>
-<div class="block">Returns the address of the endpoint this socket is bound to.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getLocalSocketAddress--">WebSocket</a></code></span></div>
+<div class="block">Returns the address of the endpoint this socket is bound toAccount.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#getLocalSocketAddress--">getLocalSocketAddress</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -1475,8 +1475,8 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>getRemoteSocketAddress</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/net/InetSocketAddress.html?is-external=true" title="class or interface in java.net">InetSocketAddress</a>&nbsp;getRemoteSocketAddress()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getRemoteSocketAddress--">WebSocket</a></code></span></div>
-<div class="block">Returns the address of the endpoint this socket is connected to, or<code>null</code> if it is unconnected.</div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getRemoteSocketAddress--">WebSocket</a></code></span></div>
+<div class="block">Returns the address of the endpoint this socket is connected toAccount, or<code>null</code> if it is unconnected.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/WebSocket.html#getRemoteSocketAddress--">getRemoteSocketAddress</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a></code></dd>
@@ -1492,7 +1492,7 @@ public&nbsp;void&nbsp;onFragment(<a href="../../../org/java_websocket/framing/Fr
 <li class="blockList">
 <h4>getResourceDescriptor</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getResourceDescriptor()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getResourceDescriptor--">WebSocket</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/WebSocket.html#getResourceDescriptor--">WebSocket</a></code></span></div>
 <div class="block">Returns the HTTP Request-URI as defined by http://tools.ietf.org/html/rfc2616#section-5.1.2<br>
  If the opening handshake has not yet happened it will return null.</div>
 <dl>

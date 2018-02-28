@@ -21,13 +21,13 @@ import static com.jinphy.simplechatserver.constants.StringConst.LINE;
  *
  * Created by jinphy on 2017/12/5.
  */
-public class Session {
+public class CommonSession {
 
     /**
      * DESC: 存放用post方法请求时的请求参数信息
      * Created by jinphy, on 2018/1/2, at 11:21
      */
-    private static Map<String, Session> sessionMap = new ConcurrentHashMap<>();
+    private static Map<String, CommonSession> sessionMap = new ConcurrentHashMap<>();
 
     private MyServer server;               // 服务端
     private List<WebSocket> clients;       // 客户端
@@ -38,7 +38,7 @@ public class Session {
 
     public StringBuilder loggoer = new StringBuilder();
 
-    private Session(MyServer server, WebSocket client, ClientHandshake handshake) {
+    private CommonSession(MyServer server, WebSocket client, ClientHandshake handshake) {
         this.server(server);
         this.client(client);
         this.parseHandshake(handshake);
@@ -61,7 +61,7 @@ public class Session {
      * Created by jinphy, on 2018/1/2, at 11:34
      */
     public static void handle(MyServer server, WebSocket client, ClientHandshake handshake) {
-        new Session(server,client, handshake);
+        new CommonSession(server,client, handshake);
     }
 
     /**
@@ -72,7 +72,7 @@ public class Session {
      */
     public static void handle(String bodyStr) {
         Body body = Body.parse(bodyStr);
-        Session session = get(body.getRequestId());
+        CommonSession session = get(body.getRequestId());
         if (session != null) {
             session.addParams(body.getContentMap());
             EventBus.getDefault().post(session);
@@ -85,7 +85,7 @@ public class Session {
      * DESC: 根据请求id获取Session实例
      * Created by jinphy, on 2018/1/3, at 11:08
      */
-    public static Session get(String requestId) {
+    public static CommonSession get(String requestId) {
         return sessionMap.remove(requestId);
     }
 
