@@ -88,6 +88,7 @@ public class Database {
                     e1.printStackTrace();
                 }
             }finally {
+                DBConnectionPool.getInstance().recycle(connection);
                 try {
                     if (connection != null) {
                         connection.setAutoCommit(true);

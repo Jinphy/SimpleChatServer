@@ -83,8 +83,9 @@ class InsertOperate extends BaseOperate {
             return Result.error();
         }
         String sql = generateSql();
+        Connection connection = null;
         try {
-            Connection connection = DBConnectionPool.getInstance().getConnection();
+            connection = DBConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();
             int count = statement.executeUpdate(sql);
             statement.close();
@@ -96,6 +97,10 @@ class InsertOperate extends BaseOperate {
             Result error = Result.error();
             error.logger += wrap("sql: " + sql, LINE);
             return error;
+        }finally {
+            if (connection != null) {
+                DBConnectionPool.getInstance().recycle(connection);
+            }
         }
     }
 }

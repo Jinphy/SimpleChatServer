@@ -47,7 +47,7 @@ class UpdateOperate extends BaseOperate {
         this.columns = join(COMMA, namesAndValues);
 
         if (wheres.size() > 0) {
-            this.where = WHERE + BLANK + join(AND, wheres);
+            this.where = WHERE + BLANK + join(wrap(AND, BLANK), wheres);
         }
     }
 
@@ -74,8 +74,9 @@ class UpdateOperate extends BaseOperate {
         }
         String sql = generateSql();
         System.out.println("sql====>>"+sql);
+        Connection connection = null;
         try {
-            Connection connection = DBConnectionPool.getInstance().getConnection();
+            connection = DBConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();
             int count = statement.executeUpdate(sql);
             statement.close();
@@ -87,6 +88,10 @@ class UpdateOperate extends BaseOperate {
             Result error = Result.error();
             error.logger += wrap("sql: " + sql, LINE);
             return error;
+        }finally {
+            if (connection != null) {
+                DBConnectionPool.getInstance().recycle(connection);
+            }
         }
     }
 }

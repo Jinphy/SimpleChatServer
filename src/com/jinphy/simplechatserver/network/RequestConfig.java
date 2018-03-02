@@ -31,6 +31,21 @@ public interface RequestConfig {
 
         // 加载指定账号对应的所有好友接口
         String loadFriends = "/friend/loadFriends";
+
+        // 获取指定的好友
+        String getFriend = "/friend/getFriend";
+
+        // 获取指定账号头像接口
+        String getAvatar = "/user/getAvatar";
+
+        // 修改好友信息
+        String modifyRemark = "/friend/modifyRemark";
+
+        // 修改好友状态
+        String modifyStatus = "/friend/modifyStatus";
+
+        // 删除好友
+        String deleteFriend = "/friend/deleteFriend";
     }
 
     interface Key{
@@ -39,5 +54,10 @@ public interface RequestConfig {
         String date = "date";
         String deviceId = "deviceId";
         String accessToken = "accessToken";
+        String requestAccount = "requestAccount";
+        String receiveAccount = "receiveAccount";
+        String remark = "remark";
+        String verifyMsg = "verifyMsg";
+        String confirm = "confirm";
     }
 }

@@ -38,14 +38,16 @@ public class MessageDao {
                         TO,
                         CONTENT,
                         CONTENT_TYPE,
-                        CREATE_TIME
+                        CREATE_TIME,
+                        EXTRA
                 )
                 .columnValues(
                         msg.getFromAccount(),
                         msg.getToAccount(),
                         msg.getContent(),
                         msg.getContentType(),
-                        msg.getCreateTime()
+                        msg.getCreateTime(),
+                        msg.getExtra()
                 )
                 .execute();
 
@@ -56,6 +58,14 @@ public class MessageDao {
 
     public Result loadMessage(String to) {
         return Database.select()
+                .columnNames(
+                        Message.ID,
+                        Message.FROM,
+                        Message.TO,
+                        Message.CREATE_TIME,
+                        Message.CONTENT,
+                        Message.CONTENT_TYPE,
+                        Message.EXTRA)
                 .tables(Database.TABLE_MESSAGE)
                 .whereEq(TO, to)
                 .whereEq(IS_NEW, true)
@@ -67,6 +77,9 @@ public class MessageDao {
      * Created by jinphy, on 2018/2/27, at 14:17
      */
     public void updateMessage(List<Map<String, String>> messages) {
+        if (messages == null || messages.size() == 0) {
+            return;
+        }
         String[] ids = new String[messages.size()];
         int i = 0;
         for (Map<String, String> message : messages) {

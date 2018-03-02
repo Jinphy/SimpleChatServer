@@ -29,8 +29,8 @@ public class UserDao {
     public synchronized Result createNewUser(String account,String password,String date) {
         return Database.insert()
                 .tables(Database.TABLE_USER)
-                .columnNames(User.ACCOUNT, User.PASSWORD, User.DATE)
-                .columnValues(account, password, date)
+                .columnNames(User.ACCOUNT, User.PASSWORD, User.DATE,User.AVATAR)
+                .columnValues(account, password, date,"无")
                 .execute();
     }
 

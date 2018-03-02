@@ -11,6 +11,7 @@ import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.models.db_models.User;
 import com.jinphy.simplechatserver.models.network_models.KeyValueArray;
 import com.jinphy.simplechatserver.models.network_models.CommonSession;
+import com.jinphy.simplechatserver.models.network_models.PushSession;
 import com.jinphy.simplechatserver.models.network_models.Response;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
@@ -65,6 +66,7 @@ public class Api {
                 if (result.data != null) {
                     code = YES;
                     msg = "登录成功！";
+                    PushSession.pushMessage(account);
                 } else {
                     code = NO_LOGIN;
                     msg = "密码错误，请重新输入！";
@@ -255,7 +257,6 @@ public class Api {
                     code = NO_PARAMS_ERROR;
                     msg = "请求参数错误，请重新检查";
                 } else {
-                    // TODO: 2018/1/10 获取更新结果
                     code = YES;
                     msg = "退出登录成功！";
                     // 更新成功后要把account加回来，并且把登录状态修改为登出状态
@@ -278,37 +279,77 @@ public class Api {
      */
     @Path(path = RequestConfig.Path.addFriend)
     public static void addFriend(CommonSession session) {
-        String code;
-        String msg;
+        String code = null;
+        String msg = null;
         // 获取参数
-        String requestAccount = session.params().get("requestAccount");
-        String receiveAccount = session.params().get("receiveAccount");
-        String remark = session.params().get("remark");
-        String verifyMsg = session.params().get("verifyMsg");
+        String requestAccount = session.params().get(RequestConfig.Key.requestAccount);
+        String receiveAccount = session.params().get(RequestConfig.Key.receiveAccount);
+        String remark = session.params().get(RequestConfig.Key.remark);
+        String verifyMsg = session.params().get(RequestConfig.Key.verifyMsg);
+        String confirm = session.params().get(RequestConfig.Key.confirm);
+        String date = session.params().get(RequestConfig.Key.date);
 
-        // 建立好友关系
         FriendDao friendDao = FriendDao.getInstance();
-        friendDao.addFriend(requestAccount, receiveAccount);
-        friendDao.addFriend(receiveAccount, requestAccount);
-        if (StringUtils.isNonEmpty(remark)) {
-            friendDao.modifyRemark(requestAccount, receiveAccount, remark);
+        if (confirm == null) {
+            // 申请成为好友
+
+            // 建立好友关系
+            friendDao.addFriend(requestAccount, receiveAccount);
+            friendDao.addFriend(receiveAccount, requestAccount);
+            if (StringUtils.isNonEmpty(remark)) {
+                friendDao.modifyRemark(receiveAccount, requestAccount, remark);
+            }
+
+            // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+            Message message = new Message();
+            message.setContentType(Message.TYPE_SYSTEM_ADD_FRIEND);
+            message.setCreateTime(System.currentTimeMillis() + "");
+            message.setToAccount(receiveAccount);
+            message.setExtra(requestAccount);
+            message.setContent(StringUtils.isNonEmpty(verifyMsg) ? verifyMsg : "");
+            MessageDao.getInstance().saveMessage(message);
+
+            code = YES;
+            msg = "添加好友申请已发送！";
+        } else {
+            // 回复好友申请
+            if ("1".equals(confirm)) {
+                // 同意好友申请
+                friendDao.modifyStatus(requestAccount, receiveAccount, Friend.STATUS_OK);
+                friendDao.modifyStatus(receiveAccount, requestAccount, Friend.STATUS_OK);
+                if (StringUtils.isNonEmpty(remark)) {
+                    friendDao.modifyRemark(receiveAccount, requestAccount, remark);
+                }
+                friendDao.setDate(requestAccount, receiveAccount, date);
+                friendDao.setDate(receiveAccount, requestAccount, date);
+
+                // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                Message message = new Message();
+                message.setContentType(Message.TYPE_SYSTEM_ADD_FRIEND_AGREE);
+                message.setCreateTime(System.currentTimeMillis() + "");
+                message.setToAccount(receiveAccount);
+                message.setContent("好友申请已同意！");
+                message.setExtra(requestAccount);
+                MessageDao.getInstance().saveMessage(message);
+
+                code = Response.YES;
+                msg = "同意好友申请成功！";
+            } else {
+                // 拒绝好友申请
+                friendDao.deleteFriend(requestAccount, receiveAccount);
+                friendDao.deleteFriend(receiveAccount, requestAccount);
+                code = Response.YES;
+                msg = "拒绝好友申请成功！";
+            }
+
+
         }
-
-        // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
-        Message message = new Message();
-        message.setContentType(Message.TYPE_SYSTEM_ADD_FRIEND);
-        message.setCreateTime(System.currentTimeMillis() + "");
-        message.setToAccount(receiveAccount);
-        message.setContent(StringUtils.isNonEmpty(verifyMsg) ? verifyMsg : "");
-        MessageDao.getInstance().saveMessage(message);
-
-        code = YES;
-        msg = "添加好友申请已发送！";
         Response response = Response.make(code, msg, null);
         session.server().broadcast(response.toString(), session.client());
         session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
                 .append("=================网络请求结束=====================================================================\n\n");
         System.out.println(session.loggoer);
+
     }
 
     /**
@@ -319,7 +360,7 @@ public class Api {
     public static void loadFriends(CommonSession session) {
         String code;
         String msg;
-        List<Map<String,String>> friends=null;
+        List<Map<String, String>> friends = null;
 
         String owner = session.params().get(Friend.OWNER);
         if (StringUtils.isTrimEmpty(owner)) {
@@ -339,6 +380,207 @@ public class Api {
         }
 
         Response response = Response.make(code, msg, friends);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    /**
+     * DESC: 获取指定的好友
+     * Created by jinphy, on 2018/3/2, at 9:28
+     */
+    public static void getFriend(CommonSession session) {
+        String code;
+        String msg;
+        Map<String, String> friend = null;
+
+        String owner = session.params().get(Friend.OWNER);
+        String account = session.params().get(Friend.ACCOUNT);
+        if (StringUtils.isTrimEmpty(owner) || StringUtils.isTrimEmpty(account)) {
+            code = Response.NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            Result result = FriendDao.getInstance().getFriend(owner, account);
+            // 任何账号默认都有一个“系统消息”好友
+            if (result.count <= 0) {
+                code = Response.NO_PARAMS_ERROR;
+                msg = "请求参数错误，请重新检查";
+            } else {
+                code = Response.YES;
+                msg = "获取好友成功！";
+                friend = result.first;
+            }
+        }
+
+        Response response = Response.make(code, msg, friend);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    /**
+     * DESC: 获取指定账号头像接口
+     * Created by jinphy, on 2018/3/1, at 9:05
+     */
+    @Path(path = RequestConfig.Path.getAvatar)
+    public static void getAvatar(CommonSession session) {
+        String code;
+        String msg;
+        Map<String, String> avatar = null;
+
+        String account = session.params().get(User.ACCOUNT);
+        if (StringUtils.isTrimEmpty(account)) {
+            code = Response.NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            Result result = FriendDao.getInstance().getAvatar(account);
+            // 任何账号默认都有一个“系统消息”好友
+            if (result.count <= 0) {
+                code = Response.NO_PARAMS_ERROR;
+                msg = "请求参数错误，请重新检查";
+            } else {
+                code = Response.YES;
+                msg = "头像加载成功！";
+                avatar = result.first;
+            }
+        }
+
+        Response response = Response.make(code, msg, avatar);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    /**
+     * DESC: 修改好友信息接口
+     * Created by jinphy, on 2018/3/2, at 18:27
+     */
+    @Path(path = RequestConfig.Path.modifyRemark)
+    public static void modifyRemark(CommonSession session) {
+        String code;
+        String msg;
+
+        String account = session.params().get(Friend.ACCOUNT);
+        String owner = session.params().get(Friend.OWNER);
+        String remark = session.params().get(Friend.REMARK);
+        if (StringUtils.isTrimEmpty(account)
+                || StringUtils.isTrimEmpty(owner)
+                || StringUtils.isTrimEmpty(remark)) {
+            code = Response.NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            FriendDao friendDao = FriendDao.getInstance();
+            Result result= friendDao.modifyRemark(account, owner, remark);
+            // 任何账号默认都有一个“系统消息”好友
+            if (result.count <= 0) {
+                code = Response.NO_PARAMS_ERROR;
+                msg = "请求参数错误，请重新检查";
+            } else {
+                code = Response.YES;
+                msg = "修改好友备注成功！";
+            }
+        }
+
+        Response response = Response.make(code, msg, null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+
+    /**
+     * DESC: 修改好友信息接口
+     * Created by jinphy, on 2018/3/2, at 18:27
+     */
+    @Path(path = RequestConfig.Path.modifyStatus)
+    public static void modifyStatus(CommonSession session) {
+        String code;
+        String msg;
+
+        String account = session.params().get(Friend.ACCOUNT);
+        String owner = session.params().get(Friend.OWNER);
+        String status = session.params().get(Friend.STATUS);
+        if (StringUtils.isTrimEmpty(account)
+                || StringUtils.isTrimEmpty(owner)
+                || StringUtils.isTrimEmpty(status)) {
+            code = Response.NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            FriendDao friendDao = FriendDao.getInstance();
+            Result result = null;
+            if (Friend.STATUS_BLACK_LISTING.equals(status)) {
+                result = friendDao.modifyStatus(account, owner, Friend.STATUS_BLACK_LISTING);
+                result = friendDao.modifyStatus(owner, account, Friend.STATUS_BLACK_LISTED);
+            } else if (Friend.STATUS_OK.equals(status)) {
+                result = friendDao.modifyStatus(account, owner, status);
+                result = friendDao.modifyStatus(owner, account, status);
+            }
+
+            // 任何账号默认都有一个“系统消息”好友
+            if (result.count <= 0) {
+                code = Response.NO_PARAMS_ERROR;
+                msg = "请求参数错误，请重新检查";
+            } else {
+                code = Response.YES;
+                msg = "修改好友状态成功！";
+
+                // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                Message message = new Message();
+                message.setContentType(Message.TYPE_SYSTEM_RELOAD_FRIEND);
+                message.setCreateTime(System.currentTimeMillis() + "");
+                message.setToAccount(account);
+                message.setExtra(owner);
+                message.setContent("重新加载好友");
+                MessageDao.getInstance().saveMessage(message);
+            }
+        }
+
+        Response response = Response.make(code, msg, null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    @Path(path = RequestConfig.Path.deleteFriend)
+    public static void deleteFriend(CommonSession session) {
+        String code;
+        String msg;
+
+        String account = session.params().get(Friend.ACCOUNT);
+        String owner = session.params().get(Friend.OWNER);
+        if (StringUtils.isTrimEmpty(account)
+                || StringUtils.isTrimEmpty(owner)) {
+            code = Response.NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            FriendDao friendDao = FriendDao.getInstance();
+            Result result = friendDao.deleteFriend(account, owner);
+            result = friendDao.deleteFriend(owner, account);
+            // 任何账号默认都有一个“系统消息”好友
+            if (result.count <= 0) {
+                code = Response.NO_PARAMS_ERROR;
+                msg = "请求参数错误，请重新检查";
+            } else {
+                code = Response.YES;
+                msg = "删除好友成功！";
+
+                // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                Message message = new Message();
+                message.setContentType(Message.TYPE_SYSTEM_DELETE_FRIEND);
+                message.setCreateTime(System.currentTimeMillis() + "");
+                message.setToAccount(account);
+                message.setExtra(owner);
+                message.setContent("删除好友");
+                MessageDao.getInstance().saveMessage(message);
+            }
+        }
+
+        Response response = Response.make(code, msg, null);
         session.server().broadcast(response.toString(), session.client());
         session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
                 .append("=================网络请求结束=====================================================================\n\n");

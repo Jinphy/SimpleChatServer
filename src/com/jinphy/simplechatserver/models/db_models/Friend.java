@@ -25,6 +25,8 @@ public class Friend {
 
     public static final String STATUS_WAITING = "waiting";
 
+    public static final String STATUS_REFUSE = "refuse";
+
     public static final String STATUS_BLACK_LISTED = "blackListed";
 
     public static final String STATUS_BLACK_LISTING = "blackListing";
@@ -120,6 +122,6 @@ public class Friend {
     public static void addDefault(String account) {
         // 默认添加系统为好友，系统的代号为0
         FriendDao.getInstance().addFriend("0", account);
-        FriendDao.getInstance().setStatus("0", account, Friend.STATUS_WAITING);
+        FriendDao.getInstance().modifyStatus("0", account, Friend.STATUS_WAITING);
     }
 }

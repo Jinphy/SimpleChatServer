@@ -4,6 +4,9 @@ import com.jinphy.simplechatserver.database.models.Result;
 import com.jinphy.simplechatserver.database.operate.Database;
 import com.jinphy.simplechatserver.models.db_models.Friend;
 import com.jinphy.simplechatserver.models.db_models.User;
+import com.jinphy.simplechatserver.models.network_models.PushSession;
+import com.sun.org.apache.regexp.internal.RE;
+import sun.nio.cs.US_ASCII;
 
 import java.util.Map;
 
@@ -58,7 +61,7 @@ public class FriendDao {
      *
      * Created by jinphy, on 2018/2/27, at 10:30
      */
-    public Result setStatus(String account, String owner,String status) {
+    public Result modifyStatus(String account, String owner, String status) {
         return Database.update()
                 .tables(Database.TABLE_FRIEND)
                 .columnNames(Friend.STATUS)
@@ -67,6 +70,21 @@ public class FriendDao {
                 .whereEq(Friend.OWNER, owner)
                 .execute();
     }
+
+    /**
+     * DESC: 设置成为好友的时间
+     * Created by jinphy, on 2018/3/2, at 15:44
+     */
+    public Result setDate(String account, String owner, String date) {
+        return Database.update()
+                .tables(Database.TABLE_FRIEND)
+                .columnNames(Friend.DATE)
+                .columnValues(date)
+                .whereEq(Friend.ACCOUNT, account)
+                .whereEq(Friend.OWNER, owner)
+                .execute();
+    }
+
 
     /**
      * DESC: 修改好友的备注
@@ -103,7 +121,7 @@ public class FriendDao {
         Map<String,String> user;
         for (Map<String, String> friend : friends.data) {
             user = Database.select()
-                    .columnNames(User.NAME,User.AVATAR,User.SEX,User.ADDRESS)
+                    .columnNames(User.NAME,User.SEX,User.ADDRESS,User.SIGNATURE)
                     .tables(Database.TABLE_USER)
                     .whereEq(User.ACCOUNT, friend.get(Friend.ACCOUNT))
                     .execute().first;
@@ -112,8 +130,48 @@ public class FriendDao {
                 friend.put(User.AVATAR, user.get(User.AVATAR));
                 friend.put(User.SEX, user.get(User.SEX));
                 friend.put(User.ADDRESS, user.get(User.ADDRESS));
+                friend.put(User.SIGNATURE, user.get(User.SIGNATURE));
             }
         }
         return friends;
+    }
+
+    public Result getFriend(String owner, String account) {
+        // 根据owner查询所有的friend表
+        Result result = Database.select()
+                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.DATE, Friend.STATUS, Friend.REMARK)
+                .tables(Database.TABLE_FRIEND)
+                .whereEq(Friend.OWNER, owner)
+                .whereEq(Friend.ACCOUNT, account)
+                .execute();
+        if (result.first == null) {
+            return result;
+        }
+
+
+        // 遍历所有查询结果，根据每条记录中的account字段查询该account对用的用户的信息
+        // 包括用户的昵称、头像、性别、地址
+        Map<String,String> user;
+        user = Database.select()
+                .columnNames(User.NAME, User.SEX, User.ADDRESS, User.SIGNATURE)
+                .tables(Database.TABLE_USER)
+                .whereEq(User.ACCOUNT, result.first.get(Friend.ACCOUNT))
+                .execute().first;
+        if (user != null) {
+            result.first.put(User.NAME, user.get(User.NAME));
+            result.first.put(User.AVATAR, user.get(User.AVATAR));
+            result.first.put(User.SEX, user.get(User.SEX));
+            result.first.put(User.ADDRESS, user.get(User.ADDRESS));
+            result.first.put(User.SIGNATURE, user.get(User.SIGNATURE));
+        }
+        return result;
+    }
+
+    public Result getAvatar(String account) {
+        return Database.select()
+                .columnNames(User.AVATAR)
+                .tables(Database.TABLE_USER)
+                .whereEq(User.ACCOUNT, account)
+                .execute();
     }
 }

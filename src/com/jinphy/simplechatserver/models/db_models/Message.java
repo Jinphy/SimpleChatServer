@@ -13,6 +13,7 @@ public class Message {
     public static final String CREATE_TIME = "createTime";
     public static final String CONTENT = "content";
     public static final String CONTENT_TYPE= "contentType";
+    public static final String EXTRA = "extra";
 
 
     /**
@@ -22,6 +23,14 @@ public class Message {
     public static final String TYPE_SYSTEM_ADD_FRIEND = "system_add_friend";
 
     public static final String TYPE_SYSTEM_ACCOUNT_INVALIDATE = "system_account_invalidate";
+
+    public static final String TYPE_SYSTEM_NOTICE = "system_notice";
+
+    public static final String TYPE_SYSTEM_ADD_FRIEND_AGREE = "system_add_friend_agree";
+
+    public static final String TYPE_SYSTEM_RELOAD_FRIEND = "system_reload_friend";
+
+    public static final String TYPE_SYSTEM_DELETE_FRIEND = "system_delete_friend";
 
     /**
      * DESC: 添加好友消息
@@ -85,6 +94,12 @@ public class Message {
      */
     private String contentType;
 
+    /**
+     * DESC: 额外的信息
+     * Created by jinphy, on 2018/3/2, at 9:13
+     */
+    private String extra;
+
 
     public int getId() {
         return id;
@@ -140,5 +155,13 @@ public class Message {
 
     public void setContentType(String contentType) {
         this.contentType = contentType;
+    }
+
+    public String getExtra() {
+        return extra;
+    }
+
+    public void setExtra(String extra) {
+        this.extra = extra;
     }
 }

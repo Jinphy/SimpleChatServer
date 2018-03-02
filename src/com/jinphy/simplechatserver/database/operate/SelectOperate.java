@@ -65,8 +65,9 @@ class SelectOperate extends BaseOperate {
         }
         Statement statement=null;
         String sql = generateSql();
+        Connection connection = null;
         try {
-            Connection connection = DBConnectionPool.getInstance().getConnection();
+            connection = DBConnectionPool.getInstance().getConnection();
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             Result ok = Result.parse(resultSet);
@@ -78,6 +79,9 @@ class SelectOperate extends BaseOperate {
             error.logger += wrap("sql: " + sql, LINE);
             return error;
         }finally {
+            if (connection != null) {
+                DBConnectionPool.getInstance().recycle(connection);
+            }
             if (statement != null) {
                 try {
                     statement.close();

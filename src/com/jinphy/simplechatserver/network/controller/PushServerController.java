@@ -135,6 +135,11 @@ public class PushServerController extends BaseController {
 
         // 推送消息
         if (result.count > 0) {
+            System.out.println("------------push-----------");
+            System.out.println("account: "+session.account);
+            System.out.println("msg: " + GsonUtils.toJson(result.data));
+            System.out.println();
+
             pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(result.data)), clients);
         }
 

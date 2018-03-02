@@ -20,7 +20,7 @@ class DeleteOperate extends BaseOperate {
     protected void checkCondition() {
         ObjectHelper.requireNonNull(tables,"table name is null when doing sql checking!");
         if (wheres.size() > 0) {
-            this.where = WHERE + BLANK + String.join(wrap(AND), wheres);
+            this.where = WHERE + BLANK + String.join(wrap(AND, BLANK), wheres);
         }
     }
 
@@ -32,6 +32,7 @@ class DeleteOperate extends BaseOperate {
         checkCondition();
 
         StringBuilder sql = new StringBuilder();
+
         sql.append(DELETE).append(BLANK)
                 .append(FROM).append(BLANK)
                 .append(tables).append(BLANK)
@@ -46,8 +47,12 @@ class DeleteOperate extends BaseOperate {
             return Result.error();
         }
         String sql = generateSql();
+
+        System.out.println("sql====> "+sql);
+
+        Connection connection=null;
         try {
-            Connection connection = DBConnectionPool.getInstance().getConnection();
+            connection = DBConnectionPool.getInstance().getConnection();
             Statement statement = connection.createStatement();
             int count = statement.executeUpdate(sql);
             statement.close();
@@ -59,6 +64,10 @@ class DeleteOperate extends BaseOperate {
             Result error = Result.error();
             error.logger += wrap("sql: " + sql, LINE);
             return error;
+        }finally {
+            if (connection != null) {
+                DBConnectionPool.getInstance().recycle(connection);
+            }
         }
     }
 }
