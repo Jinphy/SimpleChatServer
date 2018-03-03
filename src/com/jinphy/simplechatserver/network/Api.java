@@ -13,9 +13,11 @@ import com.jinphy.simplechatserver.models.network_models.KeyValueArray;
 import com.jinphy.simplechatserver.models.network_models.CommonSession;
 import com.jinphy.simplechatserver.models.network_models.PushSession;
 import com.jinphy.simplechatserver.models.network_models.Response;
+import com.jinphy.simplechatserver.network.controller.BaseController;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,7 +68,24 @@ public class Api {
                 if (result.data != null) {
                     code = YES;
                     msg = "登录成功！";
-                    PushSession.pushMessage(account);
+
+                    // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                    Message message = new Message();
+                    message.setContentType(Message.TYPE_SYSTEM_NOTICE);
+                    message.setCreateTime(System.currentTimeMillis() + "");
+                    message.setToAccount(account);
+                    message.setExtra("简聊团队");
+                    message.setContent("欢迎回来，您的信赖是我们最大的鼓励！");
+                    MessageDao.getInstance().saveMessage(message);
+
+                    BaseController.threadPools.execute(()->{
+                        try {
+                            Thread.sleep(500);
+                            PushSession.pushMessage(account);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 } else {
                     code = NO_LOGIN;
                     msg = "密码错误，请重新输入！";
@@ -150,6 +169,15 @@ public class Api {
 
                 // 注册成功，添加默认好友
                 Friend.addDefault(account);
+
+                // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                Message message = new Message();
+                message.setContentType(Message.TYPE_SYSTEM_NOTICE);
+                message.setCreateTime(System.currentTimeMillis() + "");
+                message.setToAccount(account);
+                message.setExtra("简聊团队");
+                message.setContent("恭喜您成为简聊的一员，让我们开始新的旅程，和我们一起成长吧！");
+                MessageDao.getInstance().saveMessage(message);
             }
         }
         Response response = Response.make(code, msg, null);
@@ -206,6 +234,9 @@ public class Api {
                     session.params().put(User.ACCOUNT, account);
                     session.params().remove(User.PASSWORD);
                     data = session.params();
+
+                    // 通知所有好友更新账号信息
+                    UserDao.getInstance().notifyFriends(account, FriendDao.getInstance().getAllFriendAccount(account));
                 }
             }
         }
@@ -369,7 +400,7 @@ public class Api {
         } else {
             Result result = FriendDao.getInstance().loadFriends(owner);
             // 任何账号默认都有一个“系统消息”好友
-            if (result.count <= 0) {
+            if (result.count < 0) {
                 code = Response.NO_PARAMS_ERROR;
                 msg = "请求参数错误，请重新检查";
             } else {
@@ -390,6 +421,7 @@ public class Api {
      * DESC: 获取指定的好友
      * Created by jinphy, on 2018/3/2, at 9:28
      */
+    @Path(path = RequestConfig.Path.getFriend)
     public static void getFriend(CommonSession session) {
         String code;
         String msg;
@@ -419,6 +451,7 @@ public class Api {
                 .append("=================网络请求结束=====================================================================\n\n");
         System.out.println(session.loggoer);
     }
+
 
     /**
      * DESC: 获取指定账号头像接口
@@ -473,7 +506,7 @@ public class Api {
             msg = "参数不完整！";
         } else {
             FriendDao friendDao = FriendDao.getInstance();
-            Result result= friendDao.modifyRemark(account, owner, remark);
+            Result result = friendDao.modifyRemark(account, owner, remark);
             // 任何账号默认都有一个“系统消息”好友
             if (result.count <= 0) {
                 code = Response.NO_PARAMS_ERROR;
@@ -581,6 +614,61 @@ public class Api {
         }
 
         Response response = Response.make(code, msg, null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    @Path(path = RequestConfig.Path.checkAccount)
+    public static void checkAccount(CommonSession session) {
+        String code;
+        String msg;
+        Map<String, String> data = null;
+
+        String account = session.params().remove(RequestConfig.Key.account);
+        String accessToken = session.params().remove(RequestConfig.Key.accessToken);
+        if (StringUtils.isTrimEmpty(account, accessToken)) {
+            code = NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            Result findResult = UserDao.getInstance().findUser(account);
+            String check = AccessToken.check(findResult.first.get(User.ACCESS_TOKEN), accessToken);
+            if (check != AccessToken.OK) {
+                // 令牌过期
+                code = NO_ACCESS_TOKEN;
+                msg = check;
+            } else {
+                // 参数正确
+
+                // 更新AccessToken
+                AccessToken oldAccessToken = AccessToken.parse(accessToken);
+                AccessToken newAccessToken = AccessToken.make(oldAccessToken.getDeviceId(), oldAccessToken.getStatus());
+                accessToken = newAccessToken.toString();
+                session.params().put(User.ACCESS_TOKEN, accessToken);
+
+                // 解析参数
+                KeyValueArray array = KeyValueArray.parse(session.params());
+
+                Result result = UserDao.getInstance().updateUser(account, array.keys, array.values);
+
+                session.loggoer.append(result.logger + LINE);
+                if (result.count < 0) {
+                    code = NO_SERVER;
+                    msg = "服务器异常，请稍后再试！";
+                } else if (result.count == 0) {
+                    code = NO_PARAMS_ERROR;
+                    msg = "请求参数错误，请重新检查";
+                } else {
+                    code = YES;
+                    msg = "账号令牌更新成功！";
+                    // 更新成功后要把account加回来
+                    session.params().put(User.ACCOUNT, account);
+                    data = session.params();
+                }
+            }
+        }
+        Response response = Response.make(code, msg, data);
         session.server().broadcast(response.toString(), session.client());
         session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
                 .append("=================网络请求结束=====================================================================\n\n");

@@ -5,10 +5,13 @@ import com.jinphy.simplechatserver.database.models.DBConnectionPool;
 import com.jinphy.simplechatserver.database.models.Result;
 import com.jinphy.simplechatserver.database.operate.Database;
 import com.jinphy.simplechatserver.models.db_models.AccessToken;
+import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.models.db_models.User;
 import com.jinphy.simplechatserver.utils.GsonUtils;
+import com.jinphy.simplechatserver.utils.StringUtils;
 
 import java.sql.*;
+import java.util.List;
 
 public class UserDao {
     private static UserDao instance = new UserDao();
@@ -18,7 +21,7 @@ public class UserDao {
     public static UserDao getInstance(){
         return instance;
     }
-    public synchronized Result findUser(String account,String...columns)  {
+    public Result findUser(String account,String...columns)  {
         return Database.select()
                 .tables(Database.TABLE_USER)
                 .columnNames(columns)
@@ -26,7 +29,7 @@ public class UserDao {
                 .execute();
     }
 
-    public synchronized Result createNewUser(String account,String password,String date) {
+    public Result createNewUser(String account,String password,String date) {
         return Database.insert()
                 .tables(Database.TABLE_USER)
                 .columnNames(User.ACCOUNT, User.PASSWORD, User.DATE,User.AVATAR)
@@ -34,7 +37,7 @@ public class UserDao {
                 .execute();
     }
 
-    public synchronized Result updateUser(String account, String[] columns, String[] values) {
+    public Result updateUser(String account, String[] columns, String[] values) {
         return Database.update()
                 .tables(Database.TABLE_USER)
                 .columnNames(columns)
@@ -43,7 +46,7 @@ public class UserDao {
                 .execute();
     }
 
-    public synchronized Result login(String account, String password, String deviceId) {
+    public Result login(String account, String password, String deviceId) {
         // 查询当前账号account用户的密码
         Result result = findUser(account);
 
@@ -77,5 +80,21 @@ public class UserDao {
         }
         // 账号不存在
         return result;
+    }
+
+
+    public void notifyFriends(String owner, List<String> friends) {
+        if (friends != null) {
+            Message message = new Message();
+            message.setContentType(Message.TYPE_SYSTEM_RELOAD_FRIEND);
+            message.setCreateTime(System.currentTimeMillis() + "");
+            message.setExtra(owner);
+            message.setContent("重新加载好友");
+            for (String friend : friends) {
+                // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                message.setToAccount(friend);
+                MessageDao.getInstance().saveMessage(message);
+            }
+        }
     }
 }

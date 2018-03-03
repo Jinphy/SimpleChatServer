@@ -46,6 +46,9 @@ public interface RequestConfig {
 
         // 删除好友
         String deleteFriend = "/friend/deleteFriend";
+
+        // 检测账号是否有效
+        String checkAccount = "/user/checkAccount";
     }
 
     interface Key{
@@ -59,5 +62,6 @@ public interface RequestConfig {
         String remark = "remark";
         String verifyMsg = "verifyMsg";
         String confirm = "confirm";
+
     }
 }

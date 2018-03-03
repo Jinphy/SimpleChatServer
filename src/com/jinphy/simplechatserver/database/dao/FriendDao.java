@@ -8,6 +8,8 @@ import com.jinphy.simplechatserver.models.network_models.PushSession;
 import com.sun.org.apache.regexp.internal.RE;
 import sun.nio.cs.US_ASCII;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -174,4 +176,23 @@ public class FriendDao {
                 .whereEq(User.ACCOUNT, account)
                 .execute();
     }
+
+
+    public List<String> getAllFriendAccount(String owner) {
+        Result friends = Database.select()
+                .columnNames(Friend.ACCOUNT)
+                .tables(Database.TABLE_FRIEND)
+                .whereEq(Friend.OWNER, owner)
+                .whereIn(Friend.STATUS, Friend.STATUS_OK,Friend.STATUS_BLACK_LISTING,Friend.STATUS_BLACK_LISTED)
+                .execute();
+        LinkedList<String> accounts = new LinkedList<>();
+        if (friends.count > 0) {
+            for (Map<String, String> friend : friends.data) {
+                accounts.add(friend.get(Friend.ACCOUNT));
+            }
+        }
+        return accounts;
+    }
+
+
 }

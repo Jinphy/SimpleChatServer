@@ -8,5 +8,5 @@ import java.util.concurrent.Executors;
  * Created by jinphy on 2018/1/16.
  */
 public class BaseController {
-    protected static ExecutorService threadPools = Executors.newCachedThreadPool();
+    public static ExecutorService threadPools = Executors.newCachedThreadPool();
 }
