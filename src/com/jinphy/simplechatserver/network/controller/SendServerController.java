@@ -69,5 +69,6 @@ public class SendServerController {
         // 发送消息回执
         String response = GsonUtils.toJson(map);
         sendServer.broadcast(EncryptUtils.encodeThenEncrypt(response), session.client);
+        System.out.println("send response: " + response);
     }
 }

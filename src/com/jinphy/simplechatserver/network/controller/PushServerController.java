@@ -73,7 +73,9 @@ public class PushServerController extends BaseController {
     private PushServerController() {
         userDao = UserDao.getInstance();
         messageDao = MessageDao.getInstance();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -135,16 +137,14 @@ public class PushServerController extends BaseController {
 
         // 推送消息
         if (result.count > 0) {
+            // 更新消息
+            messageDao.updateMessage(result.data);
             System.out.println("------------push-----------");
             System.out.println("account: "+session.account);
             System.out.println("msg: " + GsonUtils.toJson(result.data));
             System.out.println();
-
             pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(result.data)), clients);
         }
-
-        // 更新消息
-        messageDao.updateMessage(result.data);
     }
 
     /**

@@ -197,6 +197,9 @@ public class Api {
         String account = session.params().remove(RequestConfig.Key.account);
         String accessToken = session.params().remove(RequestConfig.Key.accessToken);
         String deviceId = session.params().remove(RequestConfig.Key.deviceId);
+        System.out.println("account = "+account);
+        System.out.println("accessToken = " + accessToken);
+        System.out.println("deviceId = " + deviceId);
         if (StringUtils.isTrimEmpty(account, deviceId, accessToken)) {
             code = NO_PARAMS_MISSING;
             msg = "参数不完整！";

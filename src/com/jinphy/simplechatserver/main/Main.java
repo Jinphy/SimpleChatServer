@@ -11,6 +11,7 @@ import com.jinphy.simplechatserver.network.controller.FileServerController;
 import com.jinphy.simplechatserver.network.controller.PushServerController;
 import com.jinphy.simplechatserver.network.controller.SendServerController;
 import org.java_websocket.WebSocket;
+import org.java_websocket.handshake.ClientHandshake;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -72,6 +73,9 @@ public class Main {
         threadPool.execute(()->{
             sendServer = MyServer.newInstance(SEND_SERVER_PORT)
                     .doOnStart(() -> System.out.println("send server start!"))
+                    .doOnOpen((client, handshake) -> {
+                        System.out.println("one send open: " + handshake.getResourceDescriptor());
+                    })
                     .doOnMessage((client, message) -> {
                         SendSession.handle(client, message);
                     })
@@ -79,8 +83,8 @@ public class Main {
                         ex.printStackTrace();
                     })
                     .doOnClose((conn, code, reason, remote) -> {
-                        System.out.println("onClose:-->" + conn.getRemoteSocketAddress());
-                        System.out.println("reason:-->" + reason);
+                        System.out.println("send: onClose:-->" + conn.getRemoteSocketAddress());
+                        System.out.println("send: reason:-->" + reason);
                     });
             //启动服务
             sendServer.start();

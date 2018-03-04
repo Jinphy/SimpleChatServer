@@ -1,6 +1,7 @@
 package com.jinphy.simplechatserver.models.network_models;
 
 import com.google.gson.reflect.TypeToken;
+import com.jinphy.simplechatserver.database.dao.MessageDao;
 import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.utils.EncryptUtils;
 import com.jinphy.simplechatserver.utils.GsonUtils;
@@ -49,8 +50,12 @@ public class SendSession {
         session.message.setCreateTime(map.get(Message.CREATE_TIME));
         session.message.setContent(map.get(Message.CONTENT));
         session.message.setContentType(map.get(Message.CONTENT_TYPE));
+        session.message.setExtra(map.get(Message.EXTRA));
         session.client = Arrays.asList(client);
 
         EventBus.getDefault().post(session);
+
+        System.out.println("sendId: " + session.sendId);
+        System.out.println("sent msg: "+msg);
     }
 }

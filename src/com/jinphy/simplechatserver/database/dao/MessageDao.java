@@ -1,10 +1,16 @@
 package com.jinphy.simplechatserver.database.dao;
 
+import com.jinphy.simplechatserver.constants.StringConst;
 import com.jinphy.simplechatserver.database.models.Result;
 import com.jinphy.simplechatserver.database.operate.Database;
 import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.models.network_models.PushSession;
+import com.jinphy.simplechatserver.utils.EncryptUtils;
+import com.jinphy.simplechatserver.utils.StringUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +37,11 @@ public class MessageDao {
      * Created by jinphy, on 2018/2/27, at 14:03
      */
     public synchronized Result saveMessage(Message msg) {
+        try {
+            msg.setContent(URLEncoder.encode(msg.getContent(), StringConst.UTF_8));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         Result result = Database.insert()
                 .tables(Database.TABLE_MESSAGE)
                 .columnNames(
@@ -56,8 +67,8 @@ public class MessageDao {
         return result;
     }
 
-    public Result loadMessage(String to) {
-        return Database.select()
+    public synchronized Result loadMessage(String to) {
+        Result result = Database.select()
                 .columnNames(
                         Message.ID,
                         Message.FROM,
@@ -70,13 +81,24 @@ public class MessageDao {
                 .whereEq(TO, to)
                 .whereEq(IS_NEW, true)
                 .execute();
+        if (result.count > 0) {
+            try {
+                for (Map<String, String> msg : result.data) {
+                    String decodedContent = URLDecoder.decode(msg.get(Message.CONTENT), StringConst.UTF_8);
+                    msg.put(Message.CONTENT, decodedContent);
+                }
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
     }
 
     /**
      * DESC: 更新消息
      * Created by jinphy, on 2018/2/27, at 14:17
      */
-    public void updateMessage(List<Map<String, String>> messages) {
+    public synchronized void updateMessage(List<Map<String, String>> messages) {
         if (messages == null || messages.size() == 0) {
             return;
         }
