@@ -199,8 +199,9 @@ abstract class BaseOperate implements Database.Operate {
     }
 
     @Override
-    public Database.Operate whereIn(String column, Object...values) {
+    public Database.Operate whereIn(String column, String...values) {
         List<String> strValues = new LinkedList<>();
+
         for (Object value : values) {
             if (!isEmpty(value)) {
                 strValues.add(wrap(value,SINGLE_QUOTATION_MARK));//用单引号包装值

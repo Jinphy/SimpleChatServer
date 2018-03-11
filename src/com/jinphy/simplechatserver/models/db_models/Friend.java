@@ -7,6 +7,7 @@ import com.jinphy.simplechatserver.database.dao.FriendDao;
  * Created by jinphy on 2018/2/27.
  */
 public class Friend {
+    public static final String system = "0";
 
     public static final String ID = "id";
 
@@ -20,6 +21,8 @@ public class Friend {
 
     public static final String STATUS = "status";
 
+    public static final String GROUP_COUNT = "groupCount";
+
 
     public static final String STATUS_OK = "ok";
 
@@ -30,6 +33,8 @@ public class Friend {
     public static final String STATUS_BLACK_LISTED = "blackListed";
 
     public static final String STATUS_BLACK_LISTING = "blackListing";
+
+    public static final String STATUS_DELETED = "deleted";
 
 
     private transient int id;
@@ -66,6 +71,8 @@ public class Friend {
     private String status;
 
     private String remark;
+
+    private int groupCount;
 
     public int getId() {
         return id;
@@ -115,13 +122,24 @@ public class Friend {
         this.remark = remark;
     }
 
+    public int getGroupCount() {
+        return groupCount;
+    }
+
+    public void setGroupCount(int groupCount) {
+        this.groupCount = groupCount;
+    }
+
     /**
      * DESC: 为指定的账号添加默认的好友
      * Created by jinphy, on 2018/2/27, at 16:43
      */
     public static void addDefault(String account) {
         // 默认添加系统为好友，系统的代号为0
-        FriendDao.getInstance().addFriend("0", account);
-        FriendDao.getInstance().modifyStatus("0", account, Friend.STATUS_WAITING);
+        FriendDao friendDao = FriendDao.getInstance();
+        friendDao.addFriend("0", account);
+        friendDao.modifyStatus("0", account, Friend.STATUS_WAITING);
+        friendDao.addFriend(account, account);
+        friendDao.modifyStatus(account, account,Friend.STATUS_WAITING);
     }
 }

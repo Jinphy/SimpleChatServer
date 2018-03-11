@@ -26,6 +26,13 @@ public interface RequestConfig {
         // 修改用户信息接口
         String modifyUserInfo = "/user/modifyUserInfo";
 
+
+        // 获取指定账号头像接口
+        String getAvatar = "/user/getAvatar";
+
+        // 获取指定的头像（多个）
+        String loadAvatars = "/user/loadAvatars";
+
         // 添加好友接口
         String addFriend = "/friend/addFriend";
 
@@ -34,9 +41,6 @@ public interface RequestConfig {
 
         // 获取指定的好友
         String getFriend = "/friend/getFriend";
-
-        // 获取指定账号头像接口
-        String getAvatar = "/user/getAvatar";
 
         // 修改好友信息
         String modifyRemark = "/friend/modifyRemark";
@@ -49,10 +53,20 @@ public interface RequestConfig {
 
         // 检测账号是否有效
         String checkAccount = "/user/checkAccount";
+
+        // 新建群聊
+        String createGroup = "/group/createGroup";
+
+        // 获取群聊
+        String getGroups = "/group/getGroups";
+
+        // 获取群成员
+        String getMembers = "/member/getMembers";
     }
 
     interface Key{
         String account = "account";
+        String accounts = "accounts";
         String password = "password";
         String date = "date";
         String deviceId = "deviceId";
@@ -62,6 +76,19 @@ public interface RequestConfig {
         String remark = "remark";
         String verifyMsg = "verifyMsg";
         String confirm = "confirm";
+        String name = "name";
+        String autoAdd = "autoAdd";
+        String creator = "creator";
+        String owner = "owner";
+        String groupNo = "groupNo";
+        String groupNos = "groupNos";
+        String members = "members";
+        String maxCount = "maxCount";
+        String showMemberName = "showMemberName";
+        String keepSilent = "keepSilent";
+        String rejectMsg = "rejectMsg";
+        String avatar = "avatar";
+        String text = "text";
 
     }
 }

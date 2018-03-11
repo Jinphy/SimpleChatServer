@@ -16,6 +16,8 @@ public class Database {
     public static final String TABLE_USER = "user";
     public static final String TABLE_FRIEND = "friend";
     public static final String TABLE_MESSAGE = "message";
+    public static final String TABLE_GROUP_CHAT = "groupChat";
+    public static final String TABLE_MEMBER = "member";
 
 
     /**
@@ -62,7 +64,8 @@ public class Database {
      *
      * Created by jinphy, on 2018/1/4, at 8:55
      */
-    public static void execute(Function<Statement, Boolean> transaction) {
+    public static boolean execute(Function<Statement, Boolean> transaction) {
+        boolean result = false;
         if (transaction != null) {
             Connection connection = null;
             Statement statement=null;
@@ -76,9 +79,11 @@ public class Database {
                 if (apply==null || !apply) {
                     // 不成功则回滚
                     connection.rollback();
+                    result = false;
                 } else {
                     // 成功则提交
                     connection.commit();
+                    result = true;
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -87,6 +92,7 @@ public class Database {
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
+                result = false;
             }finally {
                 DBConnectionPool.getInstance().recycle(connection);
                 try {
@@ -100,8 +106,8 @@ public class Database {
                     e.printStackTrace();
                 }
             }
-
         }
+        return result;
     }
 
 
@@ -335,7 +341,7 @@ public class Database {
          * @param values 列名对应的值得集合
          * Created by jinphy, on 2018/1/3, at 16:12
          */
-        Operate whereIn(String column, Object...values);
+        Operate whereIn(String column, String...values);
 
 
         /**

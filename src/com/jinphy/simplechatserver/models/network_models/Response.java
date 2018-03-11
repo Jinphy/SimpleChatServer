@@ -34,6 +34,7 @@ public class Response<T>{
     public static final String NO_API_NOT_FUND = "40001";
     public static final String NO_PARAMS_MISSING = "40002";
     public static final String NO_PARAMS_ERROR = "40003";
+    public static final String NO_EMPTY_RESULT = "40004";
 
     // 以5 开头的为服务器错误
     public static final String NO_SERVER = "50001";

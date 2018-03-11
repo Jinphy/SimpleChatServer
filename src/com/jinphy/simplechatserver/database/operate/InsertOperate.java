@@ -51,6 +51,8 @@ class InsertOperate extends BaseOperate {
             items[i++] = wrap(join(COMMA, item), LEFT_S_BRACKET, RIGHT_S_BRACKET);
         }
 
+
+
         // 列名用逗号隔开，然后用括号括起来，例如：(account,password,age)
         String names = wrap(join(COMMA,columnNames),LEFT_S_BRACKET,RIGHT_S_BRACKET);
 
@@ -83,6 +85,7 @@ class InsertOperate extends BaseOperate {
             return Result.error();
         }
         String sql = generateSql();
+        System.out.println("sql==> " + sql);
         Connection connection = null;
         try {
             connection = DBConnectionPool.getInstance().getConnection();

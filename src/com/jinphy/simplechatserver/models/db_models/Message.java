@@ -32,6 +32,8 @@ public class Message {
 
     public static final String TYPE_SYSTEM_DELETE_FRIEND = "system_delete_friend";
 
+    public static final String TYPE_SYSTEM_NEW_GROUP = "system_new_group";
+
     /**
      * DESC: 添加好友消息
      * Created by jinphy, on 2018/1/16, at 15:24

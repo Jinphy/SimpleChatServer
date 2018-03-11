@@ -35,6 +35,10 @@ public class FriendDao {
      * Created by jinphy, on 2018/2/27, at 10:21
      */
     public Result addFriend(String account, String owner) {
+        Result friendResult = getFriend(owner, account);
+        if (friendResult.count > 0) {
+            return Result.ok(1, null, null);
+        }
         return Database.insert()
                 .tables(Database.TABLE_FRIEND)
                 .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
@@ -47,6 +51,10 @@ public class FriendDao {
      * Created by jinphy, on 2018/2/27, at 10:25
      */
     public Result deleteFriend(String account, String owner) {
+        Result friendResult = getFriend(owner, account);
+        if (friendResult.count > 0 && Integer.valueOf(friendResult.first.get(Friend.GROUP_COUNT)) > 0) {
+            return modifyStatus(account, owner, Friend.STATUS_DELETED);
+        }
         return Database.delete()
                 .tables(Database.TABLE_FRIEND)
                 .whereEq(Friend.ACCOUNT, account)
@@ -110,7 +118,7 @@ public class FriendDao {
 
         // 根据owner查询所有的friend表
         Result friends = Database.select()
-                .columnNames(Friend.ACCOUNT,Friend.OWNER,Friend.DATE,Friend.STATUS,Friend.REMARK)
+                .columnNames(Friend.ACCOUNT,Friend.OWNER,Friend.DATE,Friend.STATUS,Friend.REMARK,Friend.GROUP_COUNT)
                 .tables(Database.TABLE_FRIEND)
                 .whereEq(Friend.OWNER, owner)
                 .execute();
@@ -141,7 +149,7 @@ public class FriendDao {
     public Result getFriend(String owner, String account) {
         // 根据owner查询所有的friend表
         Result result = Database.select()
-                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.DATE, Friend.STATUS, Friend.REMARK)
+                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.DATE, Friend.STATUS, Friend.REMARK,Friend.GROUP_COUNT)
                 .tables(Database.TABLE_FRIEND)
                 .whereEq(Friend.OWNER, owner)
                 .whereEq(Friend.ACCOUNT, account)
@@ -177,13 +185,24 @@ public class FriendDao {
                 .execute();
     }
 
+    public Result loadAvatars(String... accounts) {
+        return Database.select()
+                .columnNames(User.AVATAR, User.ACCOUNT)
+                .tables(Database.TABLE_USER)
+                .whereIn(User.ACCOUNT, accounts)
+                .execute();
+    }
+
 
     public List<String> getAllFriendAccount(String owner) {
         Result friends = Database.select()
                 .columnNames(Friend.ACCOUNT)
                 .tables(Database.TABLE_FRIEND)
                 .whereEq(Friend.OWNER, owner)
-                .whereIn(Friend.STATUS, Friend.STATUS_OK,Friend.STATUS_BLACK_LISTING,Friend.STATUS_BLACK_LISTED)
+//                .whereIn(Friend.STATUS,
+//                        Friend.STATUS_OK,
+//                        Friend.STATUS_BLACK_LISTING,
+//                        Friend.STATUS_BLACK_LISTED)
                 .execute();
         LinkedList<String> accounts = new LinkedList<>();
         if (friends.count > 0) {
@@ -194,5 +213,27 @@ public class FriendDao {
         return accounts;
     }
 
-
+    /**
+     * DESC: 增加好友的群数量，
+     *
+     *
+     * @param account 好友对应的账号
+     * @param owner 好友的拥有者
+     * @param delta 增量，可以为正负数
+     * Created by jinphy, on 2018/3/10, at 12:48
+     */
+    public Result addGroupCount(String account, String owner,int delta) {
+        Result friendResult = getFriend(owner, account);
+        if (friendResult.count > 0) {
+            Integer groupCount = Integer.valueOf(friendResult.first.get(Friend.GROUP_COUNT));
+            return Database.update()
+                    .tables(Database.TABLE_FRIEND)
+                    .columnNames(Friend.GROUP_COUNT)
+                    .columnValues(groupCount + delta)
+                    .whereEq(Friend.ACCOUNT, account)
+                    .whereEq(Friend.OWNER, owner)
+                    .execute();
+        }
+        return Result.error();
+    }
 }

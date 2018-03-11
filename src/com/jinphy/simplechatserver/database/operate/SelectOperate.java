@@ -44,7 +44,6 @@ class SelectOperate extends BaseOperate {
         checkCondition();
 
         StringBuilder sql = new StringBuilder();
-        System.out.println(sql);
 
         sql.append(SELECT).append(BLANK)
                 .append(distinct).append(BLANK)
@@ -66,6 +65,7 @@ class SelectOperate extends BaseOperate {
         Statement statement=null;
         String sql = generateSql();
         Connection connection = null;
+        System.out.println(sql);
         try {
             connection = DBConnectionPool.getInstance().getConnection();
             statement = connection.createStatement();
