@@ -3,11 +3,7 @@ package com.jinphy.simplechatserver.network;
 import com.jinphy.simplechatserver.annotation.Path;
 import com.jinphy.simplechatserver.database.dao.*;
 import com.jinphy.simplechatserver.database.models.Result;
-import com.jinphy.simplechatserver.database.operate.Database;
-import com.jinphy.simplechatserver.models.db_models.AccessToken;
-import com.jinphy.simplechatserver.models.db_models.Friend;
-import com.jinphy.simplechatserver.models.db_models.Message;
-import com.jinphy.simplechatserver.models.db_models.User;
+import com.jinphy.simplechatserver.models.db_models.*;
 import com.jinphy.simplechatserver.models.network_models.KeyValueArray;
 import com.jinphy.simplechatserver.models.network_models.CommonSession;
 import com.jinphy.simplechatserver.models.network_models.PushSession;
@@ -16,10 +12,8 @@ import com.jinphy.simplechatserver.network.controller.BaseController;
 import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.NoUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
-import com.sun.org.apache.regexp.internal.RE;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
-import java.sql.Statement;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -787,9 +781,6 @@ public class Api {
                 msg = check;
             } else {
                 // 参数正确
-                if (StringUtils.isEmpty(avatar)) {
-                    session.params().put(RequestConfig.Key.avatar, "无");
-                }
 
                 session.params().put(RequestConfig.Key.groupNo, NoUtils.generateGroupNo());
                 session.params().put(RequestConfig.Key.showMemberName, "true");
@@ -829,7 +820,7 @@ public class Api {
                             message.setFromAccount(Friend.system);
 
                             String groupNo = session.params().get(RequestConfig.Key.groupNo);
-                            List<String> memberList = MemberDao.getInstance().getMembersAccount(groupNo);
+                            List<String> memberList = MemberDao.getInstance().getMemberAccounts(groupNo);
                             String membersStr = GsonUtils.toJson(memberList);
                             message.setExtra(groupNo + "@" + membersStr);
 
@@ -910,6 +901,181 @@ public class Api {
         System.out.println(session.loggoer);
     }
 
+    @Path(path = RequestConfig.Path.modifyGroup)
+    public static void modifyGroup(CommonSession session) {
+
+        Response response = GroupDao.getInstance().modifyGroup(session.params());
+
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+    @Path(path = RequestConfig.Path.joinGroup)
+    public static void joinGroup(CommonSession session) {
+        String code;
+        String msg;
+
+        String groupNo = session.params().remove(Group.GROUP_NO);
+        String creator = session.params().remove(Group.CREATOR);
+        String account = session.params().remove(User.ACCOUNT);
+        if (StringUtils.isEmpty(groupNo, creator, account)) {
+            code = NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            // 查询要加入的群
+            Result result = GroupDao.getInstance().get(groupNo, creator);
+
+            session.loggoer.append(result.logger + LINE);
+            if (result.count < 0) {
+                code = NO_SERVER;
+                msg = "服务器异常，请稍后再试！";
+            } else if (result.count == 0) {
+                code = NO_EMPTY_RESULT;
+                msg = "没有找到相应的群！";
+            } else {
+                boolean autoAdd = Boolean.valueOf(result.first.get(Group.AUTO_ADD));
+                if (autoAdd) {
+                    // 成员自动添加
+                    Result memberResult = MemberDao.getInstance().saveMember(groupNo, account, Member.STATUS_OK);
+                    session.loggoer.append(memberResult.logger + LINE);
+                    if (memberResult.count <= 0) {
+                        code = NO_SERVER;
+                        msg = "服务器异常，请稍后再试！";
+                    } else {
+                        List<String> members = MemberDao.getInstance().getMemberAccounts(groupNo, account);
+                        FriendDao friendDao = FriendDao.getInstance();
+                        Message message = new Message();
+                        message.setCreateTime(System.currentTimeMillis() + "");
+                        message.setFromAccount(Friend.system);
+                        message.setContentType(Message.TYPE_SYSTEM_NEW_MEMBER);
+                        message.setContent(groupNo);
+                        message.setExtra(account);
+                        MessageDao messageDao = MessageDao.getInstance();
+
+                        for (String member : members) {
+                            friendDao.addFriend(member, account);
+                            friendDao.addGroupCount(member, account, 1);
+                            friendDao.addFriend(account, member);
+                            friendDao.addGroupCount(account, member, 1);
+                            message.setToAccount(member);
+                            messageDao.saveMessage(message);
+                        }
+
+                        message.setContentType(Message.TYPE_SYSTEM_NEW_GROUP);
+                        message.setToAccount(account);
+
+                        members.add(account);
+                        String membersStr = GsonUtils.toJson(account);
+                        message.setExtra(groupNo + "@" + membersStr);
+
+                        message.setContent("您加入群聊：" + groupNo + " 的申请已通过，现在可以开始和大家聊天了！");
+                        MessageDao.getInstance().saveMessage(message);
+
+                        code = YES;
+                        msg = "申请加入群聊成功！";
+                    }
+                } else {
+                    // 成员加入需要群主验证
+                    Message message = new Message();
+                    message.setCreateTime(System.currentTimeMillis() + "");
+                    message.setFromAccount(Friend.system);
+                    message.setToAccount(creator);
+                    message.setContentType(Message.TYPE_SYSTEM_APPLY_JOIN_GROUP);
+                    message.setContent(groupNo+"@"+account);
+                    message.setExtra(Group.STATUS_WAITING);
+                    MessageDao messageDao = MessageDao.getInstance();
+                    messageDao.saveMessage(message);
+                    code = YES;
+                    msg = "申请已发送，请等待群主通过！";
+                }
+            }
+        }
+
+        Response response = Response.make(code, msg, null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+
+
+    @Path(path = RequestConfig.Path.agreeJoinGroup)
+    public static void agreeJoinGroup(CommonSession session) {
+        String code;
+        String msg;
+
+        String groupNo = session.params().remove(Group.GROUP_NO);
+        String creator = session.params().remove(Group.CREATOR);
+        String account = session.params().remove(User.ACCOUNT);
+        if (StringUtils.isEmpty(groupNo, creator, account)) {
+            code = NO_PARAMS_MISSING;
+            msg = "参数不完整！";
+        } else {
+            // 查询要加入的群
+            Result result = GroupDao.getInstance().get(groupNo, creator);
+
+            session.loggoer.append(result.logger + LINE);
+            if (result.count < 0) {
+                code = NO_SERVER;
+                msg = "服务器异常，请稍后再试！";
+            } else if (result.count == 0) {
+                code = NO_EMPTY_RESULT;
+                msg = "没有找到相应的群！";
+            } else {
+                Result memberResult = MemberDao.getInstance().saveMember(groupNo, account, Member.STATUS_OK);
+                session.loggoer.append(memberResult.logger + LINE);
+                if (memberResult.count <= 0) {
+                    code = NO_SERVER;
+                    msg = "服务器异常，请稍后再试！";
+                } else {
+                    List<String> members = MemberDao.getInstance().getMemberAccounts(groupNo, account);
+                    FriendDao friendDao = FriendDao.getInstance();
+                    Message message = new Message();
+                    message.setCreateTime(System.currentTimeMillis() + "");
+                    message.setFromAccount(Friend.system);
+                    message.setContentType(Message.TYPE_SYSTEM_NEW_MEMBER);
+                    message.setContent(groupNo);
+                    message.setExtra(account);
+                    MessageDao messageDao = MessageDao.getInstance();
+
+                    for (String member : members) {
+                        friendDao.addFriend(member, account);
+                        friendDao.addGroupCount(member, account, 1);
+                        friendDao.addFriend(account, member);
+                        friendDao.addGroupCount(account, member, 1);
+                        message.setToAccount(member);
+                        messageDao.saveMessage(message);
+                    }
+
+                    message.setContentType(Message.TYPE_SYSTEM_NEW_GROUP);
+                    message.setToAccount(account);
+
+                    members.add(account);
+                    String membersStr = GsonUtils.toJson(account);
+                    message.setExtra(groupNo + "@" + membersStr);
+
+                    message.setContent("您加入群聊：" + groupNo + " 的申请已通过，现在可以开始和大家聊天了！");
+                    MessageDao.getInstance().saveMessage(message);
+                    code = YES;
+                    msg = "您已通过" + account + "的申请！";
+                }
+            }
+        }
+
+        Response response = Response.make(code, msg, null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
+
+
+
+
+
     @Path(path = RequestConfig.Path.getMembers)
     public static void getMembers(CommonSession session) {
         String code;
@@ -930,6 +1096,8 @@ public class Api {
             } else {
                 code = YES;
                 msg = "获取成员成功！";
+                System.out.println("member size: " + result.data.size());
+                System.out.println("member size: " + result.count);
                 response = Response.make(code, msg, result.data);
             }
         }

@@ -18,6 +18,8 @@ public class Group {
     public static final String REJECT_MSG = "rejectMsg";
     public static final String AVATAR = "avatar";
 
+    public static final String STATUS_WAITING = "waiting";
+
 
     private transient long id;
 

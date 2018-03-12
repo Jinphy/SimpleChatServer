@@ -373,7 +373,7 @@ public class Database {
          * @param values 列名对应的值得集合
          * Created by jinphy, on 2018/1/3, at 16:12
          */
-        Operate whereNotIn(String column, Object...values);
+        Operate whereNotIn(String column, String...values);
 
         /**
          * DESC: 运行外部代码，该方法传入的接口会立刻执行，并且返回一个Boolean类型的结果

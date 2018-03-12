@@ -70,7 +70,6 @@ public class MessageDao {
     public synchronized Result loadMessage(String to) {
         Result result = Database.select()
                 .columnNames(
-                        Message.ID,
                         Message.FROM,
                         Message.TO,
                         Message.CREATE_TIME,

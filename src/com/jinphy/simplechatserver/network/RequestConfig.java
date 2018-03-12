@@ -62,6 +62,15 @@ public interface RequestConfig {
 
         // 获取群成员
         String getMembers = "/member/getMembers";
+
+        // 修改群信息
+        String modifyGroup = "/group/modifyGroup";
+
+        // 申请加入群聊
+        String joinGroup = "/group/joinGroup";
+
+        // 同意申请加入群聊
+        String agreeJoinGroup = "/group/agreeJoinGroup";
     }
 
     interface Key{

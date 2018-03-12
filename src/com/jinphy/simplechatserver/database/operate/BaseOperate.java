@@ -239,7 +239,7 @@ abstract class BaseOperate implements Database.Operate {
     }
 
     @Override
-    public Database.Operate whereNotIn(String column, Object...values) {
+    public Database.Operate whereNotIn(String column, String...values) {
         List<String> strValues = new LinkedList<>();
         for (Object value : values) {
             if (!isEmpty(value)) {
