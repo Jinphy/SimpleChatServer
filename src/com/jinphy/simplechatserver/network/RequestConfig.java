@@ -71,6 +71,9 @@ public interface RequestConfig {
 
         // 同意申请加入群聊
         String agreeJoinGroup = "/group/agreeJoinGroup";
+
+        // 退出群聊、解散群聊接口
+        String exitGroup = "/group/exitGroup";
     }
 
     interface Key{
@@ -98,6 +101,8 @@ public interface RequestConfig {
         String rejectMsg = "rejectMsg";
         String avatar = "avatar";
         String text = "text";
+        String extraMsg = "extraMsg";
+        String operator = "operator";
 
     }
 }

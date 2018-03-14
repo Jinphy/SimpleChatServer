@@ -60,7 +60,7 @@ public class CommonSession {
      *  2、post请求则等到获取请求体之后再处理请求
      * Created by jinphy, on 2018/1/2, at 11:34
      */
-    public static void handle(MyServer server, WebSocket client, ClientHandshake handshake) {
+    public static  void handle(MyServer server, WebSocket client, ClientHandshake handshake) {
         new CommonSession(server,client, handshake);
     }
 

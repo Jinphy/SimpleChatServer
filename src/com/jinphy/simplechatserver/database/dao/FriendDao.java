@@ -52,14 +52,60 @@ public class FriendDao {
      */
     public Result deleteFriend(String account, String owner) {
         Result friendResult = getFriend(owner, account);
-        if (friendResult.count > 0 && Integer.valueOf(friendResult.first.get(Friend.GROUP_COUNT)) > 0) {
-            return modifyStatus(account, owner, Friend.STATUS_DELETED);
+        if (friendResult.count > 0) {
+            boolean result = Database.execute(statement -> {
+                Integer groupCount = Integer.valueOf(friendResult.first.get(Friend.GROUP_COUNT));
+                String sql;
+                if (groupCount > 0) {
+                    sql = Database.update()
+                            .tables(Database.TABLE_FRIEND)
+                            .columnNames(Friend.STATUS)
+                            .columnValues(Friend.STATUS_DELETED)
+                            .whereEq(Friend.ACCOUNT, account)
+                            .whereEq(Friend.OWNER, owner)
+                            .generateSql();
+                    statement.addBatch(sql);
+
+                    sql = Database.update()
+                            .tables(Database.TABLE_FRIEND)
+                            .columnNames(Friend.STATUS)
+                            .columnValues(Friend.STATUS_DELETED)
+                            .whereEq(Friend.ACCOUNT, owner)
+                            .whereEq(Friend.OWNER, account)
+                            .generateSql();
+                    statement.addBatch(sql);
+                } else {
+                    sql = Database.delete()
+                            .tables(Database.TABLE_FRIEND)
+                            .whereEq(Friend.ACCOUNT, account)
+                            .whereEq(Friend.OWNER, owner)
+                            .generateSql();
+                    statement.addBatch(sql);
+
+                    sql = Database.delete()
+                            .tables(Database.TABLE_FRIEND)
+                            .whereEq(Friend.ACCOUNT, owner)
+                            .whereEq(Friend.OWNER, account)
+                            .generateSql();
+                    statement.addBatch(sql);
+                }
+
+                int[] updates = statement.executeBatch();
+                for (int update : updates) {
+                    if (update <= 0) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+            if (result) {
+                return Result.ok(2, null, null);
+            } else {
+                return Result.ok(0, null, null);
+            }
+        } else {
+            return Result.ok(0, null, null);
         }
-        return Database.delete()
-                .tables(Database.TABLE_FRIEND)
-                .whereEq(Friend.ACCOUNT, account)
-                .whereEq(Friend.OWNER, owner)
-                .execute();
     }
 
     /**

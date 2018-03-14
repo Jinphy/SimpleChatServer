@@ -14,6 +14,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 该类用来处理网络请求接口
@@ -25,7 +26,7 @@ public class CommonServerController  extends BaseController{
      * DESC: 网络请求接口map
      * Created by jinphy, on 2018/1/2, at 22:27
      */
-    protected Map<String, Method> methodMap = new HashMap<>();
+    protected Map<String, Method> methodMap = new ConcurrentHashMap<>();
 
     /**
      * DESC: 单例持有类

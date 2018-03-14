@@ -40,6 +40,10 @@ public class Message {
 
     public static final String TYPE_SYSTEM_APPLY_JOIN_GROUP = "system_apply_join_group";
 
+    public static final String TYPE_SYSTEM_DELETE_MEMBER = "system_delete_member";
+
+    public static final String TYPE_SYSTEM_BREAK_GROUP = "system_break_group";
+
     /**
      * DESC: 添加好友消息
      * Created by jinphy, on 2018/1/16, at 15:24
