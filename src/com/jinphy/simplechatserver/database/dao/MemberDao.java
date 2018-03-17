@@ -2,7 +2,9 @@ package com.jinphy.simplechatserver.database.dao;
 
 import com.jinphy.simplechatserver.database.models.Result;
 import com.jinphy.simplechatserver.database.operate.Database;
+import com.jinphy.simplechatserver.models.db_models.Friend;
 import com.jinphy.simplechatserver.models.db_models.Member;
+import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.utils.StringUtils;
 
 import java.util.LinkedList;
@@ -104,6 +106,52 @@ public class MemberDao {
                 .columnNames(Member.GROUP_NO, Member.ACCOUNT, Member.ALLOW_CHAT, Member.STATUS)
                 .tables(Database.TABLE_MEMBER)
                 .whereIn(Member.GROUP_NO, groupNos)
+                .execute();
+    }
+
+    public boolean modifyAllowChat(String groupNo, String account, String allowChat, String creator) {
+        // 第一步：获取除了群主外的所有该群中的成员账号，以为只有群主才有这个权限修改该值
+        List<String> members = getMemberAccounts(groupNo, creator);
+        if (members == null || members.size() <= 0) {
+            return false;
+        }
+
+        // 更新指定成员的是否允许发言
+        Result result = Database.update()
+                .tables(Database.TABLE_MEMBER)
+                .columnNames(Member.ALLOW_CHAT)
+                .columnValues(allowChat)
+                .whereEq(Member.GROUP_NO, groupNo)
+                .whereIn(Member.ACCOUNT, account)
+                .execute();
+        if (result.count <= 0) {
+            return false;
+        }
+
+
+        // 通知成员更新变更
+        MessageDao messageDao = MessageDao.getInstance();
+        Message message = new Message();
+        message.setFromAccount(Friend.system);
+        message.setCreateTime(System.currentTimeMillis() + "");
+        message.setContentType(Message.TYPE_SYSTEM_MEMBER_ALLOW_CHAT);
+        message.setContent(new String("已被群主禁言！"));
+        message.setExtra(groupNo + "@" + account);
+
+        for (String member : members) {
+            message.setToAccount(member);
+            messageDao.saveMessage(message);
+        }
+        return true;
+    }
+
+    public Result getMember(String groupNo, String account) {
+        return Database.select()
+                .columnNames(Member.GROUP_NO, Member.GROUP_NO, Member.ALLOW_CHAT, Member.STATUS)
+                .tables(Database.TABLE_MEMBER)
+                .whereEq(Member.GROUP_NO, groupNo)
+                .whereEq(Member.ACCOUNT, account)
+                .whereEq(Member.STATUS, Member.STATUS_OK)
                 .execute();
     }
 

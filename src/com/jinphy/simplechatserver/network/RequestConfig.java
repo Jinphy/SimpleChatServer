@@ -74,6 +74,15 @@ public interface RequestConfig {
 
         // 退出群聊、解散群聊接口
         String exitGroup = "/group/exitGroup";
+
+        // 修改是否允许发言
+        String modifyAllowChat = "/member/modifyAllowChat";
+
+        // 批量移出成员
+        String removeMembers = "/group/removeMembers";
+
+        // 批量添加成员
+        String addMembers = "/group/addMembers";
     }
 
     interface Key{
@@ -103,6 +112,7 @@ public interface RequestConfig {
         String text = "text";
         String extraMsg = "extraMsg";
         String operator = "operator";
+        String allowChat = "allowChat";
 
     }
 }

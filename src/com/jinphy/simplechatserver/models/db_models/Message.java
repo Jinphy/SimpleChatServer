@@ -44,6 +44,8 @@ public class Message {
 
     public static final String TYPE_SYSTEM_BREAK_GROUP = "system_break_group";
 
+    public static final String TYPE_SYSTEM_MEMBER_ALLOW_CHAT = "system_member_allow_chat";
+
     /**
      * DESC: 添加好友消息
      * Created by jinphy, on 2018/1/16, at 15:24

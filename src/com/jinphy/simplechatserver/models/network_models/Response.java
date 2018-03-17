@@ -35,9 +35,12 @@ public class Response<T>{
     public static final String NO_PARAMS_MISSING = "40002";
     public static final String NO_PARAMS_ERROR = "40003";
     public static final String NO_EMPTY_RESULT = "40004";
+    public static final String NO_MEMBER_EXIT = "40005";
+    public static final String NO_GROUP_FULL = "40006";
 
     // 以5 开头的为服务器错误
     public static final String NO_SERVER = "50001";
+
 
     //-------------------------------------------------------------------------------------------------
 

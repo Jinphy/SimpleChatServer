@@ -45,11 +45,11 @@ public class GroupDao {
     /**
      * DESC: 执行创建群聊的整个过程
      *
-     * @param params  创建群聊的参数
+     * @param group  创建群聊的参数
      * @param members 群成员的对应的用户账号
      *                Created by jinphy, on 2018/3/10, at 11:08
      */
-    public synchronized boolean buildGroup(Map<String, String> params, String[] members) {
+    public synchronized boolean buildGroup(Map<String, String> group, String[] members) {
         if (members == null || members.length == 0) {
             return false;
         }
@@ -60,8 +60,8 @@ public class GroupDao {
 
             // 创建群
             for (String member : members) {
-                params.put(RequestConfig.Key.owner, member);
-                KeyValueArray parse = KeyValueArray.parse(params);
+                group.put(RequestConfig.Key.owner, member);
+                KeyValueArray parse = KeyValueArray.parse(group);
                 sql = Database.insert()
                         .tables(Database.TABLE_GROUP_CHAT)
                         .columnNames(parse.keys)
@@ -75,7 +75,7 @@ public class GroupDao {
             MemberDao memberDao = MemberDao.getInstance();
             for (String member : members) {
                 sql = memberDao.generateInsertSql(
-                        params.get(Member.GROUP_NO), member, Member.STATUS_OK);
+                        group.get(Member.GROUP_NO), member, Member.STATUS_OK);
                 System.out.println("sql====> " + sql);
                 statement.addBatch(sql);
             }
@@ -95,17 +95,20 @@ public class GroupDao {
      * DESC: 加入群聊
      *
      * @param account  申请加入群聊的账号
-     * @param params 创建申请者对应的群的参数
+     * @param group 创建申请者对应的群的参数
      * Created by jinphy, on 2018/3/13, at 15:58
      */
-    public synchronized Response joinGroup(Map<String, String> params, String account) {
+    public synchronized Response joinGroup(Map<String, String> group, String account) {
         Response<Response> response = Response.make("", "", null);
-        params.put(Group.OWNER, account);
-        String groupNo = params.get(Group.GROUP_NO);
+        group.put(Group.OWNER, account);
+        group.put(Group.SHOW_MEMBER_NAME, "true");
+        group.put(Group.KEEP_SILENT, "false");
+        group.put(Group.REJECT_MSG, "false");
+        String groupNo = group.get(Group.GROUP_NO);
 
         Database.execute(statement -> {
             String sql;
-            KeyValueArray parse = KeyValueArray.parse(params);
+            KeyValueArray parse = KeyValueArray.parse(group);
             sql = Database.insert()
                     .tables(Database.TABLE_GROUP_CHAT)
                     .columnNames(parse.keys)
@@ -132,7 +135,7 @@ public class GroupDao {
             message.setFromAccount(Friend.system);
             message.setContentType(Message.TYPE_SYSTEM_NEW_MEMBER);
             message.setContent(groupNo);
-            message.setExtra(account);
+            message.setExtra(GsonUtils.toJson(new String[]{account}));
 
             for (String member : members) {
                 friendDao.addFriend(member, account);
@@ -160,6 +163,92 @@ public class GroupDao {
         return response.getData();
     }
 
+    public boolean addMembers(Map<String, String> group, String operator, String... accounts) {
+        group.put(Group.SHOW_MEMBER_NAME, "true");
+        group.put(Group.KEEP_SILENT, "false");
+        group.put(Group.REJECT_MSG, "false");
+
+        return Database.execute(statement -> {
+            String sql;
+            KeyValueArray parse;
+            // 第一步：创建群聊
+            for (String account : accounts) {
+                group.put(Group.OWNER, account);
+                parse = KeyValueArray.parse(group);
+                sql = Database.insert()
+                        .tables(Database.TABLE_GROUP_CHAT)
+                        .columnNames(parse.keys)
+                        .columnValues(parse.values)
+                        .generateSql();
+                statement.addBatch(sql);
+            }
+
+
+            // 第二步：创建成员
+            MemberDao memberDao = MemberDao.getInstance();
+            for (String member : accounts) {
+                sql = memberDao.generateInsertSql(group.get(Member.GROUP_NO), member, Member.STATUS_OK);
+                statement.addBatch(sql);
+            }
+
+            // 第三步：群和成员创建成功后在建立成员之间的好友关系（好友关系的状态是未验证的）
+            FriendDao friendDao = FriendDao.getInstance();
+            for (int i = 0; i < accounts.length - 1; i++) {
+                for (int j = i + 1; j < accounts.length; j++) {
+                    Result friend = friendDao.getFriend(accounts[i], accounts[j]);
+                    int groupCount = 0;
+                    // 创建好友关系
+                    if (friend.count < 0) {
+                        sql = Database.insert()
+                                .tables(Database.TABLE_FRIEND)
+                                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
+                                .columnValues(accounts[i], accounts[j], Friend.STATUS_WAITING)
+                                .generateSql();
+                        statement.addBatch(sql);
+
+                        sql = Database.insert()
+                                .tables(Database.TABLE_FRIEND)
+                                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
+                                .columnValues(accounts[j], accounts[i], Friend.STATUS_WAITING)
+                                .generateSql();
+                        statement.addBatch(sql);
+                    } else {
+                        groupCount = Integer.valueOf(friend.first.get(Friend.GROUP_COUNT));
+                    }
+                    // 增加两个好友之间的共同群聊数
+                    groupCount++;
+                    sql = Database.update()
+                            .tables(Database.TABLE_FRIEND)
+                            .columnNames(Friend.GROUP_COUNT)
+                            .columnValues(groupCount)
+                            .whereEq(Friend.ACCOUNT, accounts[i])
+                            .whereEq(Friend.OWNER, accounts[j])
+                            .generateSql();
+                    statement.addBatch(sql);
+
+                    sql = Database.update()
+                            .tables(Database.TABLE_FRIEND)
+                            .columnNames(Friend.GROUP_COUNT)
+                            .columnValues(groupCount)
+                            .whereEq(Friend.ACCOUNT, accounts[j])
+                            .whereEq(Friend.OWNER, accounts[i])
+                            .generateSql();
+                    statement.addBatch(sql);
+                }
+            }
+
+            // 第四步：判断是否操作成功
+            int[] results = statement.executeBatch();
+            for (int result : results) {
+                if (result <= 0) {
+                    return false;
+                }
+            }
+            return true;
+        });
+
+    }
+
 
     public Result get(String groupNo, String owner) {
         Database.Operate operate = Database.select()
@@ -180,6 +269,23 @@ public class GroupDao {
 
         return operate
                 .whereEq(Group.OWNER, owner)
+                .execute();
+    }
+
+    public Result get(String groupNo) {
+        return Database.select()
+                .tables(Database.TABLE_GROUP_CHAT)
+                .columnNames(
+                        Group.CREATOR,
+                        Group.OWNER,
+                        Group.NAME,
+                        Group.GROUP_NO,
+                        Group.MAX_COUNT,
+                        Group.AUTO_ADD,
+                        Group.SHOW_MEMBER_NAME,
+                        Group.KEEP_SILENT,
+                        Group.REJECT_MSG)
+                .whereEq(Group.GROUP_NO, groupNo)
                 .execute();
     }
 
@@ -461,7 +567,7 @@ public class GroupDao {
             message.setFromAccount(Friend.system);
             message.setCreateTime(System.currentTimeMillis() + "");
             message.setContentType(Message.TYPE_SYSTEM_DELETE_MEMBER);
-            message.setContent(bySelf ?new String(member + "已退出该群聊！")  :new String( member + "已被群主移除该群聊！"));
+            message.setContent(bySelf ?new String(member + "已退出群聊！")  :new String( member + "已被群主移出群聊！"));
             message.setExtra(groupNo + "@" + member);
 
             for (String m : members) {
