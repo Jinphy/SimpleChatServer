@@ -15,7 +15,9 @@ import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.NoUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import sun.security.util.Length;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -782,7 +784,6 @@ public class Api {
                 msg = check;
             } else {
                 // 参数正确
-
                 session.params().put(RequestConfig.Key.groupNo, NoUtils.generateGroupNo());
                 session.params().put(RequestConfig.Key.showMemberName, "true");
                 session.params().put(RequestConfig.Key.keepSilent, "false");
@@ -797,35 +798,21 @@ public class Api {
                     code = NO_SERVER;
                     msg = "服务器异常，请稍后再试！";
                 } else {
-                    // 群和成员创建成功后在建立成员之间的好友关系（好友关系的状态是未验证的）
-                    FriendDao friendDao = FriendDao.getInstance();
-                    for (int i = 0; i < memberArray.length; i++) {
-                        for (int j = 0; j < memberArray.length; j++) {
-                            if (i != j) {
-                                friendDao.addFriend(memberArray[i], memberArray[j]);
-                                friendDao.addGroupCount(memberArray[i], memberArray[j], 1);
-                            }
-                        }
-                    }
 
-                    String content = "我创建了群聊，我们开始聊天吧！";
+                    String content = new String("我创建了群聊，我们开始聊天吧！");
                     // 建立好友关系后，通知各个成员更新好友、群、群成员
+                    // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
+                    Message message = new Message();
+                    message.setContentType(Message.TYPE_SYSTEM_NEW_GROUP);
+                    message.setCreateTime(System.currentTimeMillis() + "");
+                    message.setFromAccount(Friend.system);
+                    String groupNo = session.params().get(RequestConfig.Key.groupNo);
+                    String membersStr = GsonUtils.toJson(memberArray);
+                    message.setExtra(groupNo + "@" + membersStr);
+                    message.setContent(content);
                     for (String member : memberArray) {
                         if (StringUtils.noEqual(creator, member)) {
-
-                            // 保存添加好友信息到数据库以让推送服务将该消息推送给对应的用户
-                            Message message = new Message();
-                            message.setContentType(Message.TYPE_SYSTEM_NEW_GROUP);
-                            message.setCreateTime(System.currentTimeMillis() + "");
                             message.setToAccount(member);
-                            message.setFromAccount(Friend.system);
-
-                            String groupNo = session.params().get(RequestConfig.Key.groupNo);
-                            List<String> memberList = MemberDao.getInstance().getMemberAccounts(groupNo);
-                            String membersStr = GsonUtils.toJson(memberList);
-                            message.setExtra(groupNo + "@" + membersStr);
-
-                            message.setContent(content);
                             MessageDao.getInstance().saveMessage(message);
                         }
                     }
@@ -1033,21 +1020,28 @@ public class Api {
                             List<String> memberList = MemberDao.getInstance().getMemberAccounts(groupNo);
                             String membersStr = GsonUtils.toJson(memberList);
                             message.setExtra(groupNo + "@" + membersStr);
-                            message.setContent(new String(operator + "把把你加入群聊：" + groupName + "(" + groupNo + ")"));
+                            message.setContent(new String(operator + "把你加入群聊：" + groupName + "(" + groupNo + ")"));
                             for (String account : accounts) {
                                 message.setToAccount(account);
                                 messageDao.saveMessage(message);
                             }
 
-                            // 通知以存在的成员加载新成员
+                            // 通知以存在的成员加载新成员（除了操作者外）
                             message.setContentType(Message.TYPE_SYSTEM_NEW_MEMBER);
                             message.setContent(groupNo);
                             message.setExtra(GsonUtils.toJson(accounts));
 
-                            List<String> existMembers = MemberDao.getInstance().getMemberAccounts(groupNo, accounts);
-                            for (String member : existMembers) {
-                                message.setToAccount(member);
-                                messageDao.saveMessage(message);
+                            String[] temp = new String[accounts.length + 1];
+                            for (int i = 0; i < accounts.length; i++) {
+                                temp[i] = accounts[i];
+                            }
+                            temp[accounts.length] = operator;
+                            List<String> existMembers = MemberDao.getInstance().getMemberAccounts(groupNo, temp);
+                            if (existMembers != null && existMembers.size() > 0) {
+                                for (String member : existMembers) {
+                                    message.setToAccount(member);
+                                    messageDao.saveMessage(message);
+                                }
                             }
                         } else {
                             code = NO_SERVER;

@@ -14,6 +14,8 @@ import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
 import com.sun.org.apache.regexp.internal.RE;
 
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +60,7 @@ public class GroupDao {
         return Database.execute(statement -> {
             String sql;
 
-            // 创建群
+            // 第一步：创建群
             for (String member : members) {
                 group.put(RequestConfig.Key.owner, member);
                 KeyValueArray parse = KeyValueArray.parse(group);
@@ -71,13 +73,22 @@ public class GroupDao {
                 statement.addBatch(sql);
             }
 
-            // 创建成员
+            // 第二步：创建成员
             MemberDao memberDao = MemberDao.getInstance();
             for (String member : members) {
                 sql = memberDao.generateInsertSql(
                         group.get(Member.GROUP_NO), member, Member.STATUS_OK);
                 System.out.println("sql====> " + sql);
                 statement.addBatch(sql);
+            }
+
+
+            // 第三步：群和成员创建成功后在建立成员之间的好友关系（好友关系的状态是未验证的）
+            FriendDao friendDao = FriendDao.getInstance();
+            for (int i = 0; i < members.length-1; i++) {
+                for (int j = i + 1; j < members.length; j++) {
+                    buildMemberShip(statement, members[i], members[j]);
+                }
             }
 
             // 判断群和成员是否创建成功
@@ -193,49 +204,20 @@ public class GroupDao {
 
             // 第三步：群和成员创建成功后在建立成员之间的好友关系（好友关系的状态是未验证的）
             FriendDao friendDao = FriendDao.getInstance();
+            // 建立新成员之间的关系
             for (int i = 0; i < accounts.length - 1; i++) {
                 for (int j = i + 1; j < accounts.length; j++) {
-                    Result friend = friendDao.getFriend(accounts[i], accounts[j]);
-                    int groupCount = 0;
-                    // 创建好友关系
-                    if (friend.count < 0) {
-                        sql = Database.insert()
-                                .tables(Database.TABLE_FRIEND)
-                                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
-                                .columnValues(accounts[i], accounts[j], Friend.STATUS_WAITING)
-                                .generateSql();
-                        statement.addBatch(sql);
-
-                        sql = Database.insert()
-                                .tables(Database.TABLE_FRIEND)
-                                .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
-                                .columnValues(accounts[j], accounts[i], Friend.STATUS_WAITING)
-                                .generateSql();
-                        statement.addBatch(sql);
-                    } else {
-                        groupCount = Integer.valueOf(friend.first.get(Friend.GROUP_COUNT));
-                    }
-                    // 增加两个好友之间的共同群聊数
-                    groupCount++;
-                    sql = Database.update()
-                            .tables(Database.TABLE_FRIEND)
-                            .columnNames(Friend.GROUP_COUNT)
-                            .columnValues(groupCount)
-                            .whereEq(Friend.ACCOUNT, accounts[i])
-                            .whereEq(Friend.OWNER, accounts[j])
-                            .generateSql();
-                    statement.addBatch(sql);
-
-                    sql = Database.update()
-                            .tables(Database.TABLE_FRIEND)
-                            .columnNames(Friend.GROUP_COUNT)
-                            .columnValues(groupCount)
-                            .whereEq(Friend.ACCOUNT, accounts[j])
-                            .whereEq(Friend.OWNER, accounts[i])
-                            .generateSql();
-                    statement.addBatch(sql);
+                    buildMemberShip(statement, accounts[i], accounts[j]);
                 }
             }
+            // 建立新成员与旧成员之间的关系
+            List<String> oldMembers = MemberDao.getInstance().getMemberAccounts(group.get(Group.GROUP_NO), accounts);
+            for (String newMember : accounts) {
+                for (String oldMember : oldMembers) {
+                    buildMemberShip(statement, newMember, oldMember);
+                }
+            }
+
 
             // 第四步：判断是否操作成功
             int[] results = statement.executeBatch();
@@ -247,6 +229,56 @@ public class GroupDao {
             return true;
         });
 
+    }
+
+    /**
+     * DESC: 建立两个群成员之间的关系
+     * Created by jinphy, on 2018/3/18, at 10:00
+     */
+    private void buildMemberShip(Statement statement, String member1, String member2) throws SQLException {
+        Result friend = FriendDao.getInstance().getFriend(member1, member2);
+        String sql;
+        int groupCount = 0;
+        // 创建好友关系
+        if (friend.count <= 0) {
+            sql = Database.insert()
+                    .tables(Database.TABLE_FRIEND)
+                    .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
+                    .columnValues(member1, member2, Friend.STATUS_WAITING)
+                    .generateSql();
+            statement.addBatch(sql);
+
+            sql = Database.insert()
+                    .tables(Database.TABLE_FRIEND)
+                    .columnNames(Friend.ACCOUNT, Friend.OWNER, Friend.STATUS)
+                    .columnValues(member2, member1, Friend.STATUS_WAITING)
+                    .generateSql();
+            statement.addBatch(sql);
+        } else {
+            String s = friend.first.get(Friend.GROUP_COUNT);
+            if (s != null) {
+                groupCount = Integer.valueOf(s);
+            }
+        }
+        // 增加两个好友之间的共同群聊数
+        groupCount++;
+        sql = Database.update()
+                .tables(Database.TABLE_FRIEND)
+                .columnNames(Friend.GROUP_COUNT)
+                .columnValues(groupCount)
+                .whereEq(Friend.ACCOUNT, member1)
+                .whereEq(Friend.OWNER, member2)
+                .generateSql();
+        statement.addBatch(sql);
+
+        sql = Database.update()
+                .tables(Database.TABLE_FRIEND)
+                .columnNames(Friend.GROUP_COUNT)
+                .columnValues(groupCount)
+                .whereEq(Friend.ACCOUNT, member2)
+                .whereEq(Friend.OWNER, member1)
+                .generateSql();
+        statement.addBatch(sql);
     }
 
 
@@ -684,7 +716,7 @@ public class GroupDao {
             message.setFromAccount(Friend.system);
             message.setCreateTime(System.currentTimeMillis() + "");
             message.setContentType(Message.TYPE_SYSTEM_BREAK_GROUP);
-            message.setContent("已被群主解散！");
+            message.setContent(new String("已被群主解散！"));
             message.setExtra(groupNo);
 
             for (String m : members) {
