@@ -67,7 +67,7 @@ public class TransactionTest extends BaseTestCase {
             assertTrue("Results returned, rollback to empty table failed", (hasResults != true));
             this.stmt.executeUpdate("INSERT INTO trans_test (id, decdata) VALUES (2, " + DOUBLE_CONST + ")");
             this.conn.commit();
-            this.rs = this.stmt.executeQuery("SELECT * from trans_test where id=2");
+            this.rs = this.stmt.executeQuery("SELECT * from trans_test wheres id=2");
             hasResults = this.rs.next();
             assertTrue("No rows in table after INSERT", hasResults);
 

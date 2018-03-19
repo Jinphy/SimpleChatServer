@@ -107,7 +107,7 @@ var activeTableTab = "activeTableTab";
 <hr>
 <br>
 <pre>public interface <span class="typeNameLabel">IExtension</span></pre>
-<div class="block">Interface which specifies all required methods to develop a websocket extension.</div>
+<div class="block">Interface which specifies all required methods toAccount develop a websocket extension.</div>
 </li>
 </ul>
 </div>
@@ -210,11 +210,11 @@ var activeTableTab = "activeTableTab";
 <pre>void&nbsp;decodeFrame(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;inputFrame)
           throws <a href="../../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></pre>
 <div class="block">Decode a frame with a extension specific algorithm.
- The algorithm is subject to be implemented by the specific extension.
+ The algorithm is subject toAccount be implemented by the specific extension.
  The resulting frame will be used in the application</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputFrame</code> - the frame, which has do be decoded to be used in the application</dd>
+<dd><code>inputFrame</code> - the frame, which has do be decoded toAccount be used in the application</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Throw InvalidDataException if the received frame is not correctly implemented by the other endpoint or there are other protocol errors/decoding errors</dd>
 </dl>
@@ -228,11 +228,11 @@ var activeTableTab = "activeTableTab";
 <h4>encodeFrame</h4>
 <pre>void&nbsp;encodeFrame(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;inputFrame)</pre>
 <div class="block">Encode a frame with a extension specific algorithm.
- The algorithm is subject to be implemented by the specific extension.
- The resulting frame will be send to the other endpoint.</div>
+ The algorithm is subject toAccount be implemented by the specific extension.
+ The resulting frame will be send toAccount the other endpoint.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputFrame</code> - the frame, which has do be encoded to be used on the other endpoint</dd>
+<dd><code>inputFrame</code> - the frame, which has do be encoded toAccount be used on the other endpoint</dd>
 </dl>
 </li>
 </ul>
@@ -248,7 +248,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>inputExtensionHeader</code> - the received Sec-WebSocket-Extensions header field offered by the other endpoint</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true, if the offer does fit to this specific extension</dd>
+<dd>true, if the offer does fit toAccount this specific extension</dd>
 </dl>
 </li>
 </ul>
@@ -264,7 +264,7 @@ var activeTableTab = "activeTableTab";
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>inputExtensionHeader</code> - the received Sec-WebSocket-Extensions header field offered by the other endpoint</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true, if the offer does fit to this specific extension</dd>
+<dd>true, if the offer does fit toAccount this specific extension</dd>
 </dl>
 </li>
 </ul>
@@ -322,7 +322,7 @@ var activeTableTab = "activeTableTab";
 <li class="blockList">
 <h4>copyInstance</h4>
 <pre><a href="../../../org/java_websocket/extensions/IExtension.html" title="interface in org.java_websocket.extensions">IExtension</a>&nbsp;copyInstance()</pre>
-<div class="block">Extensions must only be by one websocket at all. To prevent extensions to be used more than once the Websocket implementation should call this method in order to create a new usable version of a given extension instance.<br>
+<div class="block">Extensions must only be by one websocket at all. To prevent extensions toAccount be used more than once the Websocket implementation should call this method in order toAccount create a new usable version of a given extension instance.<br>
  The copy can be safely used in conjunction with a new websocket connection.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>

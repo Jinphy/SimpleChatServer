@@ -229,10 +229,10 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 </tr>
 </table>
 <ul class="blockList">
-<li class="blockList"><a name="methods.inherited.from.class.java.lang.Object">
+<li class="blockList"><a name="methods.inherited.fromAccount.class.java.lang.Object">
 <!--   -->
 </a>
-<h3>Methods inherited from class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
+<h3>Methods inherited fromAccount class&nbsp;java.lang.<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true" title="class or interface in java.lang">Object</a></h3>
 <code><a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#clone--" title="class or interface in java.lang">clone</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#finalize--" title="class or interface in java.lang">finalize</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#getClass--" title="class or interface in java.lang">getClass</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notify--" title="class or interface in java.lang">notify</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#notifyAll--" title="class or interface in java.lang">notifyAll</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait--" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-" title="class or interface in java.lang">wait</a>, <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Object.html?is-external=true#wait-long-int-" title="class or interface in java.lang">wait</a></code></li>
 </ul>
 </li>
@@ -274,15 +274,15 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <h4>decodeFrame</h4>
 <pre>public&nbsp;void&nbsp;decodeFrame(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;inputFrame)
                  throws <a href="../../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#decodeFrame-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#decodeFrame-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
 <div class="block">Decode a frame with a extension specific algorithm.
- The algorithm is subject to be implemented by the specific extension.
+ The algorithm is subject toAccount be implemented by the specific extension.
  The resulting frame will be used in the application</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/extensions/IExtension.html#decodeFrame-org.java_websocket.framing.Framedata-">decodeFrame</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html" title="interface in org.java_websocket.extensions">IExtension</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputFrame</code> - the frame, which has do be decoded to be used in the application</dd>
+<dd><code>inputFrame</code> - the frame, which has do be decoded toAccount be used in the application</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
 <dd><code><a href="../../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Throw InvalidDataException if the received frame is not correctly implemented by the other endpoint or there are other protocol errors/decoding errors</dd>
 </dl>
@@ -295,15 +295,15 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>encodeFrame</h4>
 <pre>public&nbsp;void&nbsp;encodeFrame(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;inputFrame)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#encodeFrame-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#encodeFrame-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
 <div class="block">Encode a frame with a extension specific algorithm.
- The algorithm is subject to be implemented by the specific extension.
- The resulting frame will be send to the other endpoint.</div>
+ The algorithm is subject toAccount be implemented by the specific extension.
+ The resulting frame will be send toAccount the other endpoint.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code><a href="../../../org/java_websocket/extensions/IExtension.html#encodeFrame-org.java_websocket.framing.Framedata-">encodeFrame</a></code>&nbsp;in interface&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html" title="interface in org.java_websocket.extensions">IExtension</a></code></dd>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>inputFrame</code> - the frame, which has do be encoded to be used on the other endpoint</dd>
+<dd><code>inputFrame</code> - the frame, which has do be encoded toAccount be used on the other endpoint</dd>
 </dl>
 </li>
 </ul>
@@ -314,7 +314,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>acceptProvidedExtensionAsServer</h4>
 <pre>public&nbsp;boolean&nbsp;acceptProvidedExtensionAsServer(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;inputExtension)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#acceptProvidedExtensionAsServer-java.lang.String-">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#acceptProvidedExtensionAsServer-java.lang.String-">IExtension</a></code></span></div>
 <div class="block">Check if the received Sec-WebSocket-Extensions header field contains a offer for the specific extension if the endpoint is in the role of a server</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -322,7 +322,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>inputExtension</code> - the received Sec-WebSocket-Extensions header field offered by the other endpoint</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true, if the offer does fit to this specific extension</dd>
+<dd>true, if the offer does fit toAccount this specific extension</dd>
 </dl>
 </li>
 </ul>
@@ -333,7 +333,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>acceptProvidedExtensionAsClient</h4>
 <pre>public&nbsp;boolean&nbsp;acceptProvidedExtensionAsClient(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;inputExtension)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#acceptProvidedExtensionAsClient-java.lang.String-">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#acceptProvidedExtensionAsClient-java.lang.String-">IExtension</a></code></span></div>
 <div class="block">Check if the received Sec-WebSocket-Extensions header field contains a offer for the specific extension if the endpoint is in the role of a client</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -341,7 +341,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>inputExtension</code> - the received Sec-WebSocket-Extensions header field offered by the other endpoint</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>true, if the offer does fit to this specific extension</dd>
+<dd>true, if the offer does fit toAccount this specific extension</dd>
 </dl>
 </li>
 </ul>
@@ -353,7 +353,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <h4>isFrameValid</h4>
 <pre>public&nbsp;void&nbsp;isFrameValid(<a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;inputFrame)
                   throws <a href="../../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#isFrameValid-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#isFrameValid-org.java_websocket.framing.Framedata-">IExtension</a></code></span></div>
 <div class="block">Check if the received frame is correctly implemented by the other endpoint and there are no specification errors (like wrongly set RSV)</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -372,7 +372,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>getProvidedExtensionAsClient</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getProvidedExtensionAsClient()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#getProvidedExtensionAsClient--">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#getProvidedExtensionAsClient--">IExtension</a></code></span></div>
 <div class="block">Return the specific Sec-WebSocket-Extensions header offer for this extension if the endpoint is in the role of a client.
  If the extension returns an empty string (""), the offer will not be included in the handshake.</div>
 <dl>
@@ -390,7 +390,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>getProvidedExtensionAsServer</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;getProvidedExtensionAsServer()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#getProvidedExtensionAsServer--">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#getProvidedExtensionAsServer--">IExtension</a></code></span></div>
 <div class="block">Return the specific Sec-WebSocket-Extensions header offer for this extension if the endpoint is in the role of a server.
  If the extension returns an empty string (""), the offer will not be included in the handshake.</div>
 <dl>
@@ -408,8 +408,8 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>copyInstance</h4>
 <pre>public&nbsp;<a href="../../../org/java_websocket/extensions/IExtension.html" title="interface in org.java_websocket.extensions">IExtension</a>&nbsp;copyInstance()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#copyInstance--">IExtension</a></code></span></div>
-<div class="block">Extensions must only be by one websocket at all. To prevent extensions to be used more than once the Websocket implementation should call this method in order to create a new usable version of a given extension instance.<br>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#copyInstance--">IExtension</a></code></span></div>
+<div class="block">Extensions must only be by one websocket at all. To prevent extensions toAccount be used more than once the Websocket implementation should call this method in order toAccount create a new usable version of a given extension instance.<br>
  The copy can be safely used in conjunction with a new websocket connection.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -426,7 +426,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>reset</h4>
 <pre>public&nbsp;void&nbsp;reset()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#reset--">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#reset--">IExtension</a></code></span></div>
 <div class="block">Cleaning up internal stats when the draft gets reset.</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
@@ -441,7 +441,7 @@ implements <a href="../../../org/java_websocket/extensions/IExtension.html" titl
 <li class="blockList">
 <h4>toString</h4>
 <pre>public&nbsp;<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;toString()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#toString--">IExtension</a></code></span></div>
+<div class="block"><span class="descfrmTypeLabel">Description copied fromAccount interface:&nbsp;<code><a href="../../../org/java_websocket/extensions/IExtension.html#toString--">IExtension</a></code></span></div>
 <div class="block">Return a string which should contain the class name as well as additional information about the current configurations for this extension (DEBUG purposes)</div>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>

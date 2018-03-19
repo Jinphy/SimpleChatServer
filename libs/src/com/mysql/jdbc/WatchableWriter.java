@@ -26,7 +26,7 @@ package com.mysql.jdbc;
 import java.io.CharArrayWriter;
 
 /**
- * A java.io.Writer used to write unicode data into Blobs and Clobs
+ * A java.io.Writer used to write unicode database into Blobs and Clobs
  */
 class WatchableWriter extends CharArrayWriter {
     private WriterWatcher watcher;
@@ -38,7 +38,7 @@ class WatchableWriter extends CharArrayWriter {
     public void close() {
         super.close();
 
-        // Send data to watcher
+        // Send database to watcher
         if (this.watcher != null) {
             this.watcher.writerClosed(this);
         }

@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.db;
+package com.jinphy.simplechatserver.database.models;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,7 +21,7 @@ public class DBConnectionPool {
     private boolean hasRunBackgroungThread = false;
 /*
      一个后台线程，用来检测是否数据库连接池中的连接数超过了正常状态下的连接数，
-    如果超过了，则把超过部分的长时间为被使用的连接关闭，否则（连接数没有超过）
+    如果超过了，则把超过部分的长时间未被使用的连接关闭，否则（连接数没有超过）
     就终止该后台线程
     */
     private void run(){
@@ -100,11 +100,12 @@ public class DBConnectionPool {
                     // 启动后台线程来关闭超过部分的并且长时间空闲的连接
                     new Thread(this::run).start();
                 }
-
                 return DriverManager.getConnection(dbConfig.url,dbConfig.user,dbConfig.password);
             }
             // 连接池已经达到最大连接数，则等待空闲的连接，并释放连接池
-            connections.wait(dbConfig.connectTimeout);
+            while (connections.size() <= 0) {
+                connections.wait(dbConfig.connectTimeout);
+            }
 
             // 唤醒后说明，池中有空闲的连接了，则使用该连接
             return connections.remove(0).connection;

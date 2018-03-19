@@ -966,7 +966,7 @@ public abstract class BaseTestCase extends TestCase {
     }
 
     /**
-     * Asserts the most recent history of connection attempts from the global data in UnreliableSocketFactory.
+     * Asserts the most recent history of connection attempts from the global database in UnreliableSocketFactory.
      * 
      * @param expectedConnectionsHistory
      *            The list of expected events. Use UnreliableSocketFactory.getHostConnectedStatus(String), UnreliableSocketFactory.getHostFailedStatus(String)

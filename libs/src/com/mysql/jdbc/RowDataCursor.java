@@ -28,7 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Model for result set data backed by a cursor. Only works for forward-only result sets (but still works with updatable concurrency).
+ * Model for result set database backed by a cursor. Only works for forward-only result sets (but still works with updatable concurrency).
  */
 public class RowDataCursor implements RowData {
 
@@ -130,7 +130,7 @@ public class RowDataCursor implements RowData {
      * 
      * @param index
      *            row number to get at
-     * @return row data at index
+     * @return row database at index
      * @throws SQLException
      *             if a database error occurs
      */
@@ -220,7 +220,7 @@ public class RowDataCursor implements RowData {
     }
 
     /**
-     * Adds a row to this row data.
+     * Adds a row to this row database.
      * 
      * @param row
      *            the row to add
@@ -420,7 +420,7 @@ public class RowDataCursor implements RowData {
     /**
      * Only works on non dynamic result sets.
      * 
-     * @return the size of this row data
+     * @return the size of this row database
      */
     public int size() {
         return RESULT_SET_SIZE_UNKNOWN;

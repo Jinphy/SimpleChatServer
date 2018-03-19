@@ -152,7 +152,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>protected abstract <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;</code></td>
 <td class="colLast"><span class="typeNameLabel">AbstractWebSocket.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/AbstractWebSocket.html#connections--">connections</a></span>()</code>
-<div class="block">Getter to get all the currently available connections</div>
+<div class="block">Getter toAccount get all the currently available connections</div>
 </td>
 </tr>
 </tbody>
@@ -263,7 +263,7 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketAdapter.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketHandshakeSentAsClient-org.java_websocket.WebSocket-org.java_websocket.handshake.ClientHandshake-">onWebsocketHandshakeSentAsClient</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                                 <a href="../../../org/java_websocket/handshake/ClientHandshake.html" title="interface in org.java_websocket.handshake">ClientHandshake</a>&nbsp;request)</code>
-<div class="block">This default implementation does not do anything which will cause the connections to always progress.</div>
+<div class="block">This default implementation does not do anything which will cause the connections toAccount always progress.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -312,7 +312,7 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketAdapter.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/WebSocketAdapter.html#onWebsocketPing-org.java_websocket.WebSocket-org.java_websocket.framing.Framedata-">onWebsocketPing</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                <a href="../../../org/java_websocket/framing/Framedata.html" title="interface in org.java_websocket.framing">Framedata</a>&nbsp;f)</code>
-<div class="block">This default implementation will send a pong in response to the received ping.</div>
+<div class="block">This default implementation will send a pong in response toAccount the received ping.</div>
 </td>
 </tr>
 <tr class="rowColor">
@@ -332,7 +332,7 @@
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketListener.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/WebSocketListener.html#onWriteDemand-org.java_websocket.WebSocket-">onWriteDemand</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn)</code>
-<div class="block">This method is used to inform the selector thread that there is data queued to be written to the socket.</div>
+<div class="block">This method is used toAccount inform the selector thread that there is data queued toAccount be written toAccount the socket.</div>
 </td>
 </tr>
 </tbody>
@@ -352,7 +352,7 @@
 <tr class="altColor">
 <td class="colFirst"><code>class&nbsp;</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../../org/java_websocket/client/WebSocketClient.html" title="class in org.java_websocket.client">WebSocketClient</a></span></code>
-<div class="block">A subclass must implement at least <var>onOpen</var>, <var>onClose</var>, and <var>onMessage</var> to be
+<div class="block">A subclass must implement at least <var>onOpen</var>, <var>onClose</var>, and <var>onMessage</var> toAccount be
  useful.</div>
 </td>
 </tr>
@@ -543,21 +543,21 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#onMessage-org.java_websocket.WebSocket-java.nio.ByteBuffer-">onMessage</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/nio/ByteBuffer.html?is-external=true" title="class or interface in java.nio">ByteBuffer</a>&nbsp;message)</code>
-<div class="block">Callback for binary messages received from the remote host</div>
+<div class="block">Callback for binary messages received fromAccount the remote host</div>
 </td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#onMessage-org.java_websocket.WebSocket-java.lang.String-">onMessage</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;message)</code>
-<div class="block">Callback for string messages received from the remote host</div>
+<div class="block">Callback for string messages received fromAccount the remote host</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>abstract void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#onOpen-org.java_websocket.WebSocket-org.java_websocket.handshake.ClientHandshake-">onOpen</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
       <a href="../../../org/java_websocket/handshake/ClientHandshake.html" title="interface in org.java_websocket.handshake">ClientHandshake</a>&nbsp;handshake)</code>
-<div class="block">Called after an opening handshake has been performed and the given websocket is ready to be written on.</div>
+<div class="block">Called after an opening handshake has been performed and the given websocket is ready toAccount be written on.</div>
 </td>
 </tr>
 <tr class="altColor">
@@ -626,7 +626,7 @@
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#removeConnection-org.java_websocket.WebSocket-">removeConnection</a></span>(<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;ws)</code>
 <div class="block">This method performs remove operations on the connection and therefore also gives control over whether the operation shall be synchronized
  
- <a href="../../../org/java_websocket/server/WebSocketServer.html#WebSocketServer-java.net.InetSocketAddress-int-java.util.List-java.util.Collection-"><code>WebSocketServer.WebSocketServer(InetSocketAddress, int, List, Collection)</code></a> allows to specify a collection which will be used to store current connections in.</div>
+ <a href="../../../org/java_websocket/server/WebSocketServer.html#WebSocketServer-java.net.InetSocketAddress-int-java.util.List-java.util.Collection-"><code>WebSocketServer.WebSocketServer(InetSocketAddress, int, List, Collection)</code></a> allows toAccount specify a collection which will be used toAccount store current connections in.</div>
 </td>
 </tr>
 </tbody>
@@ -642,14 +642,14 @@
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#broadcast-byte:A-java.util.Collection-">broadcast</a></span>(byte[]&nbsp;data,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;&nbsp;clients)</code>
-<div class="block">Send a byte array to a specific collection of websocket connections</div>
+<div class="block">Send a byte array toAccount a specific collection of websocket connections</div>
 </td>
 </tr>
 <tr class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><span class="typeNameLabel">WebSocketServer.</span><code><span class="memberNameLink"><a href="../../../org/java_websocket/server/WebSocketServer.html#broadcast-java.lang.String-java.util.Collection-">broadcast</a></span>(<a href="http://docs.oracle.com/javase/7/docs/api/java/lang/String.html?is-external=true" title="class or interface in java.lang">String</a>&nbsp;text,
          <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;&nbsp;clients)</code>
-<div class="block">Send a text to a specific collection of websocket connections</div>
+<div class="block">Send a text toAccount a specific collection of websocket connections</div>
 </td>
 </tr>
 </tbody>
@@ -665,7 +665,7 @@
                int&nbsp;decodercount,
                <a href="http://docs.oracle.com/javase/7/docs/api/java/util/List.html?is-external=true" title="class or interface in java.util">List</a>&lt;<a href="../../../org/java_websocket/drafts/Draft.html" title="class in org.java_websocket.drafts">Draft</a>&gt;&nbsp;drafts,
                <a href="http://docs.oracle.com/javase/7/docs/api/java/util/Collection.html?is-external=true" title="class or interface in java.util">Collection</a>&lt;<a href="../../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&gt;&nbsp;connectionscontainer)</code>
-<div class="block">Creates a WebSocketServer that will attempt to bind/listen on the given <var>address</var>,
+<div class="block">Creates a WebSocketServer that will attempt toAccount bind/listen on the given <var>address</var>,
  and comply with <tt>Draft</tt> version <var>draft</var>.</div>
 </td>
 </tr>

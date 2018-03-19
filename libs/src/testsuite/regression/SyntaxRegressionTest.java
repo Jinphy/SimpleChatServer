@@ -444,7 +444,7 @@ public class SyntaxRegressionTest extends BaseTestCase {
             } else if (fileprivdir.length() > 0) {
                 fileprivdir = new File(fileprivdir).getCanonicalPath();
                 if (!datadir.equals(fileprivdir)) {
-                    fail("To run this test the server option\"--secure-file-priv=\" needs to be empty or to match the server's data directory.");
+                    fail("To run this test the server option\"--secure-file-priv=\" needs to be empty or to match the server's database directory.");
                 }
             }
 
@@ -719,7 +719,7 @@ public class SyntaxRegressionTest extends BaseTestCase {
 
         Connection testConn = this.conn;
         if (versionMeetsMinimum(5, 7, 10)) {
-            // MySQL 5.7.10+ requires non STRICT_TRANS_TABLES to use these functions with invalid data.
+            // MySQL 5.7.10+ requires non STRICT_TRANS_TABLES to use these functions with invalid database.
             Properties props = new Properties();
             props.put("jdbcCompliantTruncation", "false");
             String sqlMode = getMysqlVariable("sql_mode");
@@ -740,14 +740,14 @@ public class SyntaxRegressionTest extends BaseTestCase {
         for (int r : this.pstmt.executeBatch()) {
             c += r;
         }
-        assertEquals("Failed inserting data samples: wrong number of inserts.", dataSamples.length, c);
+        assertEquals("Failed inserting database samples: wrong number of inserts.", dataSamples.length, c);
 
         this.rs = this.stmt.executeQuery("SELECT id, INET_NTOA(ipv4), INET6_NTOA(ipv6) FROM testWL5787");
         int i = 0;
         while (this.rs.next()) {
             i = this.rs.getInt(1);
-            assertEquals("Wrong IPv4 data in row [" + i + "].", dataExpected[i - 1][0], this.rs.getString(2));
-            assertEquals("Wrong IPv6 data in row [" + i + "].", dataExpected[i - 1][1], this.rs.getString(3));
+            assertEquals("Wrong IPv4 database in row [" + i + "].", dataExpected[i - 1][0], this.rs.getString(2));
+            assertEquals("Wrong IPv6 database in row [" + i + "].", dataExpected[i - 1][1], this.rs.getString(3));
         }
 
         this.pstmt.close();
@@ -969,27 +969,27 @@ public class SyntaxRegressionTest extends BaseTestCase {
     /**
      * WL#7909 - Server side JSON functions
      * 
-     * Test support for data type JSON.
+     * Test support for database type JSON.
      * 
      * New JSON functions added in MySQL 5.7.8:
-     * - JSON_APPEND(), Append data to JSON document (only in 5.7.8)
-     * - JSON_ARRAY_APPEND(), Append data to JSON document (added in 5.7.9+)
+     * - JSON_APPEND(), Append database to JSON document (only in 5.7.8)
+     * - JSON_ARRAY_APPEND(), Append database to JSON document (added in 5.7.9+)
      * - JSON_ARRAY_INSERT(), Insert into JSON array
      * - JSON_ARRAY(), Create JSON array
-     * - JSON_CONTAINS_PATH(), Whether JSON document contains any data at path
+     * - JSON_CONTAINS_PATH(), Whether JSON document contains any database at path
      * - JSON_CONTAINS(), Whether JSON document contains specific object at path
      * - JSON_DEPTH(), Maximum depth of JSON document
-     * - JSON_EXTRACT(), Return data from JSON document
-     * - JSON_INSERT(), Insert data into JSON document
+     * - JSON_EXTRACT(), Return database from JSON document
+     * - JSON_INSERT(), Insert database into JSON document
      * - JSON_KEYS(), Array of keys from JSON document
      * - JSON_LENGTH(), Number of elements in JSON document
      * - JSON_MERGE(), Merge JSON documents
      * - JSON_OBJECT(), Create JSON object
      * - JSON_QUOTE(), Quote JSON document
-     * - JSON_REMOVE(), Remove data from JSON document
+     * - JSON_REMOVE(), Remove database from JSON document
      * - JSON_REPLACE(), Replace values in JSON document
      * - JSON_SEARCH(), Path to value within JSON document
-     * - JSON_SET(), Insert data into JSON document
+     * - JSON_SET(), Insert database into JSON document
      * - JSON_TYPE(), Type of JSON value
      * - JSON_UNQUOTE(), Unquote JSON value
      * - JSON_VALID(), Whether JSON value is valid
@@ -1391,21 +1391,21 @@ public class SyntaxRegressionTest extends BaseTestCase {
         // Create table with 'zlib' compression.
         createTable("testTableCompression", "(c VARCHAR(15000)) COMPRESSION='ZLIB'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='ZLIB'") >= 0);
 
         // Alter table compression to 'lz4'.
         this.stmt.execute("ALTER TABLE testTableCompression COMPRESSION='LZ4'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='LZ4'") >= 0);
 
         // Alter table compression to 'none'.
         this.stmt.execute("ALTER TABLE testTableCompression COMPRESSION='NONE'");
 
-        this.rs = this.stmt.executeQuery("show create table testTableCompression");
+        this.rs = this.stmt.executeQuery("show parse table testTableCompression");
         assertTrue(this.rs.next());
         assertTrue(StringUtils.indexOfIgnoreCase(this.rs.getString(2), "COMPRESSION='NONE'") >= 0);
     }
@@ -1967,7 +1967,7 @@ public class SyntaxRegressionTest extends BaseTestCase {
     }
 
     /**
-     * WL#8548 - InnoDB: Transparent data encryption.
+     * WL#8548 - InnoDB: Transparent database encryption.
      * WL#8821 - Innodb tablespace encryption key rotation SQL commands.
      * 
      * Test new syntax:

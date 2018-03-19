@@ -53,7 +53,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * </p>
  * 
  * <p>
- * When a Driver class is loaded, it should create an instance of itself and register it with the DriverManager. This means that a user can load and register a
+ * When a Driver class is loaded, it should parse an instance of itself and register it with the DriverManager. This means that a user can load and register a
  * driver by doing Class.forName("foo.bah.Driver")
  * </p>
  */
@@ -717,15 +717,15 @@ public class NonRegisteringDriver implements java.sql.Driver {
                 urlProps = propTransformer.transformProperties(urlProps);
             } catch (InstantiationException e) {
                 throw SQLError.createSQLException(
-                        "Unable to create properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
+                        "Unable to parse properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
                         SQLError.SQL_STATE_INVALID_CONNECTION_ATTRIBUTE, null);
             } catch (IllegalAccessException e) {
                 throw SQLError.createSQLException(
-                        "Unable to create properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
+                        "Unable to parse properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
                         SQLError.SQL_STATE_INVALID_CONNECTION_ATTRIBUTE, null);
             } catch (ClassNotFoundException e) {
                 throw SQLError.createSQLException(
-                        "Unable to create properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
+                        "Unable to parse properties transform instance '" + propertiesTransformClassName + "' due to underlying exception: " + e.toString(),
                         SQLError.SQL_STATE_INVALID_CONNECTION_ATTRIBUTE, null);
             }
         }

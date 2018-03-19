@@ -46,7 +46,7 @@ import java.util.concurrent.Callable;
 import testsuite.BaseTestCase;
 
 public class StatementsTest extends BaseTestCase {
-    // Shared test data
+    // Shared test database
     private final String testDateString = "2015-08-04";
     private final String testTimeString = "12:34:56";
     private final String testDateTimeString = testDateString + " " + testTimeString + ".0";
@@ -68,7 +68,7 @@ public class StatementsTest extends BaseTestCase {
     }
 
     /**
-     * Test shared test data validity.
+     * Test shared test database validity.
      */
     public void testSharedTestData() throws Exception {
         assertEquals(testSqlDate, Date.valueOf(testLocalDate));
@@ -760,7 +760,7 @@ public class StatementsTest extends BaseTestCase {
 
     /**
      * Helper method for *SetObject* tests.
-     * Insert data into the given PreparedStatement, or any of its subclasses, with the following structure:
+     * Insert database into the given PreparedStatement, or any of its subclasses, with the following structure:
      * 1 - `id` INT
      * 2 - `d` DATE (or any kind of *CHAR)
      * 3 - `t` TIME (or any kind of *CHAR)
@@ -867,7 +867,7 @@ public class StatementsTest extends BaseTestCase {
 
     /**
      * Helper method for *SetObject* tests.
-     * Validate the test data contained in the given ResultSet with following structure:
+     * Validate the test database contained in the given ResultSet with following structure:
      * 1 - `id` INT
      * 2 - `d` DATE (or any kind of *CHAR)
      * 3 - `t` TIME (or any kind of *CHAR)
@@ -925,7 +925,7 @@ public class StatementsTest extends BaseTestCase {
 
     /**
      * Helper method for *SetObject* tests.
-     * Insert data into the given PreparedStatement, or any of its subclasses, with the following structure:
+     * Insert database into the given PreparedStatement, or any of its subclasses, with the following structure:
      * 1 - `id` INT
      * 2 - `ot1` VARCHAR
      * 3 - `ot2` BLOB
@@ -962,7 +962,7 @@ public class StatementsTest extends BaseTestCase {
 
     /**
      * Helper method for *SetObject* tests.
-     * Validate the test data contained in the given ResultSet with following structure:
+     * Validate the test database contained in the given ResultSet with following structure:
      * 1 - `id` INT
      * 2 - `ot1` VARCHAR
      * 3 - `ot2` BLOB

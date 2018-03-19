@@ -76,7 +76,7 @@ public class BufferRow extends ResultSetRow {
     private Field[] metadata;
 
     /**
-     * Is this a row from a server-side prepared statement? If so, they're encoded differently, so we have different ways of finding where each column is, and
+     * Is this a row from a server-side prepared statement? If so, they're encoded differently, so we have different ways of finding wheres each column is, and
      * unpacking them.
      */
     private boolean isBinaryEncoded;

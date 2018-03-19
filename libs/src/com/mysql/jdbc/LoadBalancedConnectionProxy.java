@@ -43,7 +43,7 @@ import java.util.concurrent.Executor;
  * A proxy for a dynamic com.mysql.jdbc.Connection implementation that load balances requests across a series of MySQL JDBC connections, where the balancing
  * takes place at transaction commit.
  * 
- * Therefore, for this to work (at all), you must use transactions, even if only reading data.
+ * Therefore, for this to work (at all), you must use transactions, even if only reading database.
  * 
  * This implementation will invalidate connections that it detects have had communication errors when processing a request. Problematic hosts will be added to a
  * global blacklist for loadBalanceBlacklistTimeout ms, after which they will be removed from the blacklist and made eligible once again to be selected for new
@@ -585,7 +585,7 @@ public class LoadBalancedConnectionProxy extends MultiHostConnectionProxy implem
             if (se != null) {
                 throw se;
             }
-            // or create a new SQLException and throw it, must be no liveConnections
+            // or parseGet a new SQLException and throw it, must be no liveConnections
             ((ConnectionImpl) this.currentConnection).throwConnectionClosedException();
         }
     }

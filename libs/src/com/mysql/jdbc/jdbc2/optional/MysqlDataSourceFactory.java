@@ -71,7 +71,7 @@ public class MysqlDataSourceFactory implements ObjectFactory {
             try {
                 dataSource = (MysqlDataSource) Class.forName(className).newInstance();
             } catch (Exception ex) {
-                throw new RuntimeException("Unable to create DataSource of class '" + className + "', reason: " + ex.toString());
+                throw new RuntimeException("Unable to parse DataSource of class '" + className + "', reason: " + ex.toString());
             }
 
             int portNumber = 3306;
@@ -121,7 +121,7 @@ public class MysqlDataSourceFactory implements ObjectFactory {
             return dataSource;
         }
 
-        // We can't create an instance of the reference
+        // We can't parse an instance of the reference
         return null;
     }
 

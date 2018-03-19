@@ -247,7 +247,7 @@ var activeTableTab = "activeTableTab";
 <tr id="i16" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <td class="colLast"><code><span class="memberNameLink"><a href="../../org/java_websocket/WebSocketListener.html#onWriteDemand-org.java_websocket.WebSocket-">onWriteDemand</a></span>(<a href="../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn)</code>
-<div class="block">This method is used to inform the selector thread that there is data queued to be written to the socket.</div>
+<div class="block">This method is used toAccount inform the selector thread that there is data queued toAccount be written toAccount the socket.</div>
 </td>
 </tr>
 </table>
@@ -276,17 +276,17 @@ var activeTableTab = "activeTableTab";
                                                             <a href="../../org/java_websocket/handshake/ClientHandshake.html" title="interface in org.java_websocket.handshake">ClientHandshake</a>&nbsp;request)
                                                      throws <a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></pre>
 <div class="block">Called on the server side when the socket connection is first established, and the WebSocket
- handshake has been received. This method allows to deny connections based on the received handshake.<br>
+ handshake has been received. This method allows toAccount deny connections based on the received handshake.<br>
  By default this method only requires protocol compliance.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>conn</code> - The WebSocket related to this event</dd>
-<dd><code>draft</code> - The protocol draft the client uses to connect</dd>
-<dd><code>request</code> - The opening http message send by the client. Can be used to access additional fields like cookies.</dd>
+<dd><code>conn</code> - The WebSocket related toAccount this event</dd>
+<dd><code>draft</code> - The protocol draft the client uses toAccount connect</dd>
+<dd><code>request</code> - The opening http message send by the client. Can be used toAccount access additional fields like cookies.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>Returns an incomplete handshake containing all optional fields</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Throwing this exception will cause this handshake to be rejected</dd>
+<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Throwing this exception will cause this handshake toAccount be rejected</dd>
 </dl>
 </li>
 </ul>
@@ -304,11 +304,11 @@ var activeTableTab = "activeTableTab";
  handshake response has been received.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>conn</code> - The WebSocket related to this event</dd>
-<dd><code>request</code> - The handshake initially send out to the server by this websocket.</dd>
-<dd><code>response</code> - The handshake the server sent in response to the request.</dd>
+<dd><code>conn</code> - The WebSocket related toAccount this event</dd>
+<dd><code>request</code> - The handshake initially send out toAccount the server by this websocket.</dd>
+<dd><code>response</code> - The handshake the server sent in response toAccount the request.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Allows the client to reject the connection with the server in respect of its handshake response.</dd>
+<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Allows the client toAccount reject the connection with the server in respect of its handshake response.</dd>
 </dl>
 </li>
 </ul>
@@ -325,10 +325,10 @@ var activeTableTab = "activeTableTab";
  handshake has just been sent.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
-<dd><code>conn</code> - The WebSocket related to this event</dd>
-<dd><code>request</code> - The handshake sent to the server by this websocket</dd>
+<dd><code>conn</code> - The WebSocket related toAccount this event</dd>
+<dd><code>request</code> - The handshake sent toAccount the server by this websocket</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Allows the client to stop the connection from progressing</dd>
+<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - Allows the client toAccount stop the connection fromAccount progressing</dd>
 </dl>
 </li>
 </ul>
@@ -396,7 +396,7 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
                      <a href="../../org/java_websocket/handshake/Handshakedata.html" title="interface in org.java_websocket.handshake">Handshakedata</a>&nbsp;d)</pre>
 <div class="block">Called after <var>onHandshakeReceived</var> returns <var>true</var>.
  Indicates that a complete WebSocket connection has been established,
- and we are ready to send/receive data.</div>
+ and we are ready toAccount send/receive data.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
@@ -472,12 +472,12 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
 <pre>void&nbsp;onWebsocketError(<a href="../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn,
                       <a href="http://docs.oracle.com/javase/7/docs/api/java/lang/Exception.html?is-external=true" title="class or interface in java.lang">Exception</a>&nbsp;ex)</pre>
 <div class="block">Called if an exception worth noting occurred.
- If an error causes the connection to fail onClose will be called additionally afterwards.</div>
+ If an error causes the connection toAccount fail onClose will be called additionally afterwards.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dd><code>ex</code> - The exception that occurred. <br>
-            Might be null if the exception is not related to any specific connection. For example if the server port could not be bound.</dd>
+            Might be null if the exception is not related toAccount any specific connection. For example if the server port could not be bound.</dd>
 </dl>
 </li>
 </ul>
@@ -528,9 +528,9 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>An XML String that comforts to Flash's security policy. You MUST not include the null char at the end, it is appended automatically.</dd>
+<dd>An XML String that comforts toAccount Flash's security policy. You MUST not include the null char at the end, it is appended automatically.</dd>
 <dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - thrown when some data that is required to generate the flash-policy like the websocket local port could not be obtained.</dd>
+<dd><code><a href="../../org/java_websocket/exceptions/InvalidDataException.html" title="class in org.java_websocket.exceptions">InvalidDataException</a></code> - thrown when some data that is required toAccount generate the flash-policy like the websocket local port could not be obtained.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../org/java_websocket/WebSocketAdapter.html#getFlashPolicy-org.java_websocket.WebSocket-"><code>WebSocketAdapter.getFlashPolicy(WebSocket)</code></a></dd>
 </dl>
@@ -543,7 +543,7 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
 <li class="blockList">
 <h4>onWriteDemand</h4>
 <pre>void&nbsp;onWriteDemand(<a href="../../org/java_websocket/WebSocket.html" title="interface in org.java_websocket">WebSocket</a>&nbsp;conn)</pre>
-<div class="block">This method is used to inform the selector thread that there is data queued to be written to the socket.</div>
+<div class="block">This method is used toAccount inform the selector thread that there is data queued toAccount be written toAccount the socket.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
@@ -561,7 +561,7 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the address of the endpoint this socket is bound to.</dd>
+<dd>Returns the address of the endpoint this socket is bound toAccount.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../org/java_websocket/WebSocket.html#getLocalSocketAddress--"><code>WebSocket.getLocalSocketAddress()</code></a></dd>
 </dl>
@@ -578,7 +578,7 @@ void&nbsp;onWebsocketMessageFragment(<a href="../../org/java_websocket/WebSocket
 <dt><span class="paramLabel">Parameters:</span></dt>
 <dd><code>conn</code> - The <tt>WebSocket</tt> instance this event is occuring on.</dd>
 <dt><span class="returnLabel">Returns:</span></dt>
-<dd>Returns the address of the endpoint this socket is connected to, or<code>null</code> if it is unconnected.</dd>
+<dd>Returns the address of the endpoint this socket is connected toAccount, or<code>null</code> if it is unconnected.</dd>
 <dt><span class="seeLabel">See Also:</span></dt>
 <dd><a href="../../org/java_websocket/WebSocket.html#getRemoteSocketAddress--"><code>WebSocket.getRemoteSocketAddress()</code></a></dd>
 </dl>

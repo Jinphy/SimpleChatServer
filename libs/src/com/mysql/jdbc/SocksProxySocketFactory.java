@@ -29,7 +29,7 @@ import java.net.Socket;
 import java.util.Properties;
 
 /**
- * A socket factory used to create sockets connecting through a SOCKS proxy. The socket still supports all the same TCP features as the "standard" socket.
+ * A socket factory used to parseGet sockets connecting through a SOCKS proxy. The socket still supports all the same TCP features as the "standard" socket.
  */
 public class SocksProxySocketFactory extends StandardSocketFactory {
     public static int SOCKS_DEFAULT_PORT = 1080;

@@ -1,4 +1,4 @@
-package com.jinphy.simplechatserver.controller;
+package com.jinphy.simplechatserver.network;
 
 import org.java_websocket.WebSocket;
 import org.java_websocket.handshake.ClientHandshake;
@@ -77,6 +77,7 @@ public class MyServer extends WebSocketServer {
 
     @Override
     public void onError(WebSocket conn, Exception ex) {
+        System.out.println(conn);
         if (this.onError != null) {
             this.onError.onError(conn, ex);
         }
@@ -97,18 +98,18 @@ public class MyServer extends WebSocketServer {
     }
 //    连接打开接口，在打开与某个客户端的连接时调用
     public interface OnOpen{
-        void onOpen(WebSocket conn, ClientHandshake handshake);
+        void onOpen(WebSocket client, ClientHandshake handshake);
     }
 //    消息接口，在收到来自某个客户端的消息是调用
     public interface OnMessage{
-        void onMessage(WebSocket conn, String message);
+        void onMessage(WebSocket client, String message);
     }
 //    错误接口，在与某个客户端的连接发生错误时调用
     public interface OnError{
-        void onError(WebSocket conn, Exception ex);
+        void onError(WebSocket client, Exception ex);
     }
 //    关闭接口，在与某个客户端的连接关闭时调用
     public interface OnClose{
-        void onClose(WebSocket conn, int code, String reason, boolean remote);
+        void onClose(WebSocket client, int code, String reason, boolean remote);
     }
 }

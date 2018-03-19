@@ -556,7 +556,7 @@ class EscapeProcessor {
             newType = JDBC_NO_CONVERT_TO_MYSQL_EXPRESSION_MAP.get(trimmedType.toUpperCase(Locale.ENGLISH));
 
             // We need a 'special' check here to give a better error message. If we're in this block, the version of MySQL we're connected to doesn't support
-            // CAST/CONVERT, so we can't re-write some data type conversions (date,time,timestamp, datetime)
+            // CAST/CONVERT, so we can't re-write some database type conversions (date,time,timestamp, datetime)
 
             if (newType == null) {
                 throw SQLError.createSQLException(

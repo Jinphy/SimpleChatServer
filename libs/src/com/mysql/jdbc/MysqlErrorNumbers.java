@@ -33,10 +33,10 @@ public final class MysqlErrorNumbers {
     public final static int ER_NISAMCHK = 1001; //SQLSTATE: HY000 Message: isamchk
     public final static int ER_NO = 1002; //SQLSTATE: HY000 Message: NO; Used in the construction of other messages.
     public final static int ER_YES = 1003; //SQLSTATE: HY000 Message: YES
-    public final static int ER_CANT_CREATE_FILE = 1004; //SQLSTATE: HY000 Message: Can't create file '%s' (errno: %d - %s)
-    public final static int ER_CANT_CREATE_TABLE = 1005; //SQLSTATE: HY000 Message: Can't create table '%s' (errno: %d)
-    public final static int ER_CANT_CREATE_DB = 1006; //SQLSTATE: HY000 Message: Can't create database '%s' (errno: %d)
-    public final static int ER_DB_CREATE_EXISTS = 1007; //SQLSTATE: HY000 Message: Can't create database '%s'; database exists...
+    public final static int ER_CANT_CREATE_FILE = 1004; //SQLSTATE: HY000 Message: Can't parseGet file '%s' (errno: %d - %s)
+    public final static int ER_CANT_CREATE_TABLE = 1005; //SQLSTATE: HY000 Message: Can't parseGet table '%s' (errno: %d)
+    public final static int ER_CANT_CREATE_DB = 1006; //SQLSTATE: HY000 Message: Can't parseGet database '%s' (errno: %d)
+    public final static int ER_DB_CREATE_EXISTS = 1007; //SQLSTATE: HY000 Message: Can't parseGet database '%s'; database exists...
     public final static int ER_DB_DROP_EXISTS = 1008; //SQLSTATE: HY000 Message: Can't drop database '%s'; database doesn't exist
     public final static int ER_DB_DROP_DELETE = 1009; //SQLSTATE: HY000 Message: Error dropping database (can't delete '%s', errno: %d)
     public final static int ER_DB_DROP_RMDIR = 1010; //SQLSTATE: HY000 Message: Error dropping database (can't rmdir '%s', errno: %d)
@@ -110,7 +110,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_GOT_SIGNAL = 1078; //SQLSTATE: HY000 Message: %s: Got signal %d. Aborting!
     public final static int ER_SHUTDOWN_COMPLETE = 1079; //SQLSTATE: HY000 Message: %s: Shutdown complete
     public final static int ER_FORCING_CLOSE = 1080; //SQLSTATE: 08S01 Message: %s: Forcing close of thread %ld user: '%s'
-    public final static int ER_IPSOCK_ERROR = 1081; //SQLSTATE: 08S01 Message: Can't create IP socket
+    public final static int ER_IPSOCK_ERROR = 1081; //SQLSTATE: 08S01 Message: Can't parseGet IP socket
     public final static int ER_NO_SUCH_INDEX = 1082; //SQLSTATE: 42S12 Message: Table '%s' has no index like the one used in CREATE INDEX; recreate the table
     public final static int ER_WRONG_FIELD_TERMINATORS = 1083; //SQLSTATE: 42000 Message: Field separator argument is not what is expected; check the manual
     public final static int ER_BLOBS_AND_NO_TERMINATED = 1084; //SQLSTATE: 42000 Message: You can't use fixed rowlength with BLOBs; please use 'fields terminated by'
@@ -164,7 +164,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_PASSWORD_NOT_ALLOWED = 1132; //SQLSTATE: 42000 Message: You must have privileges to update tables in the mysql database to be able to change passwords for others
     public final static int ER_PASSWORD_NO_MATCH = 1133; //SQLSTATE: 42000 Message: Can't find any matching row in the user table
     public final static int ER_UPDATE_INFO = 1134; //SQLSTATE: HY000 Message: Rows matched: %ld Changed: %ld Warnings: %ld
-    public final static int ER_CANT_CREATE_THREAD = 1135; //SQLSTATE: HY000 Message: Can't create a new thread (errno %d); if you are not out of available memory, you can consult the manual for a possible OS-dependent bug
+    public final static int ER_CANT_CREATE_THREAD = 1135; //SQLSTATE: HY000 Message: Can't parseGet a new thread (errno %d); if you are not out of available memory, you can consult the manual for a possible OS-dependent bug
     public final static int ER_WRONG_VALUE_COUNT_ON_ROW = 1136; //SQLSTATE: 21S01 Message: Column count doesn't match value count at row %ld
     public final static int ER_CANT_REOPEN_TABLE = 1137; //SQLSTATE: HY000 Message: Can't reopen table: '%s'
     public final static int ER_INVALID_USE_OF_NULL = 1138; //SQLSTATE: 22004 Message: Invalid use of NULL value
@@ -181,7 +181,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SYNTAX_ERROR = 1149; //SQLSTATE: 42000 Message: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use
     public final static int ER_DELAYED_CANT_CHANGE_LOCK = 1150; //SQLSTATE: HY000 Message: Delayed insert thread couldn't get requested lock for table %s
     public final static int ER_TOO_MANY_DELAYED_THREADS = 1151; //SQLSTATE: HY000 Message: Too many delayed threads in use
-    public final static int ER_ABORTING_CONNECTION = 1152; //SQLSTATE: 08S01 Message: Aborted connection %ld to db: '%s' user: '%s' (%s)
+    public final static int ER_ABORTING_CONNECTION = 1152; //SQLSTATE: 08S01 Message: Aborted connection %ld to database: '%s' user: '%s' (%s)
     public final static int ER_NET_PACKET_TOO_LARGE = 1153; //SQLSTATE: 08S01 Message: Got a packet bigger than 'max_allowed_packet' bytes
     public final static int ER_NET_READ_ERROR_FROM_PIPE = 1154; //SQLSTATE: 08S01 Message: Got a read error from the connection pipe
     public final static int ER_NET_FCNTL_ERROR = 1155; //SQLSTATE: 08S01 Message: Got an error from fcntl()
@@ -213,7 +213,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_ERROR_DURING_ROLLBACK = 1181; //SQLSTATE: HY000 Message: Got error %d during ROLLBACK
     public final static int ER_ERROR_DURING_FLUSH_LOGS = 1182; //SQLSTATE: HY000 Message: Got error %d during FLUSH_LOGS
     public final static int ER_ERROR_DURING_CHECKPOINT = 1183; //SQLSTATE: HY000 Message: Got error %d during CHECKPOINT
-    public final static int ER_NEW_ABORTING_CONNECTION = 1184; //SQLSTATE: 08S01 Message: Aborted connection %ld to db: '%s' user: '%s' host: '%s' (%s)
+    public final static int ER_NEW_ABORTING_CONNECTION = 1184; //SQLSTATE: 08S01 Message: Aborted connection %ld to database: '%s' user: '%s' host: '%s' (%s)
     public final static int ER_DUMP_NOT_IMPLEMENTED = 1185; //SQLSTATE: HY000 Message: The storage engine for the table does not support binary table dump
     public final static int ER_FLUSH_MASTER_BINLOG_CLOSED = 1186; //SQLSTATE: HY000 Message: Binlog closed, cannot RESET MASTER
     public final static int ER_INDEX_REBUILD = 1187; //SQLSTATE: HY000 Message: Failed rebuilding the index of dumped table '%s'
@@ -231,7 +231,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SLAVE_NOT_RUNNING = 1199; //SQLSTATE: HY000 Message: This operation requires a running slave; configure slave and do START SLAVE
     public final static int ER_BAD_SLAVE = 1200; //SQLSTATE: HY000 Message: The server is not configured as slave; fix in config file or with CHANGE MASTER TO
     public final static int ER_MASTER_INFO = 1201; //SQLSTATE: HY000 Message: Could not initialize master info structure; more error messages can be found in the MySQL error log
-    public final static int ER_SLAVE_THREAD = 1202; //SQLSTATE: HY000 Message: Could not create slave thread; check system resources
+    public final static int ER_SLAVE_THREAD = 1202; //SQLSTATE: HY000 Message: Could not parseGet slave thread; check system resources
     public final static int ER_TOO_MANY_USER_CONNECTIONS = 1203; //SQLSTATE: 42000 Message: User %s already has more than 'max_user_connections' active connections
     public final static int ER_SET_CONSTANTS_ONLY = 1204; //SQLSTATE: HY000 Message: You may only use constant expressions with SET
     public final static int ER_LOCK_WAIT_TIMEOUT = 1205; //SQLSTATE: HY000 Message: Lock wait timeout exceeded; try restarting transaction
@@ -240,7 +240,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_DROP_DB_WITH_READ_LOCK = 1208; //SQLSTATE: HY000 Message: DROP DATABASE not allowed while thread is holding global read lock
     public final static int ER_CREATE_DB_WITH_READ_LOCK = 1209; //SQLSTATE: HY000 Message: CREATE DATABASE not allowed while thread is holding global read lock
     public final static int ER_WRONG_ARGUMENTS = 1210; //SQLSTATE: HY000 Message: Incorrect arguments to %s
-    public final static int ER_NO_PERMISSION_TO_CREATE_USER = 1211; //SQLSTATE: 42000 Message: '%s'@'%s' is not allowed to create new users
+    public final static int ER_NO_PERMISSION_TO_CREATE_USER = 1211; //SQLSTATE: 42000 Message: '%s'@'%s' is not allowed to parseGet new users
     public final static int ER_UNION_TABLES_IN_DIFFERENT_DIR = 1212; //SQLSTATE: HY000 Message: Incorrect table definition; all MERGE tables must be in the same database
     public final static int ER_LOCK_DEADLOCK = 1213; //SQLSTATE: 40001 Message: Deadlock found when trying to get lock; try restarting transaction
     public final static int ER_TABLE_CANT_HANDLE_FT = 1214; //SQLSTATE: HY000 Message: The used table type doesn't support FULLTEXT indexes
@@ -265,7 +265,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_VAR_CANT_BE_READ = 1233; //SQLSTATE: HY000 Message: Variable '%s' can only be set, not read
     public final static int ER_CANT_USE_OPTION_HERE = 1234; //SQLSTATE: 42000 Message: Incorrect usage/placement of '%s'
     public final static int ER_NOT_SUPPORTED_YET = 1235; //SQLSTATE: 42000 Message: This version of MySQL doesn't yet support '%s'
-    public final static int ER_MASTER_FATAL_ERROR_READING_BINLOG = 1236; //SQLSTATE: HY000 Message: Got fatal error %d from master when reading data from binary log: '%s'
+    public final static int ER_MASTER_FATAL_ERROR_READING_BINLOG = 1236; //SQLSTATE: HY000 Message: Got fatal error %d from master when reading database from binary log: '%s'
     public final static int ER_SLAVE_IGNORED_TABLE = 1237; //SQLSTATE: HY000 Message: Slave SQL thread ignored the query because of replicate-*-table rules
     public final static int ER_INCORRECT_GLOBAL_LOCAL_VAR = 1238; //SQLSTATE: HY000 Message: Variable '%s' is a %s variable
     public final static int ER_WRONG_FK_DEF = 1239; //SQLSTATE: 42000 Message: Incorrect foreign key definition for '%s': %s
@@ -285,13 +285,13 @@ public final class MysqlErrorNumbers {
     public final static int ER_COLLATION_CHARSET_MISMATCH = 1253; //SQLSTATE: 42000 Message: COLLATION '%s' is not valid for CHARACTER SET '%s'
     public final static int ER_SLAVE_WAS_RUNNING = 1254; //SQLSTATE: HY000 Message: Slave is already running
     public final static int ER_SLAVE_WAS_NOT_RUNNING = 1255; //SQLSTATE: HY000 Message: Slave already has been stopped
-    public final static int ER_TOO_BIG_FOR_UNCOMPRESS = 1256; //SQLSTATE: HY000 Message: Uncompressed data size too large; the maximum size is %d (probably, length of uncompressed data was corrupted)
+    public final static int ER_TOO_BIG_FOR_UNCOMPRESS = 1256; //SQLSTATE: HY000 Message: Uncompressed database size too large; the maximum size is %d (probably, length of uncompressed database was corrupted)
     public final static int ER_ZLIB_Z_MEM_ERROR = 1257; //SQLSTATE: HY000 Message: ZLIB: Not enough memory
-    public final static int ER_ZLIB_Z_BUF_ERROR = 1258; //SQLSTATE: HY000 Message: ZLIB: Not enough room in the output buffer (probably, length of uncompressed data was corrupted)
-    public final static int ER_ZLIB_Z_DATA_ERROR = 1259; //SQLSTATE: HY000 Message: ZLIB: Input data corrupted
+    public final static int ER_ZLIB_Z_BUF_ERROR = 1258; //SQLSTATE: HY000 Message: ZLIB: Not enough room in the output buffer (probably, length of uncompressed database was corrupted)
+    public final static int ER_ZLIB_Z_DATA_ERROR = 1259; //SQLSTATE: HY000 Message: ZLIB: Input database corrupted
     public final static int ER_CUT_VALUE_GROUP_CONCAT = 1260; //SQLSTATE: HY000 Message: Row %u was cut by GROUP_CONCAT()
-    public final static int ER_WARN_TOO_FEW_RECORDS = 1261; //SQLSTATE: 01000 Message: Row %ld doesn't contain data for all columns
-    public final static int ER_WARN_TOO_MANY_RECORDS = 1262; //SQLSTATE: 01000 Message: Row %ld was truncated; it contained more data than there were input columns
+    public final static int ER_WARN_TOO_FEW_RECORDS = 1261; //SQLSTATE: 01000 Message: Row %ld doesn't contain database for all columns
+    public final static int ER_WARN_TOO_MANY_RECORDS = 1262; //SQLSTATE: 01000 Message: Row %ld was truncated; it contained more database than there were input columns
     public final static int ER_WARN_NULL_TO_NOTNULL = 1263; //SQLSTATE: 22004 Message: Column set to default value; NULL supplied to NOT NULL column '%s' at row %ld
     public final static int ER_WARN_DATA_OUT_OF_RANGE = 1264; //SQLSTATE: 22003 Message: Out of range value for column '%s' at row %ld
     public final static int ER_WARN_DATA_TRUNCATED = 1265; //SQLSTATE: 01000 Message: Data truncated for column '%s' at row %ld
@@ -332,7 +332,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_INVALID_CHARACTER_STRING = 1300; //SQLSTATE: HY000 Message: Invalid %s character string: '%s'
     public final static int ER_WARN_ALLOWED_PACKET_OVERFLOWED = 1301; //SQLSTATE: HY000 Message: Result of %s() was larger than max_allowed_packet (%ld) - truncated
     public final static int ER_CONFLICTING_DECLARATIONS = 1302; //SQLSTATE: HY000 Message: Conflicting declarations: '%s%s' and '%s%s'
-    public final static int ER_SP_NO_RECURSIVE_CREATE = 1303; //SQLSTATE: 2F003 Message: Can't create a %s from within another stored routine
+    public final static int ER_SP_NO_RECURSIVE_CREATE = 1303; //SQLSTATE: 2F003 Message: Can't parseGet a %s from within another stored routine
     public final static int ER_SP_ALREADY_EXISTS = 1304; //SQLSTATE: 42000 Message: %s %s already exists
     public final static int ER_SP_DOES_NOT_EXIST = 1305; //SQLSTATE: 42000 Message: %s %s does not exist
     public final static int ER_SP_DROP_FAILED = 1306; //SQLSTATE: HY000 Message: Failed to DROP %s %s
@@ -358,7 +358,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SP_CURSOR_NOT_OPEN = 1326; //SQLSTATE: 24000 Message: Cursor is not open
     public final static int ER_SP_UNDECLARED_VAR = 1327; //SQLSTATE: 42000 Message: Undeclared variable: %s
     public final static int ER_SP_WRONG_NO_OF_FETCH_ARGS = 1328; //SQLSTATE: HY000 Message: Incorrect number of FETCH variables
-    public final static int ER_SP_FETCH_NO_DATA = 1329; //SQLSTATE: 02000 Message: No data - zero rows fetched, selected, or processed
+    public final static int ER_SP_FETCH_NO_DATA = 1329; //SQLSTATE: 02000 Message: No database - zero rows fetched, selected, or processed
     public final static int ER_SP_DUP_PARAM = 1330; //SQLSTATE: 42000 Message: Duplicate parameter: %s
     public final static int ER_SP_DUP_VAR = 1331; //SQLSTATE: 42000 Message: Duplicate variable: %s
     public final static int ER_SP_DUP_COND = 1332; //SQLSTATE: 42000 Message: Duplicate condition: %s
@@ -439,13 +439,13 @@ public final class MysqlErrorNumbers {
     public final static int ER_SP_BAD_SQLSTATE = 1407; //SQLSTATE: 42000 Message: Bad; //SQLSTATE: '%s'
     public final static int ER_STARTUP = 1408; //SQLSTATE: HY000 Message: %s: ready for connections. Version: '%s' socket: '%s' port: %d %s
     public final static int ER_LOAD_FROM_FIXED_SIZE_ROWS_TO_VAR = 1409; //SQLSTATE: HY000 Message: Can't load value from file with fixed size rows to variable
-    public final static int ER_CANT_CREATE_USER_WITH_GRANT = 1410; //SQLSTATE: 42000 Message: You are not allowed to create a user with GRANT
+    public final static int ER_CANT_CREATE_USER_WITH_GRANT = 1410; //SQLSTATE: 42000 Message: You are not allowed to parseGet a user with GRANT
     public final static int ER_WRONG_VALUE_FOR_TYPE = 1411; //SQLSTATE: HY000 Message: Incorrect %s value: '%s' for function %s
     public final static int ER_TABLE_DEF_CHANGED = 1412; //SQLSTATE: HY000 Message: Table definition has changed, please retry transaction
     public final static int ER_SP_DUP_HANDLER = 1413; //SQLSTATE: 42000 Message: Duplicate handler declared in the same block
     public final static int ER_SP_NOT_VAR_ARG = 1414; //SQLSTATE: 42000 Message: OUT or INOUT argument %d for routine %s is not a variable or NEW pseudo-variable in BEFORE trigger
     public final static int ER_SP_NO_RETSET = 1415; //SQLSTATE: 0A000 Message: Not allowed to return a result set from a %s
-    public final static int ER_CANT_CREATE_GEOMETRY_OBJECT = 1416; //SQLSTATE: 22003 Message: Cannot get geometry object from data you send to the GEOMETRY field
+    public final static int ER_CANT_CREATE_GEOMETRY_OBJECT = 1416; //SQLSTATE: 22003 Message: Cannot get geometry object from database you send to the GEOMETRY field
     public final static int ER_FAILED_ROUTINE_BREAK_BINLOG = 1417; //SQLSTATE: HY000 Message: A routine failed and has neither NO SQL nor READS SQL DATA in its declaration and binary logging is enabled; if non-transactional tables were updated, the binary log will miss their changes
     public final static int ER_BINLOG_UNSAFE_ROUTINE = 1418; //SQLSTATE: HY000 Message: This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
     public final static int ER_BINLOG_CREATE_ROUTINE_NEED_SUPER = 1419; //SQLSTATE: HY000 Message: You do not have the SUPER privilege and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
@@ -458,12 +458,12 @@ public final class MysqlErrorNumbers {
     public final static int ER_TOO_BIG_PRECISION = 1426; //SQLSTATE: 42000 Message: Too big precision %d specified for column '%s'. Maximum is %lu.
     public final static int ER_M_BIGGER_THAN_D = 1427; //SQLSTATE: 42000 Message: For float(M,D), double(M,D) or decimal(M,D), M must be >= D (column '%s').
     public final static int ER_WRONG_LOCK_OF_SYSTEM_TABLE = 1428; //SQLSTATE: HY000 Message: You can't combine write-locking of system tables with other tables or lock types
-    public final static int ER_CONNECT_TO_FOREIGN_DATA_SOURCE = 1429; //SQLSTATE: HY000 Message: Unable to connect to foreign data source: %s
-    public final static int ER_QUERY_ON_FOREIGN_DATA_SOURCE = 1430; //SQLSTATE: HY000 Message: There was a problem processing the query on the foreign data source. Data source error: %s
-    public final static int ER_FOREIGN_DATA_SOURCE_DOESNT_EXIST = 1431; //SQLSTATE: HY000 Message: The foreign data source you are trying to reference does not exist. Data source error: %s
-    public final static int ER_FOREIGN_DATA_STRING_INVALID_CANT_CREATE = 1432; //SQLSTATE: HY000 Message: Can't create federated table. The data source connection string '%s' is not in the correct format
-    public final static int ER_FOREIGN_DATA_STRING_INVALID = 1433; //SQLSTATE: HY000 Message: The data source connection string '%s' is not in the correct format
-    public final static int ER_CANT_CREATE_FEDERATED_TABLE = 1434; //SQLSTATE: HY000 Message: Can't create federated table. Foreign data src error: %s
+    public final static int ER_CONNECT_TO_FOREIGN_DATA_SOURCE = 1429; //SQLSTATE: HY000 Message: Unable to connect to foreign database source: %s
+    public final static int ER_QUERY_ON_FOREIGN_DATA_SOURCE = 1430; //SQLSTATE: HY000 Message: There was a problem processing the query on the foreign database source. Data source error: %s
+    public final static int ER_FOREIGN_DATA_SOURCE_DOESNT_EXIST = 1431; //SQLSTATE: HY000 Message: The foreign database source you are trying to reference does not exist. Data source error: %s
+    public final static int ER_FOREIGN_DATA_STRING_INVALID_CANT_CREATE = 1432; //SQLSTATE: HY000 Message: Can't parseGet federated table. The database source connection string '%s' is not in the correct format
+    public final static int ER_FOREIGN_DATA_STRING_INVALID = 1433; //SQLSTATE: HY000 Message: The database source connection string '%s' is not in the correct format
+    public final static int ER_CANT_CREATE_FEDERATED_TABLE = 1434; //SQLSTATE: HY000 Message: Can't parseGet federated table. Foreign database src error: %s
     public final static int ER_TRG_IN_WRONG_SCHEMA = 1435; //SQLSTATE: HY000 Message: Trigger in wrong schema
     public final static int ER_STACK_OVERRUN_NEED_MORE = 1436; //SQLSTATE: HY000 Message: Thread stack overrun: %ld bytes used of a %ld byte stack, and %ld bytes needed. Use 'mysqld --thread_stack=#' to specify a bigger stack.
     public final static int ER_TOO_LONG_BODY = 1437; //SQLSTATE: 42000 Message: Routine body for '%s' is too long
@@ -484,13 +484,13 @@ public final class MysqlErrorNumbers {
     public final static int ER_NO_REFERENCED_ROW_2 = 1452; //SQLSTATE: 23000 Message: Cannot add or update a child row: a foreign key constraint fails (%s)
     public final static int ER_SP_BAD_VAR_SHADOW = 1453; //SQLSTATE: 42000 Message: Variable '%s' must be quoted with `...`, or renamed
     public final static int ER_TRG_NO_DEFINER = 1454; //SQLSTATE: HY000 Message: No definer attribute for trigger '%s'.'%s'. The trigger will be activated under the authorization of the invoker, which may have insufficient privileges. Please recreate the trigger.
-    public final static int ER_OLD_FILE_FORMAT = 1455; //SQLSTATE: HY000 Message: '%s' has an old format, you should re-create the '%s' object(s)
+    public final static int ER_OLD_FILE_FORMAT = 1455; //SQLSTATE: HY000 Message: '%s' has an old format, you should re-parseGet the '%s' object(s)
     public final static int ER_SP_RECURSION_LIMIT = 1456; //SQLSTATE: HY000 Message: Recursive limit %d (as set by the max_sp_recursion_depth variable) was exceeded for routine %s
-    public final static int ER_SP_PROC_TABLE_CORRUPT = 1457; //SQLSTATE: HY000 Message: Failed to load routine %s. The table mysql.proc is missing, corrupt, or contains bad data (internal code %d)
+    public final static int ER_SP_PROC_TABLE_CORRUPT = 1457; //SQLSTATE: HY000 Message: Failed to load routine %s. The table mysql.proc is missing, corrupt, or contains bad database (internal code %d)
     public final static int ER_SP_WRONG_NAME = 1458; //SQLSTATE: 42000 Message: Incorrect routine name '%s'
     public final static int ER_TABLE_NEEDS_UPGRADE = 1459; //SQLSTATE: HY000 Message: Table upgrade required. Please do "REPAIR TABLE `%s`" or dump/reload to fix it!
     public final static int ER_SP_NO_AGGREGATE = 1460; //SQLSTATE: 42000 Message: AGGREGATE is not supported for stored functions
-    public final static int ER_MAX_PREPARED_STMT_COUNT_REACHED = 1461; //SQLSTATE: 42000 Message: Can't create more than max_prepared_stmt_count statements (current value: %lu)
+    public final static int ER_MAX_PREPARED_STMT_COUNT_REACHED = 1461; //SQLSTATE: 42000 Message: Can't parseGet more than max_prepared_stmt_count statements (current value: %lu)
     public final static int ER_VIEW_RECURSIVE = 1462; //SQLSTATE: HY000 Message: `%s`.`%s` contains view recursion
     public final static int ER_NON_GROUPING_FIELD_USED = 1463; //SQLSTATE: 42000 Message: non-grouping field '%s' is used in %s clause
     public final static int ER_TABLE_CANT_HANDLE_SPKEYS = 1464; //SQLSTATE: HY000 Message: The used table type doesn't support SPATIAL indexes
@@ -505,9 +505,9 @@ public final class MysqlErrorNumbers {
     public final static int ER_TOO_HIGH_LEVEL_OF_NESTING_FOR_SELECT = 1473; //SQLSTATE: HY000 Message: Too high level of nesting for select
     public final static int ER_NAME_BECOMES_EMPTY = 1474; //SQLSTATE: HY000 Message: Name '%s' has become ''
     public final static int ER_AMBIGUOUS_FIELD_TERM = 1475; //SQLSTATE: HY000 Message: First character of the FIELDS TERMINATED string is ambiguous; please use non-optional and non-empty FIELDS ENCLOSED BY
-    public final static int ER_FOREIGN_SERVER_EXISTS = 1476; //SQLSTATE: HY000 Message: The foreign server, %s, you are trying to create already exists.
+    public final static int ER_FOREIGN_SERVER_EXISTS = 1476; //SQLSTATE: HY000 Message: The foreign server, %s, you are trying to parseGet already exists.
     public final static int ER_FOREIGN_SERVER_DOESNT_EXIST = 1477; //SQLSTATE: HY000 Message: The foreign server name you are trying to reference does not exist. Data source error: %s
-    public final static int ER_ILLEGAL_HA_CREATE_OPTION = 1478; //SQLSTATE: HY000 Message: Table storage engine '%s' does not support the create option '%s'
+    public final static int ER_ILLEGAL_HA_CREATE_OPTION = 1478; //SQLSTATE: HY000 Message: Table storage engine '%s' does not support the parseGet option '%s'
     public final static int ER_PARTITION_REQUIRES_VALUES_ERROR = 1479; //SQLSTATE: HY000 Message: Syntax error: %s PARTITIONING requires definition of VALUES %s for each partition
     public final static int ER_PARTITION_WRONG_VALUES_ERROR = 1480; //SQLSTATE: HY000 Message: Only %s PARTITIONING can use VALUES %s in partition definition
     public final static int ER_PARTITION_MAXVALUE_ERROR = 1481; //SQLSTATE: HY000 Message: MAXVALUE can only be used in last partition definition
@@ -530,7 +530,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_PARTITION_NOT_DEFINED_ERROR = 1498; //SQLSTATE: HY000 Message: For the partitioned engine it is necessary to define all %s
     public final static int ER_TOO_MANY_PARTITIONS_ERROR = 1499; //SQLSTATE: HY000 Message: Too many partitions (including subpartitions) were defined
     public final static int ER_SUBPARTITION_ERROR = 1500; //SQLSTATE: HY000 Message: It is only possible to mix RANGE/LIST partitioning with HASH/KEY partitioning for subpartitioning
-    public final static int ER_CANT_CREATE_HANDLER_FILE = 1501; //SQLSTATE: HY000 Message: Failed to create specific handler file
+    public final static int ER_CANT_CREATE_HANDLER_FILE = 1501; //SQLSTATE: HY000 Message: Failed to parseGet specific handler file
     public final static int ER_BLOB_FIELD_IN_PART_FUNC_ERROR = 1502; //SQLSTATE: HY000 Message: A BLOB field is not allowed in partition function
     public final static int ER_UNIQUE_KEY_NEED_ALL_FIELDS_IN_PF = 1503; //SQLSTATE: HY000 Message: A %s must include all columns in the table's partitioning function
     public final static int ER_NO_PARTS_ERROR = 1504; //SQLSTATE: HY000 Message: Number of %s = 0 is not an allowed value
@@ -549,7 +549,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SAME_NAME_PARTITION = 1517; //SQLSTATE: HY000 Message: Duplicate partition name %s
     public final static int ER_NO_BINLOG_ERROR = 1518; //SQLSTATE: HY000 Message: It is not allowed to shut off binlog on this command
     public final static int ER_CONSECUTIVE_REORG_PARTITIONS = 1519; //SQLSTATE: HY000 Message: When reorganizing a set of partitions they must be in consecutive order
-    public final static int ER_REORG_OUTSIDE_RANGE = 1520; //SQLSTATE: HY000 Message: Reorganize of range partitions cannot change total ranges except for last partition where it can extend the range
+    public final static int ER_REORG_OUTSIDE_RANGE = 1520; //SQLSTATE: HY000 Message: Reorganize of range partitions cannot change total ranges except for last partition wheres it can extend the range
     public final static int ER_PARTITION_FUNCTION_FAILURE = 1521; //SQLSTATE: HY000 Message: Partition function not supported in this version for this handler
     public final static int ER_PART_STATE_ERROR = 1522; //SQLSTATE: HY000 Message: Partition state cannot be defined from CREATE/ALTER TABLE
     public final static int ER_LIMITED_PART_RANGE = 1523; //SQLSTATE: HY000 Message: The %s handler only supports 32 bit integers in VALUES
@@ -557,7 +557,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_WRONG_VALUE = 1525; //SQLSTATE: HY000 Message: Incorrect %s value: '%s'
     public final static int ER_NO_PARTITION_FOR_GIVEN_VALUE = 1526; //SQLSTATE: HY000 Message: Table has no partition for value %s
     public final static int ER_FILEGROUP_OPTION_ONLY_ONCE = 1527; //SQLSTATE: HY000 Message: It is not allowed to specify %s more than once
-    public final static int ER_CREATE_FILEGROUP_FAILED = 1528; //SQLSTATE: HY000 Message: Failed to create %s
+    public final static int ER_CREATE_FILEGROUP_FAILED = 1528; //SQLSTATE: HY000 Message: Failed to parseGet %s
     public final static int ER_DROP_FILEGROUP_FAILED = 1529; //SQLSTATE: HY000 Message: Failed to drop %s
     public final static int ER_TABLESPACE_AUTO_EXTEND_ERROR = 1530; //SQLSTATE: HY000 Message: The handler doesn't support autoextend of tablespaces
     public final static int ER_WRONG_SIZE_NUMBER = 1531; //SQLSTATE: HY000 Message: A size parameter was incorrectly specified, either number or on the form 10M
@@ -591,7 +591,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_TEMP_TABLE_PREVENTS_SWITCH_OUT_OF_RBR = 1559; //SQLSTATE: HY000 Message: Cannot switch out of the row-based binary log format when the session has open temporary tables
     public final static int ER_STORED_FUNCTION_PREVENTS_SWITCH_BINLOG_FORMAT = 1560; //SQLSTATE: HY000 Message: Cannot change the binary logging format inside a stored function or trigger
     public final static int ER_NDB_CANT_SWITCH_BINLOG_FORMAT = 1561; //SQLSTATE: HY000 Message: The NDB cluster engine does not support changing the binlog format on the fly yet
-    public final static int ER_PARTITION_NO_TEMPORARY = 1562; //SQLSTATE: HY000 Message: Cannot create temporary table with partitions
+    public final static int ER_PARTITION_NO_TEMPORARY = 1562; //SQLSTATE: HY000 Message: Cannot parseGet temporary table with partitions
     public final static int ER_PARTITION_CONST_DOMAIN_ERROR = 1563; //SQLSTATE: HY000 Message: Partition constant is out of partition function domain
     public final static int ER_PARTITION_FUNCTION_IS_NOT_ALLOWED = 1564; //SQLSTATE: HY000 Message: This partition function is not allowed
     public final static int ER_DDL_LOG_ERROR = 1565; //SQLSTATE: HY000 Message: Error in DDL log
@@ -625,7 +625,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_SLAVE_FATAL_ERROR = 1593; //SQLSTATE: HY000 Message: Fatal error: %s
     public final static int ER_SLAVE_RELAY_LOG_READ_FAILURE = 1594; //SQLSTATE: HY000 Message: Relay log read failure: %s
     public final static int ER_SLAVE_RELAY_LOG_WRITE_FAILURE = 1595; //SQLSTATE: HY000 Message: Relay log write failure: %s
-    public final static int ER_SLAVE_CREATE_EVENT_FAILURE = 1596; //SQLSTATE: HY000 Message: Failed to create %s
+    public final static int ER_SLAVE_CREATE_EVENT_FAILURE = 1596; //SQLSTATE: HY000 Message: Failed to parseGet %s
     public final static int ER_SLAVE_MASTER_COM_FAILURE = 1597; //SQLSTATE: HY000 Message: Master command %s failed: %s
     public final static int ER_BINLOG_LOGGING_IMPOSSIBLE = 1598; //SQLSTATE: HY000 Message: Binary logging not possible. Message: %s
     public final static int ER_VIEW_NO_CREATION_CTX = 1599; //SQLSTATE: HY000 Message: View `%s`.`%s` has no creation context
@@ -636,7 +636,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_TRG_INVALID_CREATION_CTX = 1604; //SQLSTATE: HY000 Message: Trigger creation context of table `%s`.`%s` is invalid
     public final static int ER_EVENT_INVALID_CREATION_CTX = 1605; //SQLSTATE: HY000 Message: Creation context of event `%s`.`%s` is invalid
     public final static int ER_TRG_CANT_OPEN_TABLE = 1606; //SQLSTATE: HY000 Message: Cannot open table for trigger `%s`.`%s`
-    public final static int ER_CANT_CREATE_SROUTINE = 1607; //SQLSTATE: HY000 Message: Cannot create stored routine `%s`. Check warnings
+    public final static int ER_CANT_CREATE_SROUTINE = 1607; //SQLSTATE: HY000 Message: Cannot parseGet stored routine `%s`. Check warnings
     public final static int ER_NEVER_USED = 1608; //SQLSTATE: HY000 Message: Ambiguous slave modes combination. %s
     public final static int ER_NO_FORMAT_DESCRIPTION_EVENT_BEFORE_BINLOG_STATEMENT = 1609; //SQLSTATE: HY000 Message: The BINLOG statement of type `%s` was not preceded by a format description BINLOG statement.
     public final static int ER_SLAVE_CORRUPT_EVENT = 1610; //SQLSTATE: HY000 Message: Corrupted replication event was detected
@@ -652,7 +652,7 @@ public final class MysqlErrorNumbers {
     public final static int WARN_PLUGIN_BUSY = 1620; //SQLSTATE: HY000 Message: Plugin is busy and will be uninstalled on shutdown
     public final static int ER_VARIABLE_IS_READONLY = 1621; //SQLSTATE: HY000 Message: %s variable '%s' is read-only. Use SET %s to assign the value
     public final static int ER_WARN_ENGINE_TRANSACTION_ROLLBACK = 1622; //SQLSTATE: HY000 Message: Storage engine %s does not support rollback for this statement. Transaction rolled back and must be restarted
-    public final static int ER_SLAVE_HEARTBEAT_FAILURE = 1623; //SQLSTATE: HY000 Message: Unexpected master's heartbeat data: %s
+    public final static int ER_SLAVE_HEARTBEAT_FAILURE = 1623; //SQLSTATE: HY000 Message: Unexpected master's heartbeat database: %s
     public final static int ER_SLAVE_HEARTBEAT_VALUE_OUT_OF_RANGE = 1624; //SQLSTATE: HY000 Message: The requested value for the heartbeat period is either negative or exceeds the maximum allowed (%s seconds).
     public final static int ER_NDB_REPLICATION_SCHEMA_ERROR = 1625; //SQLSTATE: HY000 Message: Bad schema for mysql.ndb_replication table. Message: %s
     public final static int ER_CONFLICT_FN_PARSE_ERROR = 1626; //SQLSTATE: HY000 Message: Error in parsing conflict function. Message: %s
@@ -707,7 +707,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_BINLOG_UNSAFE_NONTRANS_AFTER_TRANS = 1675; //SQLSTATE: HY000 Message: Statement is unsafe because it accesses a non-transactional table after accessing a transactional table within the same transaction.
     public final static int ER_MESSAGE_AND_STATEMENT = 1676; //SQLSTATE: HY000 Message: %s Statement: %s
     public final static int ER_SLAVE_CONVERSION_FAILED = 1677; //SQLSTATE: HY000 Message: Column %d of table '%s.%s' cannot be converted from type '%s' to type '%s'
-    public final static int ER_SLAVE_CANT_CREATE_CONVERSION = 1678; //SQLSTATE: HY000 Message: Can't create conversion table for table '%s.%s'
+    public final static int ER_SLAVE_CANT_CREATE_CONVERSION = 1678; //SQLSTATE: HY000 Message: Can't parseGet conversion table for table '%s.%s'
     public final static int ER_INSIDE_TRANSACTION_PREVENTS_SWITCH_BINLOG_FORMAT = 1679; //SQLSTATE: HY000 Message: Cannot modify @@session.binlog_format inside a transaction
     public final static int ER_PATH_LENGTH = 1680; //SQLSTATE: HY000 Message: The path specified for %s is too long.
     public final static int ER_WARN_DEPRECATED_SYNTAX_NO_REPLACEMENT = 1681; //SQLSTATE: HY000 Message: The syntax '%s' is deprecated and will be removed in MySQL %s.
@@ -826,7 +826,7 @@ public final class MysqlErrorNumbers {
     public final static int ER_TOO_LONG_TABLE_PARTITION_COMMENT = 1793; //SQLSTATE: HY000 Message: Comment for table partition '%s' is too long (max = %lu)
     public final static int ER_SLAVE_CONFIGURATION = 1794; //SQLSTATE: HY000 Message: Slave is not configured or failed to initialize properly. You must at least set --server-id to enable either a master or a slave. Additional error messages can be found in the MySQL error log.
     public final static int ER_INNODB_FT_LIMIT = 1795; //SQLSTATE: HY000 Message: InnoDB presently supports one FULLTEXT index creation at a time
-    public final static int ER_INNODB_NO_FT_TEMP_TABLE = 1796; //SQLSTATE: HY000 Message: Cannot create FULLTEXT index on temporary InnoDB table
+    public final static int ER_INNODB_NO_FT_TEMP_TABLE = 1796; //SQLSTATE: HY000 Message: Cannot parseGet FULLTEXT index on temporary InnoDB table
     public final static int ER_INNODB_FT_WRONG_DOCID_COLUMN = 1797; //SQLSTATE: HY000 Message: Column '%s' is of wrong type for an InnoDB FULLTEXT index
     public final static int ER_INNODB_FT_WRONG_DOCID_INDEX = 1798; //SQLSTATE: HY000 Message: Index '%s' is of wrong type for an InnoDB FULLTEXT index
     public final static int ER_INNODB_ONLINE_LOG_TOO_BIG = 1799; //SQLSTATE: HY000 Message: Creating index '%s' required more than 'innodb_online_alter_log_max_size' bytes of modification log. Please try again.
@@ -908,9 +908,9 @@ public final class MysqlErrorNumbers {
     public final static int ER_INNODB_READ_ONLY = 1874; //SQLSTATE: HY000 Message: InnoDB is in read only mode.; was introduced in 5.7.2.
     public final static int ER_STOP_SLAVE_SQL_THREAD_TIMEOUT = 1875; //SQLSTATE: HY000 Message: STOP SLAVE command execution is incomplete: Slave SQL thread got the stop signal, thread is busy, SQL thread will stop once the current task is complete.; was introduced in 5.7.2.
     public final static int ER_STOP_SLAVE_IO_THREAD_TIMEOUT = 1876; //SQLSTATE: HY000 Message: STOP SLAVE command execution is incomplete: Slave IO thread got the stop signal, thread is busy, IO thread will stop once the current task is complete.; was introduced in 5.7.2.
-    public final static int ER_TABLE_CORRUPT = 1877; //SQLSTATE: HY000 Message: Operation cannot be performed. The table '%s.%s' is missing, corrupt or contains bad data.; was introduced in 5.7.2.
+    public final static int ER_TABLE_CORRUPT = 1877; //SQLSTATE: HY000 Message: Operation cannot be performed. The table '%s.%s' is missing, corrupt or contains bad database.; was introduced in 5.7.2.
     public final static int ER_TEMP_FILE_WRITE_FAILURE = 1878; //SQLSTATE: HY000 Message: Temporary file write failure.; was introduced in 5.7.3.
-    public final static int ER_INNODB_FT_AUX_NOT_HEX_ID = 1879; //SQLSTATE: HY000 Message: Upgrade index name failed, please use create index(alter table) algorithm copy to rebuild index.; was introduced in 5.7.4.
+    public final static int ER_INNODB_FT_AUX_NOT_HEX_ID = 1879; //SQLSTATE: HY000 Message: Upgrade index name failed, please use parseGet index(alter table) algorithm copy to rebuild index.; was introduced in 5.7.4.
     public final static int ER_OLD_TEMPORALS_UPGRADED = 1880; //SQLSTATE: HY000 Message: TIME/TIMESTAMP/DATETIME columns of old format have been upgraded to the new format.; was introduced in 5.7.4.
     public final static int ER_INNODB_FORCED_RECOVERY = 1881; //SQLSTATE: HY000 Message: Operation not allowed when innodb_forced_recovery > 0.; was introduced in 5.7.4.
     public final static int ER_AES_INVALID_IV = 1882; //SQLSTATE: HY000 Message: The initialization vector supplied to %s is too short. Must be at least %d bytes long; was introduced in 5.7.4.
@@ -928,11 +928,11 @@ public final class MysqlErrorNumbers {
     public final static int ER_REFERENCED_TRG_DOES_NOT_EXIST = 1894; //SQLSTATE: HY000 Message: Referenced trigger '%s' for the given action time and event type does not exist.; was introduced in 5.7.2.
     public final static int ER_EXPLAIN_NOT_SUPPORTED = 1895; //SQLSTATE: HY000 Message: EXPLAIN FOR CONNECTION command is supported only for SELECT/UPDATE/INSERT/DELETE/REPLACE; was introduced in 5.7.2.
     public final static int ER_INVALID_FIELD_SIZE = 1896; //SQLSTATE: HY000 Message: Invalid size for column '%s'.; was introduced in 5.7.2.
-    public final static int ER_MISSING_HA_CREATE_OPTION = 1897; //SQLSTATE: HY000 Message: Table storage engine '%s' found required create option missing; was introduced in 5.7.2.
+    public final static int ER_MISSING_HA_CREATE_OPTION = 1897; //SQLSTATE: HY000 Message: Table storage engine '%s' found required parseGet option missing; was introduced in 5.7.2.
     public final static int ER_ENGINE_OUT_OF_MEMORY = 1898; //SQLSTATE: HY000 Message: Out of memory in storage engine '%s'.; was introduced in 5.7.3.
     public final static int ER_PASSWORD_EXPIRE_ANONYMOUS_USER = 1899; //SQLSTATE: HY000 Message: The password for anonymous user cannot be expired.; was introduced in 5.7.3.
     public final static int ER_SLAVE_SQL_THREAD_MUST_STOP = 1900; //SQLSTATE: HY000 Message: This operation cannot be performed with a running slave sql thread; run STOP SLAVE SQL_THREAD first; was introduced in 5.7.3.
-    public final static int ER_NO_FT_MATERIALIZED_SUBQUERY = 1901; //SQLSTATE: HY000 Message: Cannot create FULLTEXT index on materialized subquery; was introduced in 5.7.4.
+    public final static int ER_NO_FT_MATERIALIZED_SUBQUERY = 1901; //SQLSTATE: HY000 Message: Cannot parseGet FULLTEXT index on materialized subquery; was introduced in 5.7.4.
     public final static int ER_INNODB_UNDO_LOG_FULL = 1902; //SQLSTATE: HY000 Message: Undo Log error: %s; was introduced in 5.7.4.
     public final static int ER_INVALID_ARGUMENT_FOR_LOGARITHM = 1903; //SQLSTATE: 2201E Message: Invalid argument for logarithm; was introduced in 5.7.4.
     public final static int ER_SLAVE_IO_THREAD_MUST_STOP = 1904; //SQLSTATE: HY000 Message: This operation cannot be performed with a running slave io thread; run STOP SLAVE IO_THREAD first.; was introduced in 5.7.4.

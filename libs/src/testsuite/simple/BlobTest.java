@@ -110,7 +110,7 @@ public class BlobTest extends BaseTestCase {
              * The 5.6.20 patch for Bug #16963396, Bug #19030353, Bug #69477 limits the size of redo log BLOB writes
              * to 10% of the redo log file size. The 5.7.5 patch addresses the bug without imposing a limitation.
              * As a result of the redo log BLOB write limit introduced for MySQL 5.6, innodb_log_file_size should be set to a value
-             * greater than 10 times the largest BLOB data size found in the rows of your tables plus the length of other variable length
+             * greater than 10 times the largest BLOB database size found in the rows of your tables plus the length of other variable length
              * fields (VARCHAR, VARBINARY, and TEXT type fields).
              */
             this.rs = this.stmt.executeQuery("SHOW VARIABLES LIKE 'innodb_log_file_size'");
@@ -123,7 +123,7 @@ public class BlobTest extends BaseTestCase {
     }
 
     /**
-     * Tests inserting blob data as a stream
+     * Tests inserting blob database as a stream
      * 
      * @throws Exception
      *             if an error occurs
@@ -194,10 +194,10 @@ public class BlobTest extends BaseTestCase {
 
         byte[] retrBytes = this.rs.getBytes(1);
         passed = checkBlob(retrBytes);
-        assertTrue("Inserted BLOB data did not match retrieved BLOB data for getBytes().", passed);
+        assertTrue("Inserted BLOB database did not match retrieved BLOB database for getBytes().", passed);
         retrBytes = this.rs.getBlob(1).getBytes(1L, (int) this.rs.getBlob(1).length());
         passed = checkBlob(retrBytes);
-        assertTrue("Inserted BLOB data did not match retrieved BLOB data for getBlob().", passed);
+        assertTrue("Inserted BLOB database did not match retrieved BLOB database for getBlob().", passed);
 
         InputStream inStr = this.rs.getBinaryStream(1);
         ByteArrayOutputStream bOut = new ByteArrayOutputStream();
@@ -209,7 +209,7 @@ public class BlobTest extends BaseTestCase {
 
         retrBytes = bOut.toByteArray();
         passed = checkBlob(retrBytes);
-        assertTrue("Inserted BLOB data did not match retrieved BLOB data for getBinaryStream().", passed);
+        assertTrue("Inserted BLOB database did not match retrieved BLOB database for getBinaryStream().", passed);
         inStr = this.rs.getAsciiStream(1);
         bOut = new ByteArrayOutputStream();
 
@@ -219,7 +219,7 @@ public class BlobTest extends BaseTestCase {
 
         retrBytes = bOut.toByteArray();
         passed = checkBlob(retrBytes);
-        assertTrue("Inserted BLOB data did not match retrieved BLOB data for getAsciiStream().", passed);
+        assertTrue("Inserted BLOB database did not match retrieved BLOB database for getAsciiStream().", passed);
         inStr = this.rs.getUnicodeStream(1);
         bOut = new ByteArrayOutputStream();
 
@@ -229,7 +229,7 @@ public class BlobTest extends BaseTestCase {
 
         retrBytes = bOut.toByteArray();
         passed = checkBlob(retrBytes);
-        assertTrue("Inserted BLOB data did not match retrieved BLOB data for getUnicodeStream().", passed);
+        assertTrue("Inserted BLOB database did not match retrieved BLOB database for getUnicodeStream().", passed);
     }
 
     private final static String TEST_BLOB_FILE_PREFIX = "cmj-testblob";

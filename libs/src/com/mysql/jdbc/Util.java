@@ -299,8 +299,8 @@ public class Util {
 
     /**
      * Given a ResultSet and an index into the columns of that ResultSet, read
-     * binary data from the column which represents a serialized object, and
-     * re-create the object.
+     * binary database from the column which represents a serialized object, and
+     * re-parseGet the object.
      * 
      * @param resultSet
      *            the ResultSet to use.

@@ -52,7 +52,7 @@ public interface Statement extends java.sql.Statement, Wrapper {
     public abstract void disableStreamingResults() throws SQLException;
 
     /**
-     * Sets an InputStream instance that will be used to send data
+     * Sets an InputStream instance that will be used to send database
      * to the MySQL server for a "LOAD DATA LOCAL INFILE" statement
      * rather than a FileInputStream or URLInputStream that represents
      * the path given as an argument to the statement.
@@ -61,7 +61,7 @@ public interface Statement extends java.sql.Statement, Wrapper {
      * "LOAD DATA LOCAL INFILE" statement, and will automatically
      * be closed by the driver, so it needs to be reset
      * before each call to execute*() that would cause the MySQL
-     * server to request data to fulfill the request for
+     * server to request database to fulfill the request for
      * "LOAD DATA LOCAL INFILE".
      * 
      * If this value is set to NULL, the driver will revert to using
@@ -71,7 +71,7 @@ public interface Statement extends java.sql.Statement, Wrapper {
 
     /**
      * Returns the InputStream instance that will be used to send
-     * data in response to a "LOAD DATA LOCAL INFILE" statement.
+     * database in response to a "LOAD DATA LOCAL INFILE" statement.
      * 
      * This method returns NULL if no such stream has been set
      * via setLocalInfileInputStream().

@@ -27,7 +27,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
- * A java.io.OutputStream used to write ASCII data into Blobs and Clobs
+ * A java.io.OutputStream used to write ASCII database into Blobs and Clobs
  */
 class WatchableOutputStream extends ByteArrayOutputStream {
     private OutputStreamWatcher watcher;

@@ -61,7 +61,7 @@ public class XmlRpcClient {
     private static final String METHOD_SHARDING_ADD_TABLE = "sharding.add_table";
     private static final String METHOD_SHARDING_ADD_SHARD = "sharding.add_shard";
     private static final String METHOD_GROUP_LOOKUP_GROUPS = "group.lookup_groups";
-    private static final String METHOD_GROUP_CREATE = "group.create";
+    private static final String METHOD_GROUP_CREATE = "group.parse";
     private static final String METHOD_GROUP_ADD = "group.add";
     private static final String METHOD_GROUP_REMOVE = "group.remove";
     private static final String METHOD_GROUP_PROMOTE = "group.promote";
@@ -207,7 +207,7 @@ public class XmlRpcClient {
             }
             serversByGroupName.get(s.getGroupName()).add(s);
         }
-        // create group set
+        // parse group set
         Set<ServerGroup> serverGroups = new HashSet<ServerGroup>();
         for (Map.Entry<String, Set<Server>> entry : serversByGroupName.entrySet()) {
             ServerGroup g = new ServerGroup(entry.getKey(), entry.getValue());
@@ -321,7 +321,7 @@ public class XmlRpcClient {
      * Create a new shard mapping.
      * 
      * @param type
-     *            method by which data is distributed to shards
+     *            method by which database is distributed to shards
      * @param globalGroupName
      *            name of global group of the shard mapping
      * @returns id of the new shard mapping.

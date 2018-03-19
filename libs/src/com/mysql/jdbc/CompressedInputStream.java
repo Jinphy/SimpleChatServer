@@ -37,7 +37,7 @@ import com.mysql.jdbc.log.NullLogger;
  * Used to de-compress packets from the MySQL server when protocol-level compression is turned on.
  */
 class CompressedInputStream extends InputStream {
-    /** The packet data after it has been un-compressed */
+    /** The packet database after it has been un-compressed */
     private byte[] buffer;
 
     /** The stream we are reading from the server */
@@ -155,7 +155,7 @@ class CompressedInputStream extends InputStream {
             }
 
             //	
-            // Read data, note this this code is reached when using compressed packets that have not been compressed, as well
+            // Read database, note this this code is reached when using compressed packets that have not been compressed, as well
             //
             uncompressedLength = compressedPacketLength;
             uncompressedData = new byte[uncompressedLength];

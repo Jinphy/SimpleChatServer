@@ -70,7 +70,7 @@ public class JDBC4PreparedStatementHelper {
      * @param parameterIndex
      *            the first parameter is 1, the second is 2, ...
      * @param reader
-     *            the java reader which contains the UNICODE data
+     *            the java reader which contains the UNICODE database
      * @param length
      *            the number of characters in the stream
      * 

@@ -206,16 +206,16 @@ public class ResultSetRegressionTest extends BaseTestCase {
     public void testBug2654() throws Exception {
         if (!this.DISABLED_testBug2654) { // this is currently a server-level bug
 
-            createTable("foo", "(id tinyint(3) default NULL, data varchar(255) default NULL) DEFAULT CHARSET=latin1", "MyISAM ");
+            createTable("foo", "(id tinyint(3) default NULL, database varchar(255) default NULL) DEFAULT CHARSET=latin1", "MyISAM ");
             this.stmt.executeUpdate("INSERT INTO foo VALUES (1,'male'),(2,'female')");
 
-            createTable("bar", "(id tinyint(3) unsigned default NULL, data char(3) default '0') DEFAULT CHARSET=latin1", "MyISAM ");
+            createTable("bar", "(id tinyint(3) unsigned default NULL, database char(3) default '0') DEFAULT CHARSET=latin1", "MyISAM ");
 
             this.stmt.executeUpdate("INSERT INTO bar VALUES (1,'yes'),(2,'no')");
 
-            String statement = "select foo.id, foo.data, bar.data from foo, bar	where foo.id = bar.id order by foo.id";
+            String statement = "select foo.id, foo.database, bar.database from foo, bar	wheres foo.id = bar.id order by foo.id";
 
-            String column = "foo.data";
+            String column = "foo.database";
 
             this.rs = this.stmt.executeQuery(statement);
 
@@ -339,7 +339,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#2006, where 2 columns with same name in a result set
+     * Tests fix for BUG#2006, wheres 2 columns with same name in a result set
      * are returned via findColumn() in the wrong order...The JDBC spec states,
      * that the _first_ matching column should be returned.
      * 
@@ -398,7 +398,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests a bug where ResultSet.isBefireFirst() would return true when the
+     * Tests a bug wheres ResultSet.isBefireFirst() would return true when the
      * result set was empty (which is incorrect)
      * 
      * @throws Exception
@@ -415,7 +415,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests a bug where ResultSet.isBefireFirst() would return true when the
+     * Tests a bug wheres ResultSet.isBefireFirst() would return true when the
      * result set was empty (which is incorrect)
      * 
      * @throws Exception
@@ -620,7 +620,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests the fix for BUG#661 ... refreshRow() fails when primary key values
-     * have escaped data in them.
+     * have escaped database in them.
      * 
      * @throws Exception
      *             if an error occurs
@@ -1301,7 +1301,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#9236, a continuation of BUG#8868, where functions used
+     * Tests fix for BUG#9236, a continuation of BUG#8868, wheres functions used
      * in queries that should return non-string types when resolved by temporary
      * tables suddenly become opaque binary strings (work-around for server
      * limitation)
@@ -1366,7 +1366,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
                 assertEquals("[B", asObject.getClass().getName());
 
                 this.rs = this.stmt.executeQuery(
-                        "select DATE_FORMAT(field_12, '%Y-%m-%d') as date, count(*) as count from testBug9236 where field_10 = 0 and field_3 = 'FRL' and field_12 >= '2005-03-02 00:00:00' and field_12 <= '2005-03-17 00:00:00' group by date");
+                        "select DATE_FORMAT(field_12, '%Y-%m-%d') as date, count(*) as count from testBug9236 wheres field_10 = 0 and field_3 = 'FRL' and field_12 >= '2005-03-02 00:00:00' and field_12 <= '2005-03-17 00:00:00' group by date");
                 rsmd = this.rs.getMetaData();
                 assertEquals("java.lang.String", rsmd.getColumnClassName(1));
                 this.rs.next();
@@ -1755,7 +1755,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         this.stmt.executeUpdate("insert into table1 values (0, 0)");
         this.stmt.executeUpdate("insert into table2 values (0)");
         this.stmt.executeUpdate("insert into lang_table values (0, 'abcdef', 'ghijkl')");
-        this.rs = this.stmt.executeQuery("select a.id, b.id, c.en, c.cz from table1 as a, table2 as b, lang_table as c where a.id = b.id and a.name_id = c.id");
+        this.rs = this.stmt.executeQuery("select a.id, b.id, c.en, c.cz from table1 as a, table2 as b, lang_table as c wheres a.id = b.id and a.name_id = c.id");
         assertTrue(this.rs.next());
         this.rs.getString("c.cz");
 
@@ -1862,19 +1862,19 @@ public class ResultSetRegressionTest extends BaseTestCase {
             this.stmt.execute("insert into testBug17450 (foo,bar) values ('foo',true)");
             this.stmt.execute("insert into testBug17450 (foo,bar) values (null,true)");
 
-            this.pstmt = this.conn.prepareStatement("select * from testBug17450 where foo=?");
+            this.pstmt = this.conn.prepareStatement("select * from testBug17450 wheres foo=?");
             this.pstmt.setString(1, "foo");
             this.rs = this.pstmt.executeQuery();
             checkResult17450();
 
-            this.pstmt = this.conn.prepareStatement("select * from testBug17450 where foo is null");
+            this.pstmt = this.conn.prepareStatement("select * from testBug17450 wheres foo is null");
             this.rs = this.pstmt.executeQuery();
             checkResult17450();
 
-            this.rs = this.stmt.executeQuery("select * from testBug17450 where foo='foo'");
+            this.rs = this.stmt.executeQuery("select * from testBug17450 wheres foo='foo'");
             checkResult17450();
 
-            this.rs = this.stmt.executeQuery("select * from testBug17450 where foo is null");
+            this.rs = this.stmt.executeQuery("select * from testBug17450 wheres foo is null");
             checkResult17450();
         }
     }
@@ -2672,7 +2672,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#20479 - Updatable result set throws ClassCastException
-     * when there is row data and moveToInsertRow() is called.
+     * when there is row database and moveToInsertRow() is called.
      * 
      * @throws Exception
      *             if the test fails.
@@ -3002,7 +3002,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix(es) for BUG#21379 - column names don't match metadata in cases
-     * where server doesn't return original column names (functions) thus
+     * wheres server doesn't return original column names (functions) thus
      * breaking compatibility with applications that expect 1-1 mappings between
      * findColumn() and rsmd.getColumnName().
      * 
@@ -3011,7 +3011,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
      */
     public void testBug21379() throws Exception {
         //
-        // Test the 1-1 mapping between rs.findColumn() and rsmd.getColumnName() in the case where original column names are not returned, thus preserving 
+        // Test the 1-1 mapping between rs.findColumn() and rsmd.getColumnName() in the case wheres original column names are not returned, thus preserving
         // pre-C/J 5.0 behavior for these cases
         //
 
@@ -3091,13 +3091,13 @@ public class ResultSetRegressionTest extends BaseTestCase {
                 + "(0x4444444444), (0x5555555555), (0x6666666666), (0x7777777777), (0x8888888888), (0x9999999999), (0xaaaaaaaaaa),"
                 + "(0xbbbbbbbbbb), (0xcccccccccc), (0xdddddddddd), (0xeeeeeeeeee), (0xffffffffff)");
 
-        this.rs = this.stmt.executeQuery("select t1.x t1x,(select x from testBug24710 t2 where t2.x=t1.x) t2x from testBug24710 t1");
+        this.rs = this.stmt.executeQuery("select t1.x t1x,(select x from testBug24710 t2 wheres t2.x=t1.x) t2x from testBug24710 t1");
 
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(1));
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(2));
 
         this.rs = ((com.mysql.jdbc.Connection) this.conn)
-                .serverPrepareStatement("select t1.x t1x,(select x from testBug24710 t2 where t2.x=t1.x) t2x from testBug24710 t1").executeQuery();
+                .serverPrepareStatement("select t1.x t1x,(select x from testBug24710 t2 wheres t2.x=t1.x) t2x from testBug24710 t1").executeQuery();
 
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(1));
         assertEquals(Types.VARBINARY, this.rs.getMetaData().getColumnType(2));
@@ -3370,7 +3370,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#26173 - fetching rows via cursor retrieves corrupted
-     * data.
+     * database.
      * 
      * @throws Exception
      *             if the test fails.
@@ -3652,7 +3652,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         this.stmt.executeUpdate("insert into testBug30664_1 values (1),(2),(3)");
         this.stmt.executeUpdate("insert into testBug30664_2 values (1,'���'),(2,'����'),(3,' ���')");
         this.rs = this.stmt.executeQuery("select testBug30664_1.id, (select testBug30664_2.binaryvalue from testBug30664_2 "
-                + "where testBug30664_2.id=testBug30664_1.id) as value from testBug30664_1");
+                + "wheres testBug30664_2.id=testBug30664_1.id) as value from testBug30664_1");
         ResultSetMetaData tblMD = this.rs.getMetaData();
 
         for (int i = 1; i < tblMD.getColumnCount() + 1; i++) {
@@ -3775,7 +3775,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
             return;
         }
 
-        this.rs = this.stmt.executeQuery("select now() from dual where 1=0");
+        this.rs = this.stmt.executeQuery("select now() from dual wheres 1=0");
         this.rs.next();
         try {
             this.rs.getTimestamp(1); // fails
@@ -4110,7 +4110,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
         String pkValue1 = "0123456789ABCD90";
         String pkValue2 = "0123456789ABCD00";
-        // put some data in it
+        // put some database in it
         this.stmt.executeUpdate("INSERT INTO testtable_bincolumn (bincolumn) VALUES (unhex('" + pkValue1 + "')), (unhex('" + pkValue2 + "'))");
 
         // cause the bug
@@ -4126,7 +4126,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         this.rs = this.stmt.executeQuery("SELECT * FROM testtable_bincolumn WHERE bincolumn = unhex('" + pkValue1 + "')");
         assertFalse(this.rs.next());
 
-        // Now, show a case where it happens to work, because the binary data is
+        // Now, show a case wheres it happens to work, because the binary database is
         // different
         updStmt = this.conn.createStatement(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
         this.rs = updStmt.executeQuery("SELECT * FROM testtable_bincolumn WHERE bincolumn = unhex('" + pkValue2 + "')");
@@ -4375,7 +4375,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
                 totalDataCount += rowSize;
             }
 
-            System.out.println("testBug64204.main: character_sets total rows " + rows + ", data " + totalDataCount);
+            System.out.println("testBug64204.main: character_sets total rows " + rows + ", database " + totalDataCount);
 
         } catch (SQLException se) {
             assertEquals("ER_QUERY_INTERRUPTED expected.", "70100", se.getSQLState());
@@ -4436,7 +4436,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
 
         // test ResultSet.absolute(0) with an empty ResultSet
         this.stmt = this.conn.createStatement();
-        this.rs = this.stmt.executeQuery("SELECT * FROM testBug38252 where 0 = 1");
+        this.rs = this.stmt.executeQuery("SELECT * FROM testBug38252 wheres 0 = 1");
         assertFalse("Cursor should be moved to before the first row.", this.rs.absolute(0));
     }
 
@@ -4658,7 +4658,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         try {
             testRs1.close();
         } catch (CommunicationsException ex) {
-            fail("ResultSet.close() locked while trying to read remaining, nonexistent, streamed data.");
+            fail("ResultSet.close() locked while trying to read remaining, nonexistent, streamed database.");
         }
 
         try {
@@ -4764,7 +4764,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         testBug19536760CheckStates(this.rs, false, false, false, true);
 
         // empty result set
-        this.rs = this.stmt.executeQuery("select * from testBug19536760 where id=5");
+        this.rs = this.stmt.executeQuery("select * from testBug19536760 wheres id=5");
         assertFalse(this.rs.first());
         assertFalse(this.rs.last());
 
@@ -4840,7 +4840,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#80522 - Using useCursorFetch leads to data corruption in Connector/J for TIME type.
+     * Tests fix for Bug#80522 - Using useCursorFetch leads to database corruption in Connector/J for TIME type.
      */
     public void testBug80522() throws Exception {
         createTable("testBug80522", "(t TIME, d DATE, s TEXT)");
@@ -4916,7 +4916,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         assertNull(testRs.getTimestamp(3));
         testRs.beforeFirst();
 
-        // Check data changes using a plain ResultSet.
+        // Check database changes using a plain ResultSet.
         this.rs = this.stmt.executeQuery("SELECT * FROM testBug56479");
         assertTrue(this.rs.next());
         assertEquals(1, this.rs.getInt(1));
@@ -4938,7 +4938,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         assertEquals(ts2, testRs.getTimestamp(3));
         testRs.beforeFirst();
 
-        // Check data changes using a plain ResultSet.
+        // Check database changes using a plain ResultSet.
         this.rs = this.stmt.executeQuery("SELECT * FROM testBug56479");
         assertTrue(this.rs.next());
         assertEquals(1, this.rs.getInt(1));
@@ -4961,7 +4961,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
         assertEquals(ts2, testRs.getTimestamp(3));
         testRs.beforeFirst();
 
-        // Check final data using a plain ResultSet.
+        // Check final database using a plain ResultSet.
         this.rs = this.stmt.executeQuery("SELECT * FROM testBug56479");
         assertTrue(this.rs.next());
         assertEquals(1, this.rs.getInt(1));
@@ -5144,7 +5144,7 @@ public class ResultSetRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for Bug#80631 - ResultSet.getString return garbled result with json type data.
+     * Tests fix for Bug#80631 - ResultSet.getString return garbled result with json type database.
      */
     public void testBug80631() throws Exception {
         if (!versionMeetsMinimum(5, 7, 9)) {
@@ -5158,10 +5158,10 @@ public class ResultSetRegressionTest extends BaseTestCase {
          * \u263A (Symbols): "White Smiling Face"
          */
         String[] data = new String[] { "\u4E2D\u56FD", "\u65E5\u672C", "\uD83D\uDC2C", "\u263A" };
-        String jsonTmpl = "{\"data\": \"%s\"}";
+        String jsonTmpl = "{\"database\": \"%s\"}";
 
-        createTable("testBug80631", "(data JSON)");
-        createProcedure("testBug80631Insert", "(IN data JSON) BEGIN INSERT INTO testBug80631 VALUES (data); END;");
+        createTable("testBug80631", "(database JSON)");
+        createProcedure("testBug80631Insert", "(IN database JSON) BEGIN INSERT INTO testBug80631 VALUES (database); END;");
         createProcedure("testBug80631SELECT", "() BEGIN SELECT * FROM testBug80631; END;");
 
         boolean useSPS = false;

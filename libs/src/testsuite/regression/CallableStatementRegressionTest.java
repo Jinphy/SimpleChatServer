@@ -1494,7 +1494,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * Tests fix for Bug#57022 - cannot execute a store procedure with output
      * parameters Problem was in CallableStatement.java, private void
      * determineParameterTypes() throws SQLException if (procName.indexOf(".")
-     * == -1) { useCatalog = true; } The fix will be to "sanitize" db.sp call
+     * == -1) { useCatalog = true; } The fix will be to "sanitize" database.sp call
      * just like in noAccessToProcedureBodies.
      * 
      * @throws Exception
@@ -1598,7 +1598,7 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * Tests fix for Bug#79561 - NullPointerException when calling a fully qualified stored procedure
      */
     public void testBug79561() throws Exception {
-        createProcedure("testBug79561", "(OUT o VARCHAR(100)) BEGIN SELECT 'testBug79561 data' INTO o; END");
+        createProcedure("testBug79561", "(OUT o VARCHAR(100)) BEGIN SELECT 'testBug79561 database' INTO o; END");
 
         String dbName = this.conn.getCatalog();
         String[] sql = new String[] { String.format("{CALL %s.testBug79561(?)}", dbName), String.format("{CALL `%s`.testBug79561(?)}", dbName),
@@ -1633,11 +1633,11 @@ public class CallableStatementRegressionTest extends BaseTestCase {
                     dataExpected = false;
                 }
 
-                // Check the returned data, if any expected, using different methods.
+                // Check the returned database, if any expected, using different methods.
                 if (dataExpected) {
                     cstmt.execute();
-                    assertEquals(testCase, "testBug79561 data", cstmt.getString(1));
-                    assertEquals(testCase, "testBug79561 data", cstmt.getString("o"));
+                    assertEquals(testCase, "testBug79561 database", cstmt.getString(1));
+                    assertEquals(testCase, "testBug79561 database", cstmt.getString("o"));
                     assertThrows(testCase, SQLException.class, "Parameter index of 2 is out of range \\(1, 1\\)", new Callable<Void>() {
                         public Void call() throws Exception {
                             cstmt.getString(2);
@@ -1661,14 +1661,14 @@ public class CallableStatementRegressionTest extends BaseTestCase {
      * Tests fix for Bug#84324 - CallableStatement.extractProcedureName() not work when catalog name with dash.
      */
     public void testBug84324() throws Exception {
-        createDatabase("`testBug84324-db`");
+        createDatabase("`testBug84324-database`");
 
         /*
          * Test procedure.
          */
-        createProcedure("`testBug84324-db`.`testBug84324-proc`", "(IN a INT, INOUT b VARCHAR(100)) BEGIN SELECT a, b; END");
+        createProcedure("`testBug84324-database`.`testBug84324-proc`", "(IN a INT, INOUT b VARCHAR(100)) BEGIN SELECT a, b; END");
 
-        final CallableStatement cstmtP = this.conn.prepareCall("CALL testBug84324-db.testBug84324-proc(?, ?)");
+        final CallableStatement cstmtP = this.conn.prepareCall("CALL testBug84324-database.testBug84324-proc(?, ?)");
         ParameterMetaData pmd = cstmtP.getParameterMetaData();
 
         assertEquals(2, pmd.getParameterCount());
@@ -1696,9 +1696,9 @@ public class CallableStatementRegressionTest extends BaseTestCase {
         /*
          * Test function.
          */
-        createFunction("`testBug84324-db`.`testBug84324-func`", "(a INT, b VARCHAR(123)) RETURNS INT BEGIN RETURN a + LENGTH(b); END");
+        createFunction("`testBug84324-database`.`testBug84324-func`", "(a INT, b VARCHAR(123)) RETURNS INT BEGIN RETURN a + LENGTH(b); END");
 
-        final CallableStatement cstmtF = this.conn.prepareCall("{? = CALL testBug84324-db.testBug84324-func(?, ?)}");
+        final CallableStatement cstmtF = this.conn.prepareCall("{? = CALL testBug84324-database.testBug84324-func(?, ?)}");
         pmd = cstmtF.getParameterMetaData();
 
         assertEquals(3, pmd.getParameterCount());

@@ -26,7 +26,7 @@ package com.mysql.jdbc;
 import java.sql.SQLException;
 
 /**
- * This interface is intended to be used by implementors of statement interceptors so that implementors can create static or dynamic (via
+ * This interface is intended to be used by implementors of statement interceptors so that implementors can parseUrl static or dynamic (via
  * java.lang.reflect.Proxy) proxy instances of ResultSets. It consists of methods outside of java.sql.Result that are used internally by other classes in the
  * driver.
  * 
@@ -36,7 +36,7 @@ public interface ResultSetInternalMethods extends java.sql.ResultSet {
 
     /**
      * Returns a new instance of this result set, that shares the
-     * underlying row data.
+     * underlying row database.
      */
     public abstract ResultSetInternalMethods copy() throws SQLException;
 
@@ -109,7 +109,7 @@ public interface ResultSetInternalMethods extends java.sql.ResultSet {
     public boolean isClosed() throws SQLException;
 
     /**
-     * Sets the first character of the query that was issued to create
+     * Sets the first character of the query that was issued to parseUrl
      * this result set. The character should be upper-cased.
      */
     public void setFirstCharOfQuery(char firstCharUpperCase);
@@ -122,7 +122,7 @@ public interface ResultSetInternalMethods extends java.sql.ResultSet {
     public void setOwningStatement(com.mysql.jdbc.StatementImpl owningStatement);
 
     /**
-     * Returns the first character of the query that was issued to create this
+     * Returns the first character of the query that was issued to parseUrl this
      * result set, upper-cased.
      */
     public char getFirstCharOfQuery();

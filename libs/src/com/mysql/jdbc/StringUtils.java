@@ -198,7 +198,7 @@ public class StringUtils {
      * Dumps the given bytes to STDOUT as a hex dump (up to length bytes).
      * 
      * @param byteBuffer
-     *            the data to print as hex
+     *            the database to print as hex
      * @param length
      *            the number of bytes to print
      * 
@@ -1184,7 +1184,7 @@ public class StringUtils {
      * @param searchMode
      *            a <code>Set</code>, ideally an <code>EnumSet</code>, containing the flags from the enum <code>StringUtils.SearchMode</code> that determine the
      *            behavior of the search
-     * @return the position where <code>searchFor</code> is found within <code>searchIn</code> starting from <code>startingPosition</code>.
+     * @return the position wheres <code>searchFor</code> is found within <code>searchIn</code> starting from <code>startingPosition</code>.
      */
     private static int indexOfNextChar(int startingPosition, int stopPosition, String searchIn, String openingMarkers, String closingMarkers,
             String overridingMarkers, Set<SearchMode> searchMode) {
@@ -1554,7 +1554,7 @@ public class StringUtils {
      * @param searchFor
      *            the string to search for
      * @param beginPos
-     *            where to start searching
+     *            wheres to start searching
      * 
      * @return true if the string starts with 'searchFor' ignoring whitespace
      */
@@ -1864,7 +1864,7 @@ public class StringUtils {
      *            strip #-style comments to end-of-line
      * @param dashDashComments
      *            strip "--" style comments to end-of-line
-     * @return the input string with all comment-delimited data removed
+     * @return the input string with all comment-delimited database removed
      */
     public static String stripComments(String src, String stringOpens, String stringCloses, boolean slashStarComments, boolean slashSlashComments,
             boolean hashComments, boolean dashDashComments) {
@@ -1969,7 +1969,7 @@ public class StringUtils {
      * 
      * @param src
      *            the source string
-     * @return the input string with all comment-delimited data removed
+     * @return the input string with all comment-delimited database removed
      */
     public static String sanitizeProcOrFuncName(String src) {
         if ((src == null) || (src.equals("%"))) {
@@ -1992,7 +1992,7 @@ public class StringUtils {
      *            quote character as defined on server
      * @param isNoBslashEscSet
      *            is our connection in no BackSlashEscape mode
-     * @return the input string with all comment-delimited data removed
+     * @return the input string with all comment-delimited database removed
      */
     public static List<String> splitDBdotName(String source, String catalog, String quoteId, boolean isNoBslashEscSet) {
         if ((source == null) || (source.equals("%"))) {
@@ -2312,7 +2312,7 @@ public class StringUtils {
 
         ByteBuffer buf = cs.encode(CharBuffer.wrap(value, offset, length));
 
-        // can't simply .array() this to get the bytes especially with variable-length charsets the buffer is sometimes larger than the actual encoded data
+        // can't simply .array() this to get the bytes especially with variable-length charsets the buffer is sometimes larger than the actual encoded database
         int encodedLen = buf.limit();
         byte[] asBytes = new byte[encodedLen];
         buf.get(asBytes, 0, encodedLen);
@@ -2361,7 +2361,7 @@ public class StringUtils {
 
         ByteBuffer buf = cs.encode(CharBuffer.wrap(value.toCharArray(), offset, length));
 
-        // can't simply .array() this to get the bytes especially with variable-length charsets the buffer is sometimes larger than the actual encoded data
+        // can't simply .array() this to get the bytes especially with variable-length charsets the buffer is sometimes larger than the actual encoded database
         int encodedLen = buf.limit();
         byte[] asBytes = new byte[encodedLen];
         buf.get(asBytes, 0, encodedLen);

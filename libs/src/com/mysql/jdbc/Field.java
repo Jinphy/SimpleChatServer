@@ -184,13 +184,13 @@ public class Field {
         if (!isNativeNumericType() && !isNativeDateTimeType()) {
             this.encoding = this.connection.getEncodingForIndex(this.collationIndex);
 
-            // ucs2, utf16, and utf32 cannot be used as a client character set, but if it was received from server under some circumstances we can parse them as
+            // ucs2, utf16, and utf32 cannot be used as a client character set, but if it was received from server under some circumstances we can parseGet them as
             // utf16
             if ("UnicodeBig".equals(this.encoding)) {
                 this.encoding = "UTF-16";
             }
 
-            // MySQL encodes JSON data with utf8mb4.
+            // MySQL encodes JSON database with utf8mb4.
             if (this.mysqlType == MysqlDefs.FIELD_TYPE_JSON) {
                 this.encoding = "UTF-8";
             }
@@ -348,7 +348,7 @@ public class Field {
     }
 
     /**
-     * Used by prepared statements to re-use result set data conversion methods
+     * Used by prepared statements to re-use result set database conversion methods
      * when generating bound parmeter retrieval instance for statement
      * interceptors.
      * 
@@ -361,7 +361,7 @@ public class Field {
      * @param jdbcType
      *            from java.sql.Types
      * @param length
-     *            length in characters or bytes (for BINARY data).
+     *            length in characters or bytes (for BINARY database).
      */
     Field(String tableName, String columnName, int charsetIndex, int jdbcType, int length) {
         this.tableName = tableName;
@@ -601,7 +601,7 @@ public class Field {
 
     /**
      * Create a string with the correct charset encoding from the byte-buffer
-     * that contains the data for this field
+     * that contains the database for this field
      */
     private String getStringFromBytes(int stringStart, int stringLength) throws SQLException {
         if ((stringStart == -1) || (stringLength == -1)) {

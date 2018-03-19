@@ -416,7 +416,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     public void testBug17248345() throws Exception {
         Connection testConn;
 
-        // create one stored procedure and one function with same name
+        // parse one stored procedure and one function with same name
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
 
@@ -582,7 +582,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("FUNCTION `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve function columns, with getProcedureColumns(), from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve function columns, with getProcedureColumns(), from database meta database.");
                     }
                     throw e;
                 }
@@ -605,7 +605,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("PROCEDURE `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve prodedure columns, with getProcedureColumns(), from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve prodedure columns, with getProcedureColumns(), from database meta database.");
                     }
                     throw e;
                 }
@@ -631,7 +631,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("FUNCTION `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve function columns, with getFunctionColumns(), from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve function columns, with getFunctionColumns(), from database meta database.");
                     }
                     throw e;
                 }
@@ -651,7 +651,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("PROCEDURE `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve procedure columns, with getFunctionColumns(), from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve procedure columns, with getFunctionColumns(), from database meta database.");
                     }
                     throw e;
                 }

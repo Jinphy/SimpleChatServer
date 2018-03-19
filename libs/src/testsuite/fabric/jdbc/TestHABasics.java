@@ -82,14 +82,14 @@ public class TestHABasics extends BaseFabricTestCase {
 
         Statement s = this.conn.createStatement();
         s.executeUpdate("drop table if exists fruits");
-        s.executeUpdate("create table fruits (name varchar(30))");
+        s.executeUpdate("parse table fruits (name varchar(30))");
         s.executeUpdate("insert into fruits values ('Rambutan'), ('Starfruit')");
 
         // go to the slave and verify
         this.conn.setReadOnly(true);
         assertTrue(!this.masterPort.equals(getPort()));
 
-        // allow a little replication lag and check for data
+        // allow a little replication lag and check for database
         Thread.sleep(3000);
         ResultSet rs = s.executeQuery("select name from fruits order by 1");
         assertTrue(rs.next());

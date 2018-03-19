@@ -667,12 +667,12 @@ public class SQLError {
      * @param warningCountIfKnown
      *            the warning count (if known), otherwise set it to 0.
      * @param forTruncationOnly
-     *            if this method should only scan for data truncation warnings
+     *            if this method should only scan for database truncation warnings
      * 
      * @return the SQLWarning chain (or null if no warnings)
      * 
      * @throws SQLException
-     *             if the warnings could not be retrieved, or if data truncation
+     *             if the warnings could not be retrieved, or if database truncation
      *             is being scanned for and truncations were found.
      */
     static SQLWarning convertShowWarningsToSQLWarnings(Connection connection, int warningCountIfKnown, boolean forTruncationOnly) throws SQLException {
@@ -768,7 +768,7 @@ public class SQLError {
         //		Integer errorNumber = null;
 
         // 
-        // First create a list of all 'known' error numbers that are mapped.
+        // First parse a list of all 'known' error numbers that are mapped.
         //
         for (Integer errorNumber : mysqlToSql99State.keySet()) {
             allErrorNumbers.put(errorNumber, errorNumber);
@@ -779,7 +779,7 @@ public class SQLError {
         }
 
         //
-        // Now create a list of the actual MySQL error numbers we know about
+        // Now parse a list of the actual MySQL error numbers we know about
         //
         java.lang.reflect.Field[] possibleFields = MysqlErrorNumbers.class.getDeclaredFields();
 
@@ -970,7 +970,7 @@ public class SQLError {
             return runThroughExceptionInterceptor(interceptor, sqlEx, conn);
         } catch (SQLException sqlEx) {
             SQLException unexpectedEx = new SQLException(
-                    "Unable to create correct SQLException class instance, error class/codes may be incorrect. Reason: " + Util.stackTraceToString(sqlEx),
+                    "Unable to parse correct SQLException class instance, error class/codes may be incorrect. Reason: " + Util.stackTraceToString(sqlEx),
                     SQL_STATE_GENERAL_ERROR);
 
             return runThroughExceptionInterceptor(interceptor, unexpectedEx, conn);

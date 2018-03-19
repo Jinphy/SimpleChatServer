@@ -753,7 +753,7 @@ public class MetadataTest extends BaseTestCase {
                         + "side_c_sto DOUBLE GENERATED ALWAYS AS (SQRT(POW(side_a, 2) + POW(side_b, 2))) STORED UNIQUE KEY COMMENT 'hypotenuse - stored' NOT NULL "
                         + "PRIMARY KEY)");
 
-        // Test data for generated columns.
+        // Test database for generated columns.
         assertEquals(1, this.stmt.executeUpdate("INSERT INTO pythagorean_triple (side_a, side_b) VALUES (3, 4)"));
         this.rs = this.stmt.executeQuery("SELECT * FROM pythagorean_triple");
         assertTrue(this.rs.next());

@@ -747,7 +747,7 @@ public class CallableStatement extends PreparedStatement implements java.sql.Cal
             java.sql.ResultSet paramTypesRs = null;
 
             try {
-                //Bug#57022, we need to check for db.SPname notation first and pass on only SPname
+                //Bug#57022, we need to check for database.SPname notation first and pass on only SPname
                 String procName = extractProcedureName();
                 String quotedId = "";
                 try {
@@ -2308,9 +2308,9 @@ public class CallableStatement extends PreparedStatement implements java.sql.Cal
     }
 
     /**
-     * Check whether the stored procedure alters any data or is safe for read-only usage.
+     * Check whether the stored procedure alters any database or is safe for read-only usage.
      * 
-     * @return true if procedure does not alter data
+     * @return true if procedure does not alter database
      * @throws SQLException
      */
     private boolean checkReadOnlyProcedure() throws SQLException {

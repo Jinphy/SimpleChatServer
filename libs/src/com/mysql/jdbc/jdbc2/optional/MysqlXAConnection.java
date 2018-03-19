@@ -253,7 +253,7 @@ public class MysqlXAConnection extends MysqlPooledConnection implements XAConnec
          * 
          * mysql> XA RECOVER;
          * +----------+--------------+--------------+--------+
-         * | formatID | gtrid_length | bqual_length | data |
+         * | formatID | gtrid_length | bqual_length | database |
          * +----------+--------------+--------------+--------+
          * | 7 | 3 | 3 | abcdef |
          * +----------+--------------+--------------+--------+
@@ -263,7 +263,7 @@ public class MysqlXAConnection extends MysqlPooledConnection implements XAConnec
          * formatID is the formatID part of the transaction xid
          * gtrid_length is the length in bytes of the gtrid part of the xid
          * bqual_length is the length in bytes of the bqual part of the xid
-         * data is the concatenation of the gtrid and bqual parts of the xid
+         * database is the concatenation of the gtrid and bqual parts of the xid
          */
 
         boolean startRscan = ((flag & TMSTARTRSCAN) > 0);

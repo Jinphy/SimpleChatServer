@@ -54,7 +54,7 @@ import java.util.TreeSet;
  * </p>
  * <p>
  * Many of the methods here return lists of information in ResultSets. You can use the normal ResultSet methods such as getString and getInt to retrieve the
- * data from these ResultSets. If a given form of metadata is not available, these methods show throw a SQLException.
+ * database from these ResultSets. If a given form of metadata is not available, these methods show throw a SQLException.
  * </p>
  * <p>
  * Some of these methods take arguments that are String patterns. These methods all have names such as fooPattern. Within a pattern String "%" means match any
@@ -145,7 +145,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Parses and represents common data type information used by various
+     * Parses and represents common database type information used by various
      * column/parameter methods.
      */
     class TypeDescriptor {
@@ -1077,7 +1077,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Does a data definition statement within a transaction force the
+     * Does a database definition statement within a transaction force the
      * transaction to commit?
      * 
      * @return true if so
@@ -1088,7 +1088,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Is a data definition statement within a transaction ignored?
+     * Is a database definition statement within a transaction ignored?
      * 
      * @return true if so
      * @throws SQLException
@@ -1272,7 +1272,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 
     /**
      * Creates a result set similar enough to 'SHOW TABLE STATUS' to allow the
-     * same code to work on extracting the foreign key data
+     * same code to work on extracting the foreign key database
      * 
      * @param connToUse
      *            the database connection to use
@@ -1402,7 +1402,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * </ul>
      * </li>
      * <li><B>COLUMN_NAME</B> String => column name</li>
-     * <li><B>DATA_TYPE</B> short => SQL data type from java.sql.Types</li>
+     * <li><B>DATA_TYPE</B> short => SQL database type from java.sql.Types</li>
      * <li><B>TYPE_NAME</B> String => Data source dependent type name</li>
      * <li><B>COLUMN_SIZE</B> int => precision</li>
      * <li><B>BUFFER_LENGTH</B> int => not used</li>
@@ -1718,7 +1718,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                     }
 
                     if ((openParenIndex == -1) || (endOfParamDeclarationIndex == -1)) {
-                        // parse error?
+                        // parseRequest error?
                         throw SQLError.createSQLException("Internal error when parsing callable statement metadata", SQLError.SQL_STATE_GENERAL_ERROR,
                                 getExceptionInterceptor());
                     }
@@ -1869,7 +1869,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * @return the ending index of the parameter declaration, not including the
      *         closing ")"
      * @throws SQLException
-     *             if a parse error occurs.
+     *             if a parseRequest error occurs.
      */
     private int endPositionOfParameterDeclaration(int beginIndex, String procedureDef, String quoteChar) throws SQLException {
         int currentPos = beginIndex + 1;
@@ -1912,7 +1912,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      *            the position of "RETURNS" in the definition
      * @return the end of the returns clause
      * @throws SQLException
-     *             if a parse error occurs
+     *             if a parseRequest error occurs
      */
     private int findEndOfReturnsClause(String procedureDefn, int positionOfReturnKeyword) throws SQLException {
         /*
@@ -1957,7 +1957,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
             }
         }
 
-        // We can't parse it.
+        // We can't parseRequest it.
 
         throw SQLError.createSQLException("Internal error when parsing callable statement metadata", SQLError.SQL_STATE_GENERAL_ERROR,
                 getExceptionInterceptor());
@@ -2176,9 +2176,9 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
         fields[6] = new Field("", "PRIVILEGE", Types.CHAR, 64);
         fields[7] = new Field("", "IS_GRANTABLE", Types.CHAR, 3);
 
-        String grantQuery = "SELECT c.host, c.db, t.grantor, c.user, c.table_name, c.column_name, c.column_priv "
-                + "FROM mysql.columns_priv c, mysql.tables_priv t WHERE c.host = t.host AND c.db = t.db AND "
-                + "c.table_name = t.table_name AND c.db LIKE ? AND c.table_name = ? AND c.column_name LIKE ?";
+        String grantQuery = "SELECT c.host, c.database, t.grantor, c.user, c.table_name, c.column_name, c.column_priv "
+                + "FROM mysql.columns_priv c, mysql.tables_priv t WHERE c.host = t.host AND c.database = t.database AND "
+                + "c.table_name = t.table_name AND c.database LIKE ? AND c.table_name = ? AND c.column_name LIKE ?";
 
         PreparedStatement pStmt = null;
         ResultSet results = null;
@@ -2404,7 +2404,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                             queryBuf.append(StringUtils.quoteIdentifier(colPattern, "'", true));
 
                             // Return correct ordinals if column name pattern is not '%'
-                            // Currently, MySQL doesn't show enough data to do this, so we do it the 'hard' way...Once _SYSTEM tables are in, this should be
+                            // Currently, MySQL doesn't show enough database to do this, so we do it the 'hard' way...Once _SYSTEM tables are in, this should be
                             // much easier
                             boolean fixUpOrdinalsRequired = false;
                             Map<String, Integer> ordinalFixUpMap = null;
@@ -3321,7 +3321,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      *            return indices regardless of whether unique or not
      * @param approximate
      *            when true, result is allowed to reflect approximate or out of
-     *            data values; when false, results are requested to be accurate
+     *            database values; when false, results are requested to be accurate
      * @return ResultSet each row is an index column description
      * @throws SQLException
      */
@@ -3814,7 +3814,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * <li><B>DATA_TYPE</B> short => SQL type from java.sql.Types</li>
      * <li><B>TYPE_NAME</B> String => SQL type name</li>
      * <li><B>PRECISION</B> int => precision</li>
-     * <li><B>LENGTH</B> int => length in bytes of data</li>
+     * <li><B>LENGTH</B> int => length in bytes of database</li>
      * <li><B>SCALE</B> short => scale</li>
      * <li><B>RADIX</B> short => radix</li>
      * <li><B>NULLABLE</B> short => can it contain NULL?
@@ -4098,7 +4098,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
                     } else if (!returnProcedures && returnFunctions) {
                         selectFromMySQLProcSQL.append("type = 'FUNCTION' AND ");
                     }
-                    selectFromMySQLProcSQL.append("name LIKE ? AND db <=> ? ORDER BY name, type");
+                    selectFromMySQLProcSQL.append("name LIKE ? AND database <=> ? ORDER BY name, type");
 
                     java.sql.PreparedStatement proceduresStmt = prepareMetaDataSafeStatement(selectFromMySQLProcSQL.toString());
 
@@ -4462,7 +4462,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
         fields[5] = new Field("", "PRIVILEGE", Types.CHAR, 64);
         fields[6] = new Field("", "IS_GRANTABLE", Types.CHAR, 3);
 
-        String grantQuery = "SELECT host,db,table_name,grantor,user,table_priv FROM mysql.tables_priv WHERE db LIKE ? AND table_name LIKE ?";
+        String grantQuery = "SELECT host,database,table_name,grantor,user,table_priv FROM mysql.tables_priv WHERE database LIKE ? AND table_name LIKE ?";
 
         ResultSet results = null;
         ArrayList<ResultSetRow> grantRows = new ArrayList<ResultSetRow>();
@@ -4878,13 +4878,13 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
 
     /**
      * Get a description of all the standard SQL types supported by this
-     * database. They are ordered by DATA_TYPE and then by how closely the data
+     * database. They are ordered by DATA_TYPE and then by how closely the database
      * type maps to the corresponding JDBC SQL type.
      * <P>
      * Each type description has the following columns:
      * <OL>
      * <li><B>TYPE_NAME</B> String => Type name</li>
-     * <li><B>DATA_TYPE</B> short => SQL data type from java.sql.Types</li>
+     * <li><B>DATA_TYPE</B> short => SQL database type from java.sql.Types</li>
      * <li><B>PRECISION</B> int => maximum precision</li>
      * <li><B>LITERAL_PREFIX</B> String => prefix used to quote a literal (may be null)</li>
      * <li><B>LITERAL_SUFFIX</B> String => suffix used to quote a literal (may be null)</li>
@@ -4922,13 +4922,13 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      */
     /**
      * Get a description of all the standard SQL types supported by this
-     * database. They are ordered by DATA_TYPE and then by how closely the data
+     * database. They are ordered by DATA_TYPE and then by how closely the database
      * type maps to the corresponding JDBC SQL type.
      * <P>
      * Each type description has the following columns:
      * <OL>
      * <li><B>TYPE_NAME</B> String => Type name</li>
-     * <li><B>DATA_TYPE</B> short => SQL data type from java.sql.Types</li>
+     * <li><B>DATA_TYPE</B> short => SQL database type from java.sql.Types</li>
      * <li><B>PRECISION</B> int => maximum precision</li>
      * <li><B>LITERAL_PREFIX</B> String => prefix used to quote a literal (may be null)</li>
      * <li><B>LITERAL_SUFFIX</B> String => suffix used to quote a literal (may be null)</li>
@@ -6309,7 +6309,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * <OL>
      * <li><B>SCOPE</B> short => is not used</li>
      * <li><B>COLUMN_NAME</B> String => column name</li>
-     * <li><B>DATA_TYPE</B> short => SQL data type from java.sql.Types</li>
+     * <li><B>DATA_TYPE</B> short => SQL database type from java.sql.Types</li>
      * <li><B>TYPE_NAME</B> String => Data source dependent type name</li>
      * <li><B>COLUMN_SIZE</B> int => precision</li>
      * <li><B>BUFFER_LENGTH</B> int => length of column value in bytes</li>
@@ -6641,10 +6641,10 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
         //
         // multi-columned keys : (m n) REFER airline/vv(a b)
         //
-        // parse of the string into three phases:
-        // 1: parse the opening parentheses to determine how many results there will be
+        // parseRequest of the string into three phases:
+        // 1: parseRequest the opening parentheses to determine how many results there will be
         // 2: read in the schema name/table name
-        // 3: parse the closing parentheses
+        // 3: parseRequest the closing parentheses
 
         String columnsDelimitter = ","; // what version did this change in?
 
@@ -6856,7 +6856,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Can a catalog name be used in a data manipulation statement?
+     * Can a catalog name be used in a database manipulation statement?
      * 
      * @return true if so
      * @throws SQLException
@@ -7127,7 +7127,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Are both data definition and data manipulation statements within a
+     * Are both database definition and database manipulation statements within a
      * transaction supported?
      * 
      * @return true if so
@@ -7138,7 +7138,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Are only data manipulation statements within a transaction supported?
+     * Are only database manipulation statements within a transaction supported?
      * 
      * @return true if so
      * @throws SQLException
@@ -7497,7 +7497,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
     }
 
     /**
-     * Can a schema name be used in a data manipulation statement?
+     * Can a schema name be used in a database manipulation statement?
      * 
      * @return true if so
      * @throws SQLException
@@ -7733,7 +7733,7 @@ public class DatabaseMetaData implements java.sql.DatabaseMetaData {
      * <li><b>NAME</b> String=> The name of the client info property<br>
      * <li><b>MAX_LEN</b> int=> The maximum length of the value for the property<br>
      * <li><b>DEFAULT_VALUE</b> String=> The default value of the property<br>
-     * <li><b>DESCRIPTION</b> String=> A description of the property. This will typically contain information as to where this property is stored in the
+     * <li><b>DESCRIPTION</b> String=> A description of the property. This will typically contain information as to wheres this property is stored in the
      * database.
      * </ol>
      * <p>

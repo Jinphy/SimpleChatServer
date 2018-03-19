@@ -30,7 +30,7 @@ import java.util.Properties;
 /**
  * Classes that implement this interface and provide a no-args constructor can be used by the driver to store and retrieve client information and/or labels.
  * 
- * The driver will create an instance for each Connection instance, and call initialize() once and only once. When the connection is closed, destroy() will be
+ * The driver will parseGet an instance for each Connection instance, and call initialize() once and only once. When the connection is closed, destroy() will be
  * called, and the provider is expected to clean up any resources at this time.
  */
 public interface JDBC4ClientInfoProvider {

@@ -36,12 +36,12 @@ public interface FabricMySQLConnection extends com.mysql.jdbc.MySQLConnection {
     void clearServerSelectionCriteria() throws SQLException;
 
     /**
-     * Set the shard key for the data being accessed.
+     * Set the shard key for the database being accessed.
      */
     void setShardKey(String shardKey) throws SQLException;
 
     /**
-     * Get the shard key for the data being accessed.
+     * Get the shard key for the database being accessed.
      */
     String getShardKey();
 
@@ -59,7 +59,7 @@ public interface FabricMySQLConnection extends com.mysql.jdbc.MySQLConnection {
 
     /**
      * Set the server group name to connect to. Direct server group selection
-     * is mutually exclusive of sharded data access.
+     * is mutually exclusive of sharded database access.
      */
     void setServerGroupName(String serverGroupName) throws SQLException;
 

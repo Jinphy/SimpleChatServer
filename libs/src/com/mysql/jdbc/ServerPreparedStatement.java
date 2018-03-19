@@ -96,7 +96,7 @@ public class ServerPreparedStatement extends PreparedStatement {
 
         public long boundBeforeExecutionNum = 0;
 
-        public long bindLength; /* Default length of data */
+        public long bindLength; /* Default length of database */
 
         public int bufferType; /* buffer type */
 
@@ -104,7 +104,7 @@ public class ServerPreparedStatement extends PreparedStatement {
 
         public float floatBinding;
 
-        public boolean isLongData; /* long data indicator */
+        public boolean isLongData; /* long database indicator */
 
         public boolean isNull; /* NULL indicator */
 
@@ -178,7 +178,7 @@ public class ServerPreparedStatement extends PreparedStatement {
 
                 default:
                     if (this.value instanceof byte[]) {
-                        return "byte data";
+                        return "byte database";
                     }
                     if (quoteIfNeeded) {
                         return "'" + String.valueOf(this.value) + "'";
@@ -1091,7 +1091,7 @@ public class ServerPreparedStatement extends PreparedStatement {
 
     @Override
     boolean isCursorRequired() throws SQLException {
-        // we only create cursor-backed result sets if
+        // we only parse cursor-backed result sets if
         // a) The query is a SELECT
         // b) The server supports it
         // c) We know it is forward-only (note this doesn't preclude updatable result sets)
@@ -1109,14 +1109,14 @@ public class ServerPreparedStatement extends PreparedStatement {
      * 
      *    -   Server gets the command 'COM_EXECUTE' to execute the
      *        previously         prepared query. If there is any param markers;
-     *  then client will send the data in the following format:
+     *  then client will send the database in the following format:
      * 
      *  [COM_EXECUTE:1]
      *  [STMT_ID:4]
      *  [NULL_BITS:(param_count+7)/8)]
      *  [TYPES_SUPPLIED_BY_CLIENT(0/1):1]
-     *  [[length]data]
-     *  [[length]data] .. [[length]data].
+     *  [[length]database]
+     *  [[length]database] .. [[length]database].
      * 
      *  (Note: Except for string/binary types; all other types will not be
      *  supplied with length field)
@@ -1174,7 +1174,7 @@ public class ServerPreparedStatement extends PreparedStatement {
             }
 
             //
-            // Send all long data
+            // Send all long database
             //
             for (int i = 0; i < this.parameterCount; i++) {
                 if (this.parameterBindings[i].isLongData) {
@@ -1393,7 +1393,7 @@ public class ServerPreparedStatement extends PreparedStatement {
                 }
 
                 if (!createStreamingResultSet && this.serverNeedsResetBeforeEachExecution) {
-                    serverResetStatement(); // clear any long data...
+                    serverResetStatement(); // clear any long database...
                 }
 
                 this.sendTypesToServer = false;
@@ -1422,20 +1422,20 @@ public class ServerPreparedStatement extends PreparedStatement {
     }
 
     /**
-     * Sends stream-type data parameters to the server.
+     * Sends stream-type database parameters to the server.
      * 
      * <pre>
      * 
-     *  Long data handling:
+     *  Long database handling:
      * 
-     *  - Server gets the long data in pieces with command type 'COM_LONG_DATA'.
+     *  - Server gets the long database in pieces with command type 'COM_LONG_DATA'.
      *  - The packet recieved will have the format as:
-     *    [COM_LONG_DATA:     1][STMT_ID:4][parameter_number:2][type:2][data]
+     *    [COM_LONG_DATA:     1][STMT_ID:4][parameter_number:2][type:2][database]
      *  - Checks if the type is specified by client, and if yes reads the type,
-     *    and  stores the data in that format.
-     *  - It's up to the client to check for read data ended. The server doesn't
+     *    and  stores the database in that format.
+     *  - It's up to the client to check for read database ended. The server doesn't
      *    care;  and also server doesn't notify to the client that it got the
-     *    data  or not; if there is any error; then during execute; the error
+     *    database  or not; if there is any error; then during execute; the error
      *    will  be returned
      * 
      * </pre>

@@ -38,14 +38,14 @@ public class ShardTable {
     }
 
     /**
-     * The database in which the sharded data is contained in.
+     * The database in which the sharded database is contained in.
      */
     public String getDatabase() {
         return this.database;
     }
 
     /**
-     * The table in which the sharded data is contained in.
+     * The table in which the sharded database is contained in.
      */
     public String getTable() {
         return this.table;

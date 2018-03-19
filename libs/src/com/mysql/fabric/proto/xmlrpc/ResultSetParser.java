@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Parser for result data returned from Fabric XML-RPC protocol.
+ * Parser for result database returned from Fabric XML-RPC protocol.
  */
 public class ResultSetParser {
     public ResultSetParser() {

@@ -26,7 +26,7 @@ package com.mysql.fabric;
 import java.util.Set;
 
 /**
- * Server Group - a set of servers responsible for the same set of data
+ * Server Group - a set of servers responsible for the same set of database
  */
 public class ServerGroup {
     private String name;

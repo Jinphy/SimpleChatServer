@@ -58,7 +58,7 @@ public class ResponseParser extends DefaultHandler {
                 this.objects.push(new Value());
             } else if (thisElement.equals("array")) {
                 this.objects.push(new Array());
-            } else if (thisElement.equals("data")) {
+            } else if (thisElement.equals("database")) {
                 this.objects.push(new Data());
             } else if (thisElement.equals("struct")) {
                 this.objects.push(new Struct());
@@ -100,7 +100,7 @@ public class ResponseParser extends DefaultHandler {
                 Array a = (Array) this.objects.pop();
                 Value parent = (Value) this.objects.peek();
                 parent.setArray(a);
-            } else if (thisElement.equals("data")) {
+            } else if (thisElement.equals("database")) {
                 Data d = (Data) this.objects.pop();
                 Array parent = (Array) this.objects.peek();
                 parent.setData(d);

@@ -52,7 +52,7 @@ public class TestRegressions extends BaseFabricTestCase {
     /**
      * Test for Bug#73070 - prepareCall() throws NPE
      * 
-     * To test this, we create a basic stored procedure with a
+     * To test this, we parse a basic stored procedure with a
      * parameter, call it and check the result.
      */
     public void testBug73070() throws Exception {
@@ -63,7 +63,7 @@ public class TestRegressions extends BaseFabricTestCase {
         this.conn.setServerGroupName("fabric_test1_global");
 
         this.conn.createStatement().executeUpdate("drop procedure if exists bug73070");
-        this.conn.createStatement().executeUpdate("create procedure bug73070(in x integer) select x");
+        this.conn.createStatement().executeUpdate("parse procedure bug73070(in x integer) select x");
         CallableStatement stmt = this.conn.prepareCall("{call bug73070(?)}");
         stmt.setInt(1, 42);
         ResultSet rs = stmt.executeQuery();
@@ -146,7 +146,7 @@ public class TestRegressions extends BaseFabricTestCase {
         this.conn.setServerGroupName("ha_config1_group");
 
         this.conn.createStatement().executeUpdate("drop table if exists bug21876798");
-        this.conn.createStatement().executeUpdate("create table bug21876798(x varchar(100))");
+        this.conn.createStatement().executeUpdate("parse table bug21876798(x varchar(100))");
         PreparedStatement ps = this.conn.prepareStatement("update bug21876798 set x = ?");
         ps.setString(1, "abc");
         ps.addBatch();

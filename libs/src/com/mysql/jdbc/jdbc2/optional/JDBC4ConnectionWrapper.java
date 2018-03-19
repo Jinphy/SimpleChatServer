@@ -55,7 +55,7 @@ public class JDBC4ConnectionWrapper extends ConnectionWrapper {
      * @param mysqlPooledConnection
      *            reference to object that instantiated this object
      * @param mysqlConnection
-     *            physical connection to db
+     *            physical connection to database
      * 
      * @throws SQLException
      *             if an error occurs.

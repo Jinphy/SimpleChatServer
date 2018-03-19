@@ -117,14 +117,14 @@ public final class MysqlDefs {
 
     static final int FIELD_TYPE_TINY = 1;
 
-    // Older data types
+    // Older database types
     static final int FIELD_TYPE_TINY_BLOB = 249;
 
     static final int FIELD_TYPE_VAR_STRING = 253;
 
     static final int FIELD_TYPE_VARCHAR = 15;
 
-    // Newer data types
+    // Newer database types
     static final int FIELD_TYPE_YEAR = 13;
 
     static final int FIELD_TYPE_JSON = 245;

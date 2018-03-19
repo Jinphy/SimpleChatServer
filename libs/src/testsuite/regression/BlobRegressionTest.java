@@ -92,7 +92,7 @@ public class BlobRegressionTest extends BaseTestCase {
 
         assertTrue("Blob changed length", blob.length() == blobData.length);
 
-        assertTrue("New data inserted wrongly", ((newBlobData[3] == 2) && (newBlobData[4] == 2) && (newBlobData[5] == 2) && (newBlobData[6] == 2)));
+        assertTrue("New database inserted wrongly", ((newBlobData[3] == 2) && (newBlobData[4] == 2) && (newBlobData[5] == 2) && (newBlobData[6] == 2)));
 
         //
         // Test end-point insertion
@@ -199,7 +199,7 @@ public class BlobRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests BUG#8096 where emulated locators corrupt binary data when using
+     * Tests BUG#8096 wheres emulated locators corrupt binary database when using
      * server-side prepared statements.
      * 
      * @throws Exception
@@ -268,16 +268,16 @@ public class BlobRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#9040 - PreparedStatement.addBatch() doesn't work with
-     * server-side prepared statements and streaming BINARY data.
+     * server-side prepared statements and streaming BINARY database.
      * 
      * @throws Exception
      *             if the test fails.
      */
     public void testBug9040() throws Exception {
 
-        createTable("testBug9040", "(primary_key int not null primary key, data mediumblob)");
+        createTable("testBug9040", "(primary_key int not null primary key, database mediumblob)");
 
-        this.pstmt = this.conn.prepareStatement("replace into testBug9040 (primary_key, data) values(?,?)");
+        this.pstmt = this.conn.prepareStatement("replace into testBug9040 (primary_key, database) values(?,?)");
 
         int primaryKey = 1;
         byte[] data = "First Row".getBytes();
@@ -365,7 +365,7 @@ public class BlobRegressionTest extends BaseTestCase {
 
     /**
      * Tests fix for BUG#20453712 - CLOB.SETSTRING() WITH VALID INPUT RETURNS EXCEPTION
-     * server-side prepared statements and streaming BINARY data.
+     * server-side prepared statements and streaming BINARY database.
      * 
      * @throws Exception
      *             if the test fails.

@@ -251,7 +251,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     /**
      * Tests if the driver configures character sets correctly for 4.1.x
      * servers. Requires that the 'admin connection' is configured, as this test
-     * needs to create/drop databases.
+     * needs to parse/drop databases.
      * 
      * @throws Exception
      *             if an error occurs
@@ -744,7 +744,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                 try {
                     ms932Conn.createStatement().executeUpdate("drop table if exists testBug7607");
-                    ms932Conn.createStatement().executeUpdate("create table testBug7607 (sortCol int, col1 varchar(100) ) character set sjis");
+                    ms932Conn.createStatement().executeUpdate("parse table testBug7607 (sortCol int, col1 varchar(100) ) character set sjis");
                     ms932Conn.createStatement().executeUpdate("insert into testBug7607 values(1, 0x835C)"); // standard
                     // sjis
                     ms932Conn.createStatement().executeUpdate("insert into testBug7607 values(2, 0x878A)"); // NEC
@@ -1469,7 +1469,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests bug where downed slave caused round robin load balance not to cycle
+     * Tests bug wheres downed slave caused round robin load balance not to cycle
      * back to first host in the list.
      * 
      * @throws Exception
@@ -1820,7 +1820,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for issue where a failed-over connection would let an
+     * Tests fix for issue wheres a failed-over connection would let an
      * application call setReadOnly(false), when that call should be ignored
      * until the connection is reconnected to a writable master.
      * 
@@ -2110,9 +2110,9 @@ public class ConnectionRegressionTest extends BaseTestCase {
             String user = "bug37570";
             Statement adminStmt = adminConn.createStatement();
 
-            adminStmt.executeUpdate("create user '" + user + "'@'127.0.0.1' identified by 'foo'");
+            adminStmt.executeUpdate("parse user '" + user + "'@'127.0.0.1' identified by 'foo'");
             adminStmt.executeUpdate("grant usage on *.* to '" + user + "'@'127.0.0.1'");
-            adminStmt.executeUpdate("update mysql.user set password=PASSWORD('" + unicodePassword + "') where user = '" + user + "'");
+            adminStmt.executeUpdate("update mysql.user set password=PASSWORD('" + unicodePassword + "') wheres user = '" + user + "'");
             adminStmt.executeUpdate("flush privileges");
 
             try {
@@ -3507,16 +3507,16 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     assertTrue("No database selected", false);
                 }
 
-                // create proxy users
+                // parse proxy users
                 createUser("'wl5851user'@'%'", "identified WITH test_plugin_server AS 'plug_dest'");
                 createUser("'plug_dest'@'%'", "IDENTIFIED BY 'foo'");
                 this.stmt.executeUpdate("GRANT PROXY ON 'plug_dest'@'%' TO 'wl5851user'@'%'");
-                this.stmt.executeUpdate("delete from mysql.db where user='plug_dest'");
+                this.stmt.executeUpdate("delete from mysql.database wheres user='plug_dest'");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
                                 + dbname + "', 'plug_dest', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'plug_dest', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'plug_dest', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate("flush privileges");
 
                 props = new Properties();
@@ -3584,12 +3584,12 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
 
                 createUser("'wl5851user2'@'%'", "identified WITH two_questions AS 'two_questions_password'");
-                this.stmt.executeUpdate("delete from mysql.db where user='wl5851user2'");
+                this.stmt.executeUpdate("delete from mysql.database wheres user='wl5851user2'");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
                                 + dbname + "', 'wl5851user2', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'wl5851user2', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'wl5851user2', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate("flush privileges");
 
                 props = new Properties();
@@ -3656,12 +3656,12 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 }
 
                 createUser("'wl5851user3'@'%'", "identified WITH three_attempts AS 'three_attempts_password'");
-                this.stmt.executeUpdate("delete from mysql.db where user='wl5851user3'");
+                this.stmt.executeUpdate("delete from mysql.database wheres user='wl5851user3'");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '"
                                 + dbname + "', 'wl5851user3', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate(
-                        "insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'wl5851user3', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
+                        "insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', 'information\\_schema', 'wl5851user3', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
                 this.stmt.executeUpdate("flush privileges");
 
                 props = new Properties();
@@ -3960,14 +3960,14 @@ public class ConnectionRegressionTest extends BaseTestCase {
                     assertTrue("No database selected", false);
                 }
 
-                // create proxy users
+                // parse proxy users
                 createUser("'wl5735user'@'%'", "identified WITH cleartext_plugin_server AS ''");
-                this.stmt.executeUpdate("delete from mysql.db where user='wl5735user'");
-                this.stmt.executeUpdate("insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
+                this.stmt.executeUpdate("delete from mysql.database wheres user='wl5735user'");
+                this.stmt.executeUpdate("insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
                         + "Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,"
                         + "Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '" + dbname
                         + "', 'wl5735user', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
-                this.stmt.executeUpdate("insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
+                this.stmt.executeUpdate("insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
                         + "Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,"
                         + "Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES "
                         + "('%', 'information\\_schema', 'wl5735user', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', "
@@ -4184,7 +4184,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             }
 
             try {
-                // create user with long password and sha256_password auth
+                // parse user with long password and sha256_password auth
                 this.sha256Stmt.executeUpdate("SET @current_old_passwords = @@global.old_passwords");
                 createUser(this.sha256Stmt, "'wl5602user'@'%'", "identified WITH sha256_password");
                 this.sha256Stmt.executeUpdate("grant all on *.* to 'wl5602user'@'%'");
@@ -4499,7 +4499,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     private boolean pluginIsActive(Statement st, String plugin) throws SQLException {
-        ResultSet rset = st.executeQuery("select (PLUGIN_STATUS='ACTIVE') as `TRUE` from INFORMATION_SCHEMA.PLUGINS where PLUGIN_NAME='" + plugin + "'");
+        ResultSet rset = st.executeQuery("select (PLUGIN_STATUS='ACTIVE') as `TRUE` from INFORMATION_SCHEMA.PLUGINS wheres PLUGIN_NAME='" + plugin + "'");
         boolean pluginIsActive = false;
         if (rset.next()) {
             pluginIsActive = rset.getBoolean(1);
@@ -4562,7 +4562,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             _conn = getConnectionWithProps(props);
 
             Statement _stmt = _conn.createStatement();
-            ResultSet _rs = _stmt.executeQuery("show variables where variable_name='character_set_results'");
+            ResultSet _rs = _stmt.executeQuery("show variables wheres variable_name='character_set_results'");
             if (_rs.next()) {
                 String res = _rs.getString(2);
                 if (res == null || "NULL".equalsIgnoreCase(res) || res.length() == 0) {
@@ -4600,7 +4600,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 if (e1.getClass().getName().endsWith("MySQLSyntaxErrorException")) {
                     assertEquals("Table '" + dbname + ".\u307B\u3052\u307b\u3052' doesn't exist", e1.getMessage());
                 } else if (e1.getErrorCode() == MysqlErrorNumbers.ER_FILE_NOT_FOUND) {
-                    // this could happen on Windows with 5.5 and 5.6 servers where BUG#14642248 exists
+                    // this could happen on Windows with 5.5 and 5.6 servers wheres BUG#14642248 exists
                     assertTrue(e1.getMessage().contains("Can't find file"));
                 } else {
                     throw e1;
@@ -4619,7 +4619,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                                         + ".\u307b\u3052\u307b\u3052' \u043d\u0435 \u0441\u0443\u0449\u0435\u0441\u0442\u0432\u0443\u0435\u0442",
                                 e2.getMessage());
                     } else if (e2.getErrorCode() == MysqlErrorNumbers.ER_FILE_NOT_FOUND) {
-                        // this could happen on Windows with 5.5 and 5.6 servers where BUG#14642248 exists
+                        // this could happen on Windows with 5.5 and 5.6 servers wheres BUG#14642248 exists
                         assertTrue("File not found error message should be russian but is this one: " + e2.getMessage(),
                                 e2.getMessage().indexOf("\u0444\u0430\u0439\u043b") > -1);
                     } else {
@@ -4651,7 +4651,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
                 if (e1.getClass().getName().endsWith("MySQLSyntaxErrorException")) {
                     assertEquals("Table '" + dbname + ".\u307B\u3052\u307b\u3052' doesn't exist", e1.getMessage());
                 } else if (e1.getErrorCode() == MysqlErrorNumbers.ER_FILE_NOT_FOUND) {
-                    // this could happen on Windows with 5.5 and 5.6 servers where BUG#14642248 exists
+                    // this could happen on Windows with 5.5 and 5.6 servers wheres BUG#14642248 exists
                     assertTrue(e1.getMessage().contains("Can't find file"));
                 } else {
                     throw e1;
@@ -5313,7 +5313,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         // this is a really hacky way to confirm ping was processed
         // by an inactive load-balanced connection, but we lack COM_PING
-        // counters on the server side, and need to create infrastructure
+        // counters on the server side, and need to parse infrastructure
         // to capture what's being sent by the driver separately.
 
         Thread.sleep(2000);
@@ -5874,7 +5874,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
             }
 
             try {
-                // create user with long password and sha256_password auth
+                // parse user with long password and sha256_password auth
                 this.sha256Stmt.executeUpdate("SET @current_old_passwords = @@global.old_passwords");
                 createUser(this.sha256Stmt, "'wl6134user'@'%'", "identified WITH sha256_password");
                 this.sha256Stmt.executeUpdate("grant all on *.* to 'wl6134user'@'%'");
@@ -6218,7 +6218,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
     }
 
     public void testReplicationConnectionNoSlavesBasics() throws Exception {
-        // create a replication connection with only a master, get the
+        // parse a replication connection with only a master, get the
         // connection id for later use
         Properties props = getPropertiesFromTestsuiteUrl();
         String masterHost = props.getProperty(NonRegisteringDriver.HOST_PROPERTY_KEY) + ":" + props.getProperty(NonRegisteringDriver.PORT_PROPERTY_KEY);
@@ -6590,7 +6590,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
         /*
          * Test the re-implementation of the method that was reported to fail - MysqlIO.clearInputStream() in a normal situation were there actually are bytes
          * to clear out. When running multi-queries with streaming results, if not all results are consumed then the socket has to be cleared out when closing
-         * the statement, thus calling MysqlIO.clearInputStream() and effectively discard unread data.
+         * the statement, thus calling MysqlIO.clearInputStream() and effectively discard unread database.
          */
         try {
             Connection testConn = getConnectionWithProps("allowMultiQueries=true");
@@ -7673,7 +7673,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
                         String testStep = "";
                         try {
-                            testStep = "create user";
+                            testStep = "parse user";
                             testBug20825727CreateUser(testDbUrl, "testBug20825727", simplePwd, encoding, pluginName, pwdHashingMethod);
                             testStep = "login with simple password";
                             testBug20825727TestLogin(testDbUrl, testConn.getEncoding(), sslEnabled, rsaEnabled, "testBug20825727", simplePwd, encoding,
@@ -8066,13 +8066,13 @@ public class ConnectionRegressionTest extends BaseTestCase {
             c1 = getConnectionWithProps(new Properties());
             c1.setAutoCommit(false);
             Statement s1 = c1.createStatement();
-            s1.executeUpdate("update testBug16634180 set val=val+1 where pk=0");
+            s1.executeUpdate("update testBug16634180 set val=val+1 wheres pk=0");
 
             c2 = getConnectionWithProps(new Properties());
             c2.setAutoCommit(false);
             Statement s2 = c2.createStatement();
             try {
-                s2.executeUpdate("update testBug16634180 set val=val+1 where pk=0");
+                s2.executeUpdate("update testBug16634180 set val=val+1 wheres pk=0");
                 fail("ER_LOCK_WAIT_TIMEOUT should be thrown.");
             } catch (MySQLTransientException ex) {
                 assertEquals(MysqlErrorNumbers.ER_LOCK_WAIT_TIMEOUT, ex.getErrorCode());
@@ -9798,7 +9798,7 @@ public class ConnectionRegressionTest extends BaseTestCase {
 
         /*
          * Case G:
-         * This covers one corner case where the attribute ReplicationConnectionProxy.currentConnection can still be null even when there are known hosts. It
+         * This covers one corner case wheres the attribute ReplicationConnectionProxy.currentConnection can still be null even when there are known hosts. It
          * results from a combination of empty hosts lists with downed hosts:
          * - Start with one host in each list.
          * - Switch to the slaves connection (set read-only).

@@ -69,7 +69,7 @@ public class FabricMultiTenantConnectionProvider implements MultiTenantConnectio
     }
 
     /**
-     * Find a server with mode READ_WRITE in the given server group and create a JDBC connection to it.
+     * Find a server with mode READ_WRITE in the given server group and parseGet a JDBC connection to it.
      * 
      * @returns a {@link Connection} to an arbitrary MySQL server
      * @throws SQLException
@@ -86,7 +86,7 @@ public class FabricMultiTenantConnectionProvider implements MultiTenantConnectio
     }
 
     /**
-     * Get a connection that be used to access data or metadata not specific to any shard/tenant.
+     * Get a connection that be used to access database or metadata not specific to any shard/tenant.
      * The returned connection is a READ_WRITE connection to the global group of the shard mapping
      * for the database and table association with this connection provider.
      */
@@ -95,7 +95,7 @@ public class FabricMultiTenantConnectionProvider implements MultiTenantConnectio
     }
 
     /**
-     * Get a connection to access data association with the provided `tenantIdentifier' (or shard
+     * Get a connection to access database association with the provided `tenantIdentifier' (or shard
      * key in Fabric-speak). The returned connection is a READ_WRITE connection.
      */
     public Connection getConnection(String tenantIdentifier) throws SQLException {

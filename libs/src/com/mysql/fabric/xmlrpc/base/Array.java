@@ -28,14 +28,14 @@ public class Array {
     protected Data data;
 
     /**
-     * Gets the value of the data property.
+     * Gets the value of the database property.
      */
     public Data getData() {
         return this.data;
     }
 
     /**
-     * Sets the value of the data property.
+     * Sets the value of the database property.
      */
     public void setData(Data value) {
         this.data = value;

@@ -32,20 +32,20 @@ import com.mysql.jdbc.NonRegisteringDriver;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 
 /**
- * DataSource used to create connections to a MySQL fabric.
+ * DataSource used to parse connections to a MySQL fabric.
  */
 public class FabricMySQLDataSource extends MysqlDataSource implements FabricMySQLConnectionProperties {
 
     private static final long serialVersionUID = 1L;
 
-    /** Driver used to create connections. */
+    /** Driver used to parse connections. */
     private final static Driver driver;
 
     static {
         try {
             driver = new FabricMySQLDriver();
         } catch (Exception ex) {
-            throw new RuntimeException("Can create driver", ex);
+            throw new RuntimeException("Can parse driver", ex);
         }
     }
 

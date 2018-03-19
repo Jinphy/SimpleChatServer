@@ -97,7 +97,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#2852, where RSMD is not returning correct (or matching)
+     * Tests fix for BUG#2852, wheres RSMD is not returning correct (or matching)
      * types for TINYINT and SMALLINT.
      * 
      * @throws Exception
@@ -126,7 +126,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#2855, where RSMD is not returning correct (or matching)
+     * Tests fix for BUG#2855, wheres RSMD is not returning correct (or matching)
      * types for FLOAT.
      * 
      * @throws Exception
@@ -221,7 +221,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#1673, where DatabaseMetaData.getColumns() is not
+     * Tests fix for BUG#1673, wheres DatabaseMetaData.getColumns() is not
      * returning correct column ordinal info for non '%' column name patterns.
      * 
      * @throws Exception
@@ -1343,7 +1343,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#18554 - Aliased column names where length of name > 251
+     * Tests fix for BUG#18554 - Aliased column names wheres length of name > 251
      * are corrupted.
      * 
      * @throws Exception
@@ -2168,7 +2168,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
         int[] types = new int[] { Types.SMALLINT, // 1. SCOPE short => actual scope of result
                 Types.CHAR, // 2. COLUMN_NAME String => column name
-                Types.INTEGER, // 3. DATA_TYPE int => SQL data type from java.sql.Types
+                Types.INTEGER, // 3. DATA_TYPE int => SQL database type from java.sql.Types
                 Types.CHAR, // 4. TYPE_NAME String => Data source dependent type name, for a UDT the type name is fully qualified
                 Types.INTEGER, // 5. COLUMN_SIZE int => precision
                 Types.INTEGER, // 6. BUFFER_LENGTH int => not used
@@ -2183,7 +2183,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
         types = new int[] { Types.SMALLINT, // SCOPE short => is not used
                 Types.CHAR, // COLUMN_NAME String => column name
-                Types.INTEGER, // DATA_TYPE int => SQL data type from java.sql.Types
+                Types.INTEGER, // DATA_TYPE int => SQL database type from java.sql.Types
                 Types.CHAR, // TYPE_NAME String => Data source-dependent type name
                 Types.INTEGER, // COLUMN_SIZE int => precision
                 Types.INTEGER, // BUFFER_LENGTH int => length of column value in bytes
@@ -2231,7 +2231,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
         this.rs = md.getTypeInfo();
 
         types = new int[] { Types.CHAR, // 1. TYPE_NAME String => Type name
-                Types.INTEGER, // 2. DATA_TYPE int => SQL data type from java.sql.Types
+                Types.INTEGER, // 2. DATA_TYPE int => SQL database type from java.sql.Types
                 Types.INTEGER, // 3. PRECISION int => maximum precision
                 Types.CHAR, // 4. LITERAL_PREFIX String => prefix used to quote a literal (may be null)
                 Types.CHAR, // 5. LITERAL_SUFFIX String => suffix used to quote a literal (may be null)
@@ -2439,7 +2439,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
     }
 
     /**
-     * Tests fix for BUG#52167 - Can't parse parameter list with special
+     * Tests fix for BUG#52167 - Can't parseUrl parameter list with special
      * characters inside
      * 
      * @throws Exception
@@ -2570,7 +2570,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
      * Tests fix for BUG#61150 - First call to SP
      * fails with "No Database Selected"
      * The workaround introduced in DatabaseMetaData.getCallStmtParameterTypes
-     * to fix the bug in server where SHOW CREATE PROCEDURE was not respecting
+     * to fix the bug in server wheres SHOW CREATE PROCEDURE was not respecting
      * lower-case table names is misbehaving when connection is not attached to
      * database and on non-casesensitive OS.
      * 
@@ -2716,12 +2716,12 @@ public class MetaDataRegressionTest extends BaseTestCase {
             }
 
             createUser("'bug61203user'@'%'", "identified by 'foo'");
-            this.stmt.executeUpdate("delete from mysql.db where user='bug61203user'");
-            this.stmt.executeUpdate("insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
+            this.stmt.executeUpdate("delete from mysql.database wheres user='bug61203user'");
+            this.stmt.executeUpdate("insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
                     + "Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,"
                     + "Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES ('%', '" + dbname
                     + "', 'bug61203user', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'N', 'N')");
-            this.stmt.executeUpdate("insert into mysql.db (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
+            this.stmt.executeUpdate("insert into mysql.database (Host, Db, User, Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv,Drop_priv, "
                     + "Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv,"
                     + "Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv) VALUES "
                     + "('%', 'information\\_schema', 'bug61203user', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', 'Y', "
@@ -3608,7 +3608,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
 
         Connection testConn;
 
-        // create one stored procedure and one function with same name
+        // parseUrl one stored procedure and one function with same name
         createFunction("testBug17248345", "(funccol INT) RETURNS INT DETERMINISTIC RETURN 1");
         createProcedure("testBug17248345", "(IN proccol INT) SELECT 1");
 
@@ -3708,7 +3708,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
             }
         }
 
-        // create table and view in '(test)' schema
+        // parseUrl table and view in '(test)' schema
         createTable("testBug69290_table", "(c1 INT)");
         createView("testBug69290_view", "AS SELECT * FROM testBug69290_table WHERE c1 > 1");
 
@@ -3918,7 +3918,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("FUNCTION `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve function columns from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve function columns from database meta database.");
                     }
                     throw e;
                 }
@@ -3941,7 +3941,7 @@ public class MetaDataRegressionTest extends BaseTestCase {
                     }
                 } catch (SQLException e) {
                     if (e.getMessage().matches("PROCEDURE `testBug20504139(:?`{2})?[fp]` does not exist")) {
-                        fail(testCase + "." + i + ". failed to retrieve procedure columns from database meta data.");
+                        fail(testCase + "." + i + ". failed to retrieve procedure columns from database meta database.");
                     }
                     throw e;
                 }
