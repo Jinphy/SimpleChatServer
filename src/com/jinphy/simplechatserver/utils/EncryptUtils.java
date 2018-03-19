@@ -199,4 +199,34 @@ public class EncryptUtils {
         String temp = Integer.toHexString(b & 0xff);
         return temp.length() == 1 ? 0 + temp : temp;
     }
+
+
+    /**
+     * DESC: 编码
+     * Created by jinphy, on 2018/3/18, at 21:10
+     */
+    public static String encode(String original) {
+        if (StringUtils.isEmpty(original)) {
+            return "";
+        }
+        try {
+            return URLEncoder.encode(original, UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static String decode(String original) {
+        if (StringUtils.isEmpty(original)) {
+            return "";
+        }
+        try {
+            return URLDecoder.decode(original, UTF_8);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 }

@@ -259,6 +259,8 @@ public class Database {
         Operate whereEq(String column, Object value);
 
 
+
+
         /**
          * DESC: where小于条件，通过该方法查询的条件为 < ，例如 account<123
          *      该方法可以调用多次

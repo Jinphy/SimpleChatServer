@@ -1,16 +1,12 @@
 package com.jinphy.simplechatserver.database.dao;
 
-import com.jinphy.simplechatserver.constants.StringConst;
 import com.jinphy.simplechatserver.database.models.Result;
 import com.jinphy.simplechatserver.database.operate.Database;
 import com.jinphy.simplechatserver.models.db_models.Message;
 import com.jinphy.simplechatserver.models.network_models.PushSession;
 import com.jinphy.simplechatserver.utils.EncryptUtils;
-import com.jinphy.simplechatserver.utils.StringUtils;
+import sun.nio.cs.ext.MS874;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.List;
 import java.util.Map;
 
@@ -37,34 +33,82 @@ public class MessageDao {
      * Created by jinphy, on 2018/2/27, at 14:03
      */
     public synchronized Result saveMessage(Message msg) {
-        try {
-            msg.setContent(URLEncoder.encode(msg.getContent(), StringConst.UTF_8));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        Result result = Database.insert()
-                .tables(Database.TABLE_MESSAGE)
-                .columnNames(
-                        FROM,
-                        TO,
-                        CONTENT,
-                        CONTENT_TYPE,
-                        CREATE_TIME,
-                        EXTRA
-                )
-                .columnValues(
-                        msg.getFromAccount(),
-                        msg.getToAccount(),
-                        msg.getContent(),
-                        msg.getContentType(),
-                        msg.getCreateTime(),
-                        msg.getExtra()
-                )
-                .execute();
+        msg.setContent(EncryptUtils.encode(msg.getContent()));
 
-        // 通知推送服务推送新消息
-        PushSession.pushMessage(msg.getToAccount());
-        return result;
+        String toAccount = msg.getToAccount();
+
+        if (toAccount.contains("G")) {
+            // 群聊消息
+            boolean result = Database.execute(statement->{
+                List<String> members = GroupDao.getInstance().getCanReceiveMsgMembers(toAccount, msg.getFromAccount());
+                if (members != null && members.size() > 0) {
+                    msg.setExtra(null);
+                    msg.extra(Message.KEY_GROUP_NO, toAccount);
+                    msg.extra(Message.KEY_CHAT_GROUP, "true");
+                    for (String member : members) {
+                        String sql = Database.insert()
+                                .tables(Database.TABLE_MESSAGE)
+                                .columnNames(
+                                        FROM,
+                                        TO,
+                                        CONTENT,
+                                        CONTENT_TYPE,
+                                        CREATE_TIME,
+                                        EXTRA
+                                )
+                                .columnValues(
+                                        msg.getFromAccount(),
+                                        member,
+                                        msg.getContent(),
+                                        msg.getContentType(),
+                                        msg.getCreateTime(),
+                                        msg.getExtra()
+                                )
+                                .generateSql();
+                        statement.addBatch(sql);
+                    }
+                    int[] results = statement.executeBatch();
+                    for (int r : results) {
+                        if (r <= 0) {
+                            return false;
+                        }
+                    }
+                    for (String member : members) {
+                        PushSession.pushMessage(member);
+                    }
+                    return true;
+                }
+                return true;
+            });
+            if (result) {
+                return Result.ok(1, null, null);
+            } else {
+                return Result.error();
+            }
+        } else {
+            Result result = Database.insert()
+                    .tables(Database.TABLE_MESSAGE)
+                    .columnNames(
+                            FROM,
+                            TO,
+                            CONTENT,
+                            CONTENT_TYPE,
+                            CREATE_TIME,
+                            EXTRA
+                    )
+                    .columnValues(
+                            msg.getFromAccount(),
+                            msg.getToAccount(),
+                            msg.getContent(),
+                            msg.getContentType(),
+                            msg.getCreateTime(),
+                            msg.getExtra()
+                    )
+                    .execute();
+            // 通知推送服务推送新消息
+            PushSession.pushMessage(msg.getToAccount());
+            return result;
+        }
     }
 
     public synchronized Result loadMessage(String to) {
@@ -82,13 +126,9 @@ public class MessageDao {
                 .whereEq(IS_NEW, true)
                 .execute();
         if (result.count > 0) {
-            try {
-                for (Map<String, String> msg : result.data) {
-                    String decodedContent = URLDecoder.decode(msg.get(Message.CONTENT), StringConst.UTF_8);
-                    msg.put(Message.CONTENT, decodedContent);
-                }
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
+            for (Map<String, String> msg : result.data) {
+                String decodedContent = EncryptUtils.decode(msg.get(Message.CONTENT));
+                msg.put(Message.CONTENT, decodedContent);
             }
         }
         return result;

@@ -81,7 +81,7 @@ public class Api {
 
                     BaseController.threadPools.execute(() -> {
                         try {
-                            Thread.sleep(500);
+                            Thread.sleep(2500);
                             PushSession.pushMessage(account);
                         } catch (InterruptedException e) {
                             e.printStackTrace();

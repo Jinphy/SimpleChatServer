@@ -14,9 +14,11 @@ import com.jinphy.simplechatserver.utils.GsonUtils;
 import com.jinphy.simplechatserver.utils.StringUtils;
 import com.sun.org.apache.regexp.internal.RE;
 
+import javax.xml.crypto.Data;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -729,4 +731,27 @@ public class GroupDao {
         });
     }
 
+    /**
+     * DESC: 获取可以就收群消息的成员
+     *
+     * @param groupNo 群号
+     * @param msgSender 发送消息的成员
+     * Created by jinphy, on 2018/3/18, at 20:55
+     */
+    public List<String> getCanReceiveMsgMembers(String groupNo, String msgSender) {
+        Result result = Database.select()
+                .columnNames(Group.OWNER)
+                .tables(Database.TABLE_GROUP_CHAT)
+                .whereEq(Group.GROUP_NO, groupNo)
+                .whereEq(Group.REJECT_MSG, "false")
+                .whereLB(Group.OWNER, msgSender)
+                .execute();
+        List<String> members = new LinkedList<>();
+        if (result.count > 0) {
+            for (Map<String, String> member : result.data) {
+                members.add(member.get(Group.OWNER));
+            }
+        }
+        return members;
+    }
 }

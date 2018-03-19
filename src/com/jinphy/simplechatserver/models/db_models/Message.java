@@ -1,5 +1,14 @@
 package com.jinphy.simplechatserver.models.db_models;
 
+import com.google.gson.reflect.TypeToken;
+import com.jinphy.simplechatserver.utils.EncryptUtils;
+import com.jinphy.simplechatserver.utils.GsonUtils;
+import com.jinphy.simplechatserver.utils.StringUtils;
+
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * DESC:
  * Created by jinphy on 2018/1/16.
@@ -64,6 +73,12 @@ public class Message {
      */
     public static final String TYPE_CHAT_IMAGE = "image";
 
+    public static final String KEY_SENDER = "KEY_SENDER";
+
+    public static final String KEY_GROUP_NO = "KEY_GROUP_NO";
+
+    public static final String KEY_CHAT_GROUP = "KEY_CHAT_GROUP";
+
 
     private transient int id;
 
@@ -113,6 +128,11 @@ public class Message {
      * Created by jinphy, on 2018/3/2, at 9:13
      */
     private String extra;
+
+    transient private Map<String, String> extraMap = new HashMap<>();
+
+    private static Type mapType = new TypeToken<Map<String, String>>() {
+    }.getType();
 
 
     public int getId() {
@@ -172,10 +192,59 @@ public class Message {
     }
 
     public String getExtra() {
+        if (StringUtils.isEmpty(extra) && extraMap != null && extraMap.size() > 0) {
+            extra = GsonUtils.toJson(extraMap);
+        }
         return extra;
     }
 
     public void setExtra(String extra) {
         this.extra = extra;
+        if (extra != null) {
+            try {
+                Map<String, String> tempMap = GsonUtils.toBean(extra, mapType);
+                if (tempMap != null && tempMap.size() > 0) {
+                    extraMap.clear();
+                    for (Map.Entry<String, String> entry : tempMap.entrySet()) {
+                        extraMap.put(entry.getKey(), entry.getValue());
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    /**
+     * DESC: 保存extra信息
+     * Created by jinphy, on 2018/3/18, at 19:20
+     */
+    public void extra(String key, Object value) {
+        if (value != null) {
+            extraMap.put(key, EncryptUtils.aesEncrypt(value.toString()));
+        }
+    }
+
+
+    /**
+     * DESC: 通过key获取extra信息
+     * Created by jinphy, on 2018/3/18, at 19:20
+     */
+    public String extra(String key) {
+        if (key == null) {
+            return "";
+        }
+        String value = extraMap.get(key);
+
+        return EncryptUtils.aesDecrypt(value);
+    }
+
+    public String removeExtra(String key) {
+        if (extraMap != null) {
+            String remove = extraMap.remove(key);
+            return EncryptUtils.aesDecrypt(remove);
+        }
+        return null;
     }
 }
