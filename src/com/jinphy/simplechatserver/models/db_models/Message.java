@@ -210,7 +210,6 @@ public class Message {
                     }
                 }
             } catch (Exception e) {
-                e.printStackTrace();
             }
         }
     }

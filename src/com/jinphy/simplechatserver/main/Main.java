@@ -43,6 +43,8 @@ public class Main {
                     .doOnOpen((client, handshake) -> {
                         System.out.println("--------new push connected ---------------------------");
                         System.out.println("pushId: " + client.getResourceDescriptor());
+                        System.out.println("local ip:" + client.getLocalSocketAddress());
+                        System.out.println("remote ip:" + client.getRemoteSocketAddress());
                         System.out.println("-------------------------------------------------------");
                         PushSession.acceptClient(client, handshake);
                     })
@@ -75,6 +77,7 @@ public class Main {
                     .doOnStart(() -> System.out.println("send server start!"))
                     .doOnOpen((client, handshake) -> {
                         System.out.println("one send open: " + handshake.getResourceDescriptor());
+                        System.out.println("remote ip: " + client.getRemoteSocketAddress());
                     })
                     .doOnMessage((client, message) -> {
                         SendSession.handle(client, message);
@@ -104,6 +107,7 @@ public class Main {
                         CommonSession.handle(commonServer,client,handshake);
                     })
                     .doOnMessage((client, message) -> {
+                        System.out.println("message: "+message);
                         CommonSession.handle(message);
                     })
                     .doOnError((client, ex) -> {
@@ -127,6 +131,10 @@ public class Main {
             fileServer = MyServer.newInstance(FILE_SERVER_PORT)
                     .doOnStart(() -> System.out.println("file server start!"))
                     .doOnOpen((client, handshake) -> {
+                        System.out.println("-------------------------------------------------------");
+                        System.out.println("file server open: "+client.getRemoteSocketAddress());
+                        FileSession.handle(client, handshake);
+
                     })
                     .doOnMessage((client, message) -> {
                         FileSession.handle(client, message);
@@ -136,6 +144,8 @@ public class Main {
                         ex.printStackTrace();
                     })
                     .doOnClose((client, code, reason, remote) -> {
+                        System.out.println("file server close: " + client.getRemoteSocketAddress());
+                        System.out.println("-------------------------------------------------------");
                     });
 
             // 启动服务器

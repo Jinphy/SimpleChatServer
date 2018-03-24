@@ -1,5 +1,8 @@
 package com.jinphy.simplechatserver.utils;
 
+import org.java_websocket.util.Base64;
+
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -140,6 +143,30 @@ public class StringUtils {
     }
 
 
+
+    public static String bytesToStr(byte[] source) {
+        if (source == null) {
+            return "";
+        }
+        return Base64.encodeBytes(source);
+    }
+
+
+    public static String bytesToStr(byte[] source, int offset, int len) {
+        if (source == null) {
+            return "";
+        }
+        return org.java_websocket.util.Base64.encodeBytes(source, offset, len);
+    }
+
+    public static byte[] strToBytes(String source) {
+        try {
+            return Base64.decode(source);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new byte[0];
+        }
+    }
 
 
 
