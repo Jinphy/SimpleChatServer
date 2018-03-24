@@ -4,6 +4,7 @@ import com.jinphy.simplechatserver.models.network_models.FileSession;
 import com.jinphy.simplechatserver.network.MyServer;
 import com.jinphy.simplechatserver.utils.EncryptUtils;
 import com.jinphy.simplechatserver.utils.GsonUtils;
+import com.jinphy.simplechatserver.utils.StringUtils;
 import okio.BufferedSink;
 import okio.BufferedSource;
 import okio.Okio;
@@ -12,7 +13,9 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.OpenOption;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,7 +28,7 @@ public class FileServerController extends BaseController {
 
     MyServer fileServer;
 
-    Map<String, UploadData> uploadMap = new ConcurrentHashMap<>();
+//    Map<String, UploadData> uploadMap = new ConcurrentHashMap<>();
 
     Map<String, BufferedSource> sourceMap = new ConcurrentHashMap<>();
 
@@ -51,16 +54,12 @@ public class FileServerController extends BaseController {
 
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void handleSession(FileSession session) {
-        switch (session.taskType) {
-            case FileSession.DOWNLOAD:
-                handleDownload(session);
-                break;
-            case FileSession.UPLOAD:
-                handleUpload(session);
-                break;
-            default:
-                break;
+        if (session.task.isUpload) {
+            handleUpload(session);
+        } else {
+            handleDownload(session);
         }
+
     }
 
     /**
@@ -68,31 +67,31 @@ public class FileServerController extends BaseController {
      * Created by jinphy, on 2018/1/19, at 18:06
      */
     private void handleDownload(FileSession session) {
-        BufferedSource source = null;
-        Map<String, Object> response = new HashMap<>();
+        BufferedSource source = session.task.source;
+        if (source == null) {
+            fileServer.broadcast("错误：文件不存在", session.client);
+            return;
+        }
+        Map<String, String> map = new HashMap<>();
+        int readCount;
+        byte[] buffer = new byte[102400];
+        // 记录发送的顺序
+        int times = 0;
+
+        System.out.println("download file start: " + session.task.fileName);
         try {
-            String fileName = session.url.substring(session.url.lastIndexOf("/") + 1);
-            File file = new File("./files", fileName);
-            long fileLength = file.length();
-            source = Okio.buffer(Okio.source(file));
-
-            response.put("fileName", fileName);
-            response.put("fileLength", fileLength);
-            fileServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(response)), session.client);
-            response.clear();
-
-            byte[] buffer = new byte[102400];
-            while (source.read(buffer) != -1) {
-                response.put("content", new String(buffer, "utf8"));
-                fileServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(response)), session.client);
+            while ((readCount = source.read(buffer)) != -1) {
+                map.put("content", StringUtils.bytesToStr(buffer, 0, readCount));
+                map.put("times", (++times)+"");
+                fileServer.broadcast(GsonUtils.toJson(map), session.client);
+                System.out.println("times: " + times);
             }
+            map.put("content", "[end]");
+            fileServer.broadcast(GsonUtils.toJson(map), session.client);
         } catch (Exception e) {
             e.printStackTrace();
-            response.clear();
-            response.put("ok", false);
-            fileServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(response)), session.client);
+            fileServer.broadcast("error", session.client);
         }finally {
-            FileSession.sessionMap.remove(session.taskId);
             if (source != null) {
                 try {
                     source.close();
@@ -101,6 +100,7 @@ public class FileServerController extends BaseController {
                 }
             }
         }
+
     }
 
     /**
@@ -108,73 +108,81 @@ public class FileServerController extends BaseController {
      * Created by jinphy, on 2018/1/19, at 18:06
      */
     private void handleUpload(FileSession session) {
-        switch (session.status) {
-            case FileSession.START:
-                UploadData upload = UploadData.parse(session);
-                uploadMap.put(session.taskId, upload);
-                break;
-            case FileSession.DOING:
-                try {
-                    UploadData uploadData = uploadMap.get(session.taskId);
-                    byte[] content = session.content.getBytes("utf8");
-                    uploadData.update(content.length);
-                    uploadData.sink.write(content);
-
-                    Map<String, Object> response = new HashMap<>();
-                    response.put("percentage", uploadData.percentage);
-                    response.put("total", uploadData.totalLength);
-                    response.put("current", uploadData.currentLength);
-                    if (uploadData.currentLength == uploadData.totalLength) {
-                        response.put("url", uploadData.url);
-                    }
-                    fileServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(response)),session.client);
-                } catch (Exception e) {
-                    e.printStackTrace();
+        FileTask task = session.task;
+        // 已经上传完毕
+        try {
+            if (task.sink == null) {
+                // 文件创建失败
+                session.client.get(0).close();
+                FileSession.sessionMap.remove(session.address);
+                return;
+            }
+            byte[] buffer;
+            while ((buffer = session.getBuffer()) != null) {
+                task.write(buffer);
+                if (session.isFinished()) {
+                    break;
                 }
-                break;
-            case FileSession.END:
-                UploadData uploadData = uploadMap.remove(session.taskId);
+            }
+            System.out.println("upload ok");
+
+            // 上传完毕
+            fileServer.broadcast("ok", session.client);
+
+            task.sink.flush();
+            task.sink.close();
+
+            FileSession.sessionMap.remove(session.address);
+        } catch (IOException e) {
+            e.printStackTrace();
+            fileServer.broadcast("error", session.client);
+        }
+    }
+    public static class FileTask{
+
+        public String fileName;
+        public boolean isUpload;
+        public BufferedSink sink;
+        public BufferedSource source;
+
+        public static FileTask create(String fileName,boolean isUpload) {
+            return new FileTask(fileName,isUpload);
+        }
+
+        private FileTask(String fileName, boolean isUpload) {
+            this.isUpload = isUpload;
+            this.fileName = fileName;
+            File file = new File("./files", fileName);
+            if (isUpload) {
+                // 上传任务
+                file.getParentFile().mkdirs();
                 try {
-                    uploadData.sink.flush();
-                    uploadData.sink.close();
+                    if (!file.exists()) {
+                        file.createNewFile();
+                    }
+                    sink = Okio.buffer(Okio.sink(file));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                FileSession.sessionMap.remove(session.taskId);
-                break;
-            default:
-                break;
+            } else {
+                // 下载任务
+                if (!file.exists()) {
+                    return;
+                }
+                try {
+                    source = Okio.buffer(Okio.source(file));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-    }
 
-
-    public static class UploadData{
-        BufferedSink sink;
-        long currentLength;
-        long totalLength;
-        float percentage;
-        String url;
-
-        public static UploadData parse(FileSession session) {
-            UploadData uploadData = new UploadData();
+        public synchronized void write(byte[] buffer) {
             try {
-                uploadData.totalLength = session.fileLength;
-                File file = new File("./files", session.fileName);
-                file.getParentFile().mkdirs();
-                file.createNewFile();
-
-                uploadData.sink = Okio.buffer(Okio.sink(file));
-                uploadData.url = "ws:simplechat/files/" + session.fileName;
-            } catch (Exception e) {
+                this.sink.write(buffer);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-
-            return uploadData;
-        }
-
-        public void update(long length) {
-            currentLength += length;
-            percentage = (float) (currentLength * 1.0 / totalLength);
         }
 
     }
