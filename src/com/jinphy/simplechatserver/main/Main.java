@@ -30,7 +30,7 @@ public class Main {
 
     public static void main(String[] args) {
         Main.createPushServer();
-        Main.createSendServer();
+//        Main.createSendServer();
         Main.createCommonServer();
         Main.createFileServer();
     }
