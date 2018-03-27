@@ -1307,5 +1307,33 @@ public class Api {
         System.out.println(session.loggoer);
     }
 
+    @Path(path = RequestConfig.Path.sendMsg)
+    public static void sendMsg(CommonSession session) {
+        String code;
+        String msg;
+
+        Message message = new Message();
+
+        message.setFromAccount(session.params().get(Message.FROM));
+        message.setToAccount(session.params().get(Message.TO));
+        message.setCreateTime(session.params().get(Message.CREATE_TIME));
+        message.setContent(session.params().get(Message.CONTENT));
+        message.setContentType(session.params().get(Message.CONTENT_TYPE));
+        message.setExtra(session.params().get(Message.EXTRA));
+
+
+        Result result = MessageDao.getInstance().saveMessage(message);
+
+        if (result.count == 1) {
+            code = YES;
+        } else {
+            code = NO;
+        }
+        Response response = Response.make(code, "", null);
+        session.server().broadcast(response.toString(), session.client());
+        session.loggoer.append("response json: " + GsonUtils.toJson(response) + LINE)
+                .append("=================网络请求结束=====================================================================\n\n");
+        System.out.println(session.loggoer);
+    }
 
 }

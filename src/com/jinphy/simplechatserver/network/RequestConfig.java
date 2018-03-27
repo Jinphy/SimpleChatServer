@@ -83,6 +83,9 @@ public interface RequestConfig {
 
         // 批量添加成员
         String addMembers = "/group/addMembers";
+
+        // 发送消息接口
+        String sendMsg = "/message/sendMsg";
     }
 
     interface Key{
