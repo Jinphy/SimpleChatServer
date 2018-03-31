@@ -160,7 +160,6 @@ public class PushServerController extends BaseController {
         String check = AccessToken.check(serverAccessToken, session.accessToken);
         if (check == AccessToken.OK) {
             clientMap.put(session.account, session.client);
-
             // 当有新客户端连接时要首先把没有接收到的消息推送给该客户端
             PushSession.pushMessage(session.account);
         } else {
