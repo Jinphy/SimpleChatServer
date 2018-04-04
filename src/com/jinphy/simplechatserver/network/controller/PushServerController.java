@@ -142,9 +142,9 @@ public class PushServerController extends BaseController {
             for (Map<String, String> msg : result.data) {
                 System.out.println("------------push-----------");
                 System.out.println("account: "+session.account);
-                System.out.println("msg: " + GsonUtils.toJson(Arrays.asList(msg)));
+                System.out.println("msg: " + GsonUtils.toJson(msg));
                 System.out.println();
-                pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(Arrays.asList(msg))), clients);
+                pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(msg)), clients);
             }
 
         }
@@ -164,14 +164,18 @@ public class PushServerController extends BaseController {
             PushSession.pushMessage(session.account);
         } else {
             // 客户端登录已过期
-            Message[] messages = new Message[1];
-            messages[0] = new Message();
-            messages[0].setContentType(Message.TYPE_SYSTEM_ACCOUNT_INVALIDATE);
-            messages[0].setContent(check);
-            messages[0].setCreateTime(System.currentTimeMillis()+"");
-            messages[0].setFromAccount(User.SYSTEM);
-            messages[0].setToAccount(session.account);
-            pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(messages)), Arrays.asList(session.client));
+            Message message = new Message();
+            message.setContentType(Message.TYPE_SYSTEM_ACCOUNT_INVALIDATE);
+            message.setContent(check);
+            message.setCreateTime(System.currentTimeMillis()+"");
+            message.setFromAccount(User.SYSTEM);
+            message.setToAccount(session.account);
+
+            System.out.println("------------push-----------");
+            System.out.println("account: "+session.account);
+            System.out.println("msg: " + GsonUtils.toJson(message));
+            System.out.println();
+            pushServer.broadcast(EncryptUtils.encodeThenEncrypt(GsonUtils.toJson(message)), Arrays.asList(session.client));
         }
     }
 
